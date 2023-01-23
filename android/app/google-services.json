@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "772780930319",
+    "project_id": "expert-on-time",
+    "storage_bucket": "expert-on-time.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772780930319:android:c9250df0df4d7b28a0ba7a",
+        "android_client_info": {
+          "package_name": "com.expert"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772780930319-d0pjjfc4os1i0pii203cpla03ol2ghp0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBQaVfckWYn66fa2zIBG4h9dK03216oZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772780930319-d0pjjfc4os1i0pii203cpla03ol2ghp0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

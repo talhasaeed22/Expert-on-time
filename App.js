@@ -5,13 +5,14 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import MyDrawer from './components/MyDrawer';
 import Home from './components/Home';
 import GetStarted from './components/GetStarted';
+import Login from './components/Login';
 
 
 const Drawer = createDrawerNavigator();
 
 function App() {
   return (
-    <GetStarted/>
+    <Home/>
     // <NavigationContainer>
     //     <Drawer.Navigator screenOptions={{
     //     drawerStyle: {
