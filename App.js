@@ -1,62 +1,26 @@
 import * as React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import MyDrawer from './components/MyDrawer';
-import Home from './components/Home';
-import GetStarted from './components/GetStarted';
+import { createStackNavigator } from '@react-navigation/stack'
 import Login from './components/Login';
+import AdminHome from './components/AdminHome';
 
 
-const Drawer = createDrawerNavigator();
 
 function App() {
+  const Stack = createStackNavigator();
   return (
-    <Home/>
-    // <NavigationContainer>
-    //     <Drawer.Navigator screenOptions={{
-    //     drawerStyle: {
-    //       backgroundColor:'white',
-    //     },
-    //   }}
-        
-    //      drawerContent={props => <MyDrawer {...props} />}>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen options={{
+                title: '', headerShown:false
+            }} name="Login" component={Login} />
+        <Stack.Screen options={{
+                title: '', headerShown:false
+            }} name="AdminHome" component={AdminHome} />
 
-    //       <Drawer.Screen name="Home" component={Home} options={{
-    //         title: '',
-    //         headerShown: true,
-    //         headerTransparent: true,
-    //       }} />
-
-    //       <Drawer.Screen name="Hotels" component={Home} options={{
-    //         title: 'Medium Share',
-    //         headerShown: true,
-    //         headerTintColor: 'white',
-    //         headerTitleAlign: 'center',
-    //         headerStyle: {
-    //           backgroundColor: '#181c3f' ,
-    //         },
-
-    //       }} />
-    //       <Drawer.Screen name="Restaurants" component={Home} options={{
-    //         title: '',
-    //         headerShown: true,
-    //         headerTransparent: true,
-    //       }} />
-    //       <Drawer.Screen name="Institutions" component={Home} options={{
-    //         title: '',
-    //         headerShown: true,
-    //         headerTransparent: true,
-    //         headerTintColor: 'white',
-    //       }} />
-    //       <Drawer.Screen name="Trip Places" component={Home} options={{
-    //         title: '',
-    //         headerShown: true,
-    //         headerTransparent: true,
-    //         headerTintColor: 'white',
-    //       }} />
-    //     </Drawer.Navigator>
-    //   </NavigationContainer>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

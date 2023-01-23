@@ -1,10 +1,18 @@
 import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, TextInput, Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 
 
-const Login = () => {
+const Login = ({navigation}) => {
+    useEffect(()=>{
+        if(auth().currentUser){
+            if(auth().currentUser.email === 'admin@firebase.com'){
+                navigation.navigate('AdminHome')
+            }
+        }
+    }, [])
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
 
@@ -12,7 +20,7 @@ const Login = () => {
         auth()
         .signInWithEmailAndPassword(email, password)
         .then((userCred)=>{
-            Alert.alert('login Successfully');
+            navigation.navigate('AdminHome')
         })
         .catch((error)=>{
             if (error.code === 'auth/invalid-email') {
@@ -87,7 +95,9 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         // backgroundColor: 'yellow',
         padding: 40,
-        gap: 10
+        paddingTop:0,
+        gap: 10,
+        marginTop:30
     },
     title: {
         color: "black",
