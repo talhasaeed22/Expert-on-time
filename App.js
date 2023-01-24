@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
 import Login from './components/Login';
 import AdminHome from './components/AdminHome';
+import GetStarted from './components/GetStarted';
 
 
 
@@ -12,6 +13,9 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      <Stack.Screen options={{
+                title: '', headerShown:false
+            }} name="Start" component={GetStarted} />
         <Stack.Screen options={{
                 title: '', headerShown:false
             }} name="Login" component={Login} />

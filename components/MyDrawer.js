@@ -27,25 +27,25 @@ const MyDrawer = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView  {...props}>
-        <View style={{ marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingTop: 50 }}>
-          {/* <Image style={{ width: 50, height: 50 }} source={require('../images/logo.png')} /> */}
-          <Text style={{ fontSize: 31, color: 'black', fontWeight: 'bold', }}>Expert in Time </Text>
+        <View style={{ marginBottom: 20,  paddingTop: 50, marginLeft:20 }}>
+         
+          <Text style={{ fontSize: 31, color: 'black', fontWeight: 'bold', }}>Expert on Time </Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: "center", padding: 15, }}>
           {/* <Avatar.Image source={{  }} size={50} /> */}
           <View style={{ flexDirection: 'column' }}>
             <Text style={{ marginLeft: 15, fontSize: 15, color: 'black', fontWeight: 'bold' }}> Admin Pannel </Text>
-            <Text style={{ marginLeft: 15, fontWeight: 'bold', color: 'gray' }}> {'auth().currentUser.email'} </Text>
+            <Text style={{ marginLeft: 15, fontWeight: 'bold', color: 'gray' }}> {auth().currentUser.email} </Text>
           </View>
         </View>
-        <View style={{ marginTop: 15, flexDirection: 'column', marginLeft: 15 }}>
+        <View style={{ marginTop: 15, flexDirection: 'column', marginLeft: 10 }}>
 
           <DrawerItem onPress={() => { props.navigation.navigate('Home'); setScreen(1) }} style={screen === 1 ? { backgroundColor: '#181c3f' } : {}}
             icon={({ color, size }) => (<Icon name="home-outline" size={21} color={screen === 1 ? ('white') : 'black'} />)}
             label={() => (<Text style={{ color: screen === 1 ? ('white') : 'black', fontSize: 15 }}>Home</Text>)}
 
           />
-          <DrawerItem onPress={() => { props.navigation.navigate('Home'); setScreen(2) }} style={screen === 2 ? { backgroundColor: '#181c3f' } : {}}
+          <DrawerItem onPress={() => { props.navigation.navigate('Posts'); setScreen(2) }} style={screen === 2 ? { backgroundColor: '#181c3f' } : {}}
             icon={({ color, size }) => (<Icon name="post-outline" size={21} color={screen === 2 ? ('white') : 'black'} />)}
             label={() => (<Text style={{ color: screen === 2 ? ('white') : 'black', fontSize: 15 }}>Posts</Text>)}
 

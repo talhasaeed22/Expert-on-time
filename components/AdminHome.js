@@ -6,7 +6,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import MyDrawer from './MyDrawer';
-import Jobs from './Jobs';
+import Jobs from './Admin/Home/Jobs';
+import Home from './Admin/Home/Home';
+import PostHome from './Admin/Posts/PostHome';
 
 const AdminHome = () => {
  
@@ -21,19 +23,27 @@ const AdminHome = () => {
         
          drawerContent={props => <MyDrawer {...props} />}>
 
-          <Drawer.Screen name="Home" component={Jobs} options={{
-            title: '',
+          <Drawer.Screen name="Home" component={Home} options={{
+            title: 'Admin Pannel',
+            headerStyle: {
+              backgroundColor: 'white',
+            },
+            headerTitleAlign:'center',
             headerShown: true,
-            headerTransparent: true,
+            headerTintColor: 'white',
+            headerStyle: {
+              backgroundColor: 'black' ,
+            },
+            // headerTransparent: true,
           }} />
 
-          <Drawer.Screen name="Posts" component={Jobs} options={{
-            title: 'Medium Share',
+          <Drawer.Screen name="Posts" component={PostHome} options={{
+            title: 'Posts',
             headerShown: true,
             headerTintColor: 'white',
             headerTitleAlign: 'center',
             headerStyle: {
-              backgroundColor: '#181c3f' ,
+              backgroundColor: 'black' ,
             },
 
           }} />
