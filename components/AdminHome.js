@@ -29,11 +29,7 @@ const AdminHome = () => {
               backgroundColor: 'white',
             },
             headerTitleAlign:'center',
-            headerShown: true,
-            headerTintColor: 'white',
-            headerStyle: {
-              backgroundColor: 'black' ,
-            },
+            
             // headerTransparent: true,
           }} />
 

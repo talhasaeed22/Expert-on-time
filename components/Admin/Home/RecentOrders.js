@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Fontsinto from 'react-native-vector-icons/Fontisto'
 
 const RecentOrders = () => {
 
@@ -35,18 +35,18 @@ const RecentOrders = () => {
     return (
         <View style={styles.box}>
             <View>
-                <Text style={styles.primaryHeading}>Client Name:</Text>
+                <Text style={styles.primaryHeading}>Client Name</Text>
                 <Text style={{fontSize:16}}>ABC</Text>
                 <Text>{'\n'}</Text>
-                <Text style={styles.primaryHeading}>Handyman Name:</Text>
+                <Text style={styles.primaryHeading}>Handyman Name</Text>
                 <Text style={{fontSize:16}}>DEF</Text>
                 <Text>{'\n'}</Text>
-                <Text style={styles.primaryHeading}>Order Date: </Text>
+                <Text style={styles.primaryHeading}>Order Date</Text>
                 <Text style={{fontSize:16}}>21 Jan 2023</Text>
             </View>
             <View style={{ display: 'flex', alignItems:'center', backgroundColor:'#39be5f', padding:15, borderRadius:20 }}>
-                <Icon name='details' size={31} color={'white'} />
-                <Text style={{fontSize:14, borderBottomWidth:1, borderBottomColor:'lightgray'}}>View Detail</Text>
+                <Fontsinto name='prescription' size={31} color={'white'} />
+                <Text style={{fontSize:14, borderBottomWidth:1, borderBottomColor:'white', color:'white'}}>View Detail</Text>
             </View>
 
         </View>

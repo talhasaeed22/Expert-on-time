@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, TextInput, Button } from 'react-native-paper';
 import SelectDropdown from 'react-native-select-dropdown'
 import { SelectList } from 'react-native-dropdown-select-list'
 
 const CreatePost = () => {
+
   const countries = ["Plumber", "Architect", "Painter", "Sweeper"]
   const data = [
     {key:'1', value:'Plumber',},
@@ -129,6 +130,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: 'black',
+    textDecorationLine: 'underline',
 
   },
   form: {
