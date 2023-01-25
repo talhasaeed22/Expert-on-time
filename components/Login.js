@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity, ActivityIndicator, Keyboard } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity, ActivityIndicator, Keyboard, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Avatar, TextInput, Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
@@ -11,44 +11,44 @@ const Login = ({ navigation }) => {
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
     const handleLogin = () => {
-       if(email === '' || password === ''){
-        Alert.alert(
-            'Warning',
-            'Please fill all the required Fields!'
-        );
-       }else{
-        Keyboard.dismiss();
-        setEmail(email.toLowerCase())
-        setLoading(true);
-        auth()
-            .signInWithEmailAndPassword(email, password)
-            .then((userCred) => {
-                setLoading(false)
-                navigation.dispatch(
-                    StackActions.replace('AdminHome')
-                );
-            })
-            .catch((error) => {
-                setLoading(false)
+        if (email === '' || password === '') {
+            Alert.alert(
+                'Warning',
+                'Please fill all the required Fields!'
+            );
+        } else {
+            Keyboard.dismiss();
+            setEmail(email.toLowerCase())
+            setLoading(true);
+            auth()
+                .signInWithEmailAndPassword(email, password)
+                .then((userCred) => {
+                    setLoading(false)
+                    navigation.dispatch(
+                        StackActions.replace('AdminHome')
+                    );
+                })
+                .catch((error) => {
+                    setLoading(false)
 
-                if (error.code === 'auth/invalid-email') {
-                    Alert.alert(
-                        'Warning',
-                        'That email address is invalid!'
-                    );
-                } else if (error.code === 'auth/wrong-password') {
-                    Alert.alert(
-                        'Warning',
-                        'The Password is invalid!'
-                    );
-                } else if (error.code === 'auth/user-not-found') {
-                    Alert.alert(
-                        'Warning',
-                        'Please Enter Valid Credentials'
-                    );
-                }
-            })
-       }
+                    if (error.code === 'auth/invalid-email') {
+                        Alert.alert(
+                            'Warning',
+                            'That email address is invalid!'
+                        );
+                    } else if (error.code === 'auth/wrong-password') {
+                        Alert.alert(
+                            'Warning',
+                            'The Password is invalid!'
+                        );
+                    } else if (error.code === 'auth/user-not-found') {
+                        Alert.alert(
+                            'Warning',
+                            'Please Enter Valid Credentials'
+                        );
+                    }
+                })
+        }
     }
     return (
         <>
@@ -57,8 +57,8 @@ const Login = ({ navigation }) => {
                 <ScrollView>
                     <View style={styles.container}>
                         <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <Avatar.Image size={64} source={require('../images/logo.jpg')} />
-                            <Text style={styles.title}>Expert on Time</Text>
+                            <Image resizeMode='center' style={{ height: 60, }} source={require('../images/Logo1.jpeg')} size={100} />
+                            {/* <Text style={styles.title}>Expert on Time</Text> */}
                             <Text>EST 2021</Text>
                         </View>
                         <View>
@@ -80,7 +80,7 @@ const Login = ({ navigation }) => {
                 <View style={styles.buttonsContainer}>
                     <Text style={{ color: 'white', textAlign: 'center', fontStyle: "italic", fontSize: 17 }}>Welcome to our Application</Text>
                     <TouchableOpacity onPress={handleLogin}>
-                       {loading ? <ActivityIndicator color={'white'} size='large'/> :  <Button style={{ height: 50, alignItems: 'center', justifyContent: "center" }} textColor="black" labelStyle={{ fontSize: 20 }} buttonColor='white' icon="login" mode="contained" >
+                        {loading ? <ActivityIndicator color={'white'} size='large' /> : <Button style={{ height: 50, alignItems: 'center', justifyContent: "center" }} textColor="black" labelStyle={{ fontSize: 20 }} buttonColor='white' icon="login" mode="contained" >
                             Login
                         </Button>}
                     </TouchableOpacity>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         // backgroundColor: 'yellow',
         padding: 40,
-        paddingTop: 0,
+        paddingTop: 40,
         gap: 10,
         marginTop: 30
     },

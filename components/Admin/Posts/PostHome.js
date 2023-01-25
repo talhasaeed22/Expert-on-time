@@ -6,6 +6,7 @@ const Tab = createBottomTabNavigator();
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Material from 'react-native-vector-icons/MaterialCommunityIcons'
 import CreatePost from './CreatePost';
+import Posts from './Posts';
 
 const PostHome = () => {
   return (
@@ -50,7 +51,7 @@ const PostHome = () => {
           headerTransparent: true,
         }} />
         
-        <Tab.Screen name="PostDetails" component={CreatePost}options={{
+        <Tab.Screen name="PostDetails" component={Posts}options={{
           title: '',
           headerShown: true,
           headerTransparent: true,

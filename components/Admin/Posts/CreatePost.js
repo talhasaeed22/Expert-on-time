@@ -1,19 +1,20 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Avatar, TextInput, Button } from 'react-native-paper';
 import SelectDropdown from 'react-native-select-dropdown'
 import { SelectList } from 'react-native-dropdown-select-list'
+import Icon from 'react-native-vector-icons/AntDesign'
+import firestore from '@react-native-firebase/firestore'
 
-const CreatePost = () => {
+const CreatePost = ({navigation}) => {
 
-  const countries = ["Plumber", "Architect", "Painter", "Sweeper"]
   const data = [
-    {key:'1', value:'Plumber',},
-    {key:'2', value:'Architect'},
-    {key:'3', value:'Sweeper'},
-    {key:'4', value:'Painter', },
+    { key: '1', value: 'Plumber', },
+    { key: '2', value: 'Architect' },
+    { key: '3', value: 'Sweeper' },
+    { key: '4', value: 'Painter', },
 
-]
+  ]
   const [fname, setfname] = useState('')
   const [lname, setlname] = useState('')
   const [email, setEmail] = useState('')
@@ -24,13 +25,40 @@ const CreatePost = () => {
   const [price, setPrice] = useState('')
   const [brief, setBrief] = useState('')
   const [category, setCategory] = useState('')
+const [loading, setLoading] = useState(false)
+  const handlePosts = () => {
+    setLoading(true);
+    firestore()
+      .collection('posts')
+      .add({
+        name: fname + lname,
+        email: email,
+        address: address,
+        phone: phone,
+        postalCode:postalCode,
+        budget:budget,
+        price:price,
+        brief:brief,
+        category:category
+      })
+      .then(() => {
+        setLoading(false)
+        console.log('Post Added')
+        navigation.navigate('PostDetails')
+      })
+      .catch((err)=>{
+        setLoading(false)
+        console.log(err)
+      })
+      
+  }
 
   return (
     <>
-      <View style={{ marginTop: 20, padding: 10 }}>
-        <Text style={styles.primaryHeading}>CreatePost</Text>
-      </View>
       <ScrollView>
+        <View style={{ marginTop: 20, padding: 10 }}>
+          <Text style={styles.primaryHeading}>CreatePost</Text>
+        </View>
         <View style={styles.form}>
 
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", gap: 4 }}>
@@ -74,34 +102,14 @@ const CreatePost = () => {
 
 
 
-          <View style={{ display: 'flex', width: '100%',}}>
-            <Text style={{marginBottom:10}}>Select Category</Text>
-            {/* <TextInput value={phone} onChangeText={setPhone} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Phone Number' mode='outlined' /> */}
-            {/* <View style={{borderWidth:1, borderRadius:6, borderColor:'gray'}}>
-              <SelectDropdown
-              data={countries}
-              onSelect={(selectedItem, index) => {
-                console.log(selectedItem, index);
-                setCategory(selectedItem)
-              }}
-              
-              buttonTextAfterSelection={(selectedItem, index) => {
-                // text represented after item is selected
-                // if data array is an array of objects then return selectedItem.property to render after item is selected
-                return selectedItem
-              }}
-              rowTextForSelection={(item, index) => {
-                // text represented for each item in dropdown
-                // if data array is an array of objects then return item.property to represent item in dropdown
-                return item
-              }}
+          <View style={{ display: 'flex', width: '100%', }}>
+            <Text style={{ marginBottom: 10 }}>Select Category</Text>
+           
+            <SelectList
+              setSelected={(val) => setCategory(val)}
+              data={data}
+              save="value"
             />
-            </View> */}
-            <SelectList 
-        setSelected={(val) => setSelected(val)} 
-        data={data} 
-        save="value"
-    />
           </View>
 
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", gap: 4 }}>
@@ -116,6 +124,12 @@ const CreatePost = () => {
             </View>
 
           </View>
+
+          {loading ? <ActivityIndicator/> : <TouchableOpacity onPress={handlePosts} style={{ display: 'flex', alignItems: 'flex-end', paddingTop: 10, paddingBottom: 10 }}>
+            <Button color='white' style={{ width: 100, padding: 5 }} icon={() => (<Icon name='pluscircleo' size={23} color='white' />)} mode="contained">
+              Add
+            </Button>
+          </TouchableOpacity>}
 
         </View>
         <View style={{ paddingTop: 70 }}></View>

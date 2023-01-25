@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button, Image, View, Text, Alert } from 'react-native';
 import auth from '@react-native-firebase/auth'
+import { Avatar } from 'react-native-paper';
+
 import {
   DrawerContentScrollView,
   DrawerItem,
@@ -27,12 +29,12 @@ const MyDrawer = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView  {...props}>
-        <View style={{ marginBottom: 20,  paddingTop: 50, marginLeft:20 }}>
-         
-          <Text style={{ fontSize: 31, color: 'black', fontWeight: 'bold', }}>Expert on Time </Text>
+        <View style={{ marginBottom: 20, paddingTop: 40,  display:'flex', alignItems:"center" }}>
+          <Image resizeMode='center' style={{height:60,}}   source={require('../images/Logo1.jpeg')} size={100} />
+
+          {/* <Text style={{ fontSize: 31, color: 'black', fontWeight: 'bold',}}>Expert on Time </Text> */}
         </View>
         <View style={{ flexDirection: 'row', alignItems: "center", padding: 15, }}>
-          {/* <Avatar.Image source={{  }} size={50} /> */}
           <View style={{ flexDirection: 'column' }}>
             <Text style={{ marginLeft: 15, fontSize: 15, color: 'black', fontWeight: 'bold' }}> Admin Pannel </Text>
             <Text style={{ marginLeft: 15, fontWeight: 'bold', color: 'gray' }}> {auth().currentUser.email} </Text>
