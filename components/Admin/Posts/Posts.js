@@ -8,7 +8,7 @@ const Posts = () => {
     const [list, setList] = useState([])
     const [loading, setLoading] = useState(false);
     const [deleted, setDeleted] = useState(false)
-
+    const [count, setCount] = useState(0)
     useEffect(() => {
         getPosts();
     }, [deleted])
@@ -35,7 +35,7 @@ const Posts = () => {
                         brief: brief,
                         category: category
                     })
-
+                    setCount(count + 1);
                 })
                 setList(Data)
                 setLoading(false)
@@ -60,29 +60,30 @@ const Posts = () => {
     }
     return (
         <View style={{ padding: 20 }}>
-            <View style={styles.box}>
-                <View style={{ display: 'flex' }}>
-                    <Text style={{ fontSize: 18, color: "white", fontWeight: 'bold' }}>Total Posts</Text>
-                    <Text style={{ fontSize: 35, padding: 8, color: 'white', fontWeight: 'bold' }}>21</Text>
-                </View>
-
-                <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 20, padding: 10, paddingLeft: 20, paddingRight: 20, }}>
-                    <Icon name='post-outline' size={40} color={'black'} />
-                    {/* <Text style={{ fontSize: 16, borderBottomWidth: 1, borderBottomColor: 'lightgray' }}>View More</Text> */}
-                </View>
-
-            </View>
-
-            <View style={{ marginBottom: 15 }}>
-                <Text style={styles.primaryHeading}>Posts Details</Text>
-            </View>
             <ScrollView>
+                <View style={{ marginBottom: 15 }}>
+                    <Text style={styles.primaryHeading}>Posts Details</Text>
+                </View>
+                <View style={styles.box}>
+                    <View style={{ display: 'flex' }}>
+                        <Text style={{ fontSize: 20, color: "white", fontWeight: 'bold' }}>Total Posts</Text>
+                        <Text style={{ fontSize: 35, padding: 8, color: 'white', fontWeight: 'bold' }}>{count}</Text>
+                    </View>
+
+                    <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 20, padding: 10, paddingLeft: 20, paddingRight: 20, }}>
+                        <Icon name='post-outline' size={40} color={'black'} />
+                        {/* <Text style={{ fontSize: 16, borderBottomWidth: 1, borderBottomColor: 'lightgray' }}>View More</Text> */}
+                    </View>
+
+                </View>
+
+
                 {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
                     return <PostDetailBox deletePost={deletePost} element={element} index={index} />
                 }) :
-                    <View style={{display:"flex", alignItems:"center",  marginTop: 30, }}>
+                    <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>
                         <Icon name='folder-text-outline' size={35} color='black' />
-                        <Text style={{textAlign: "center", fontWeight: "bold" }}>No Posts Added</Text>
+                        <Text style={{ textAlign: "center", fontWeight: "bold" }}>No Posts Added</Text>
                     </View>)}
                 <View style={{ paddingTop: 150 }}></View>
 
@@ -106,7 +107,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 20,
+        padding: 60,
+        paddingLeft: 30,
         paddingRight: 15,
         borderRadius: 15,
         color: 'white',
