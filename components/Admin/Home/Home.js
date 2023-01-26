@@ -4,14 +4,14 @@ import HomeBox from './HomeBox'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import RecentOrders from './RecentOrders'
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <ScrollView>
-      <View style={{ backgroundColor: 'white', paddingLeft: 20, paddingRight: 20, borderTopWidth:1, borderColor:'lightgray' }}>
+      <View style={{ backgroundColor: 'white', paddingLeft: 20, paddingRight: 20, borderTopWidth: 1, borderColor: 'lightgray' }}>
 
         <View style={{ disple: 'flex', gap: 10, marginTop: 30 }}>
-          <HomeBox Icon={Icon} bgcolor='#4e75ec' iconname='post-outline' heading="Total Active Orders" />
-          <HomeBox Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Total Handymans" />
+          <HomeBox navigation={navigation} id="orders" Icon={Icon} bgcolor='#4e75ec' iconname='post-outline' heading="Total Active Orders" />
+          <HomeBox navigation={navigation} id="handyman" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Total Handymans" />
         </View>
 
         <View style={{ marginTop: 20 }}>

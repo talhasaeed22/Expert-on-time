@@ -9,6 +9,7 @@ import MyDrawer from './MyDrawer';
 import Jobs from './Admin/Home/Jobs';
 import Home from './Admin/Home/Home';
 import PostHome from './Admin/Posts/PostHome';
+import HomeHandyman from './Admin/Handymans/HomeHandyman';
 
 const AdminHome = () => {
  
@@ -39,7 +40,7 @@ const AdminHome = () => {
             headerTintColor: 'white',
             headerTitleAlign: 'center',
             headerStyle: {
-              backgroundColor: 'black' ,
+              backgroundColor: '#6b6b6b' ,
             },
 
           }} />
@@ -48,11 +49,13 @@ const AdminHome = () => {
             headerShown: true,
             headerTransparent: true,
           }} />
-          <Drawer.Screen name="Handymans" component={Jobs} options={{
-            title: '',
-            headerShown: true,
-            headerTransparent: true,
+          <Drawer.Screen name="Handymans" component={HomeHandyman} options={{
+            title: 'Handymans',
             headerTintColor: 'white',
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#6b6b6b' ,
+            },
           }} />
           <Drawer.Screen name="Settings" component={Jobs} options={{
             title: '',

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Button, Image, View, Text, Alert } from 'react-native';
 import auth from '@react-native-firebase/auth'
 import { Avatar } from 'react-native-paper';
+import { StackActions } from '@react-navigation/native';
 
 import {
   DrawerContentScrollView,
@@ -18,7 +19,10 @@ const MyDrawer = (props) => {
   const handleLogout = () => {
     auth().signOut().then(() => {
       console.log('signed out');
-      props.navigation.navigate('Login')
+      props.navigation.navigate('Login');
+    //   navigation.dispatch(
+    //     StackActions.replace('Login')
+    // );
     }).catch((err) => {
       console.log(err)
     })
@@ -37,7 +41,7 @@ const MyDrawer = (props) => {
         <View style={{ flexDirection: 'row', alignItems: "center", padding: 15, }}>
           <View style={{ flexDirection: 'column' }}>
             <Text style={{ marginLeft: 15, fontSize: 15, color: 'black', fontWeight: 'bold' }}> Admin Pannel </Text>
-            <Text style={{ marginLeft: 15, fontWeight: 'bold', color: 'gray' }}> {auth().currentUser.email} </Text>
+            <Text style={{ marginLeft: 15, fontWeight: 'bold', color: 'gray' }}> {auth().currentUser && auth().currentUser.email} </Text>
           </View>
         </View>
         <View style={{ marginTop: 15, flexDirection: 'column', marginLeft: 10 }}>
@@ -58,7 +62,7 @@ const MyDrawer = (props) => {
             label={() => (<Text style={{ color: screen === 3 ? ('white') : 'black', fontSize: 15 }}>Jobs</Text>)}
 
           />
-          <DrawerItem onPress={() => { props.navigation.navigate('Home'); setScreen(4) }} style={screen === 4 ? { backgroundColor: '#181c3f' } : {}}
+          <DrawerItem onPress={() => { props.navigation.navigate('Handymans'); setScreen(4) }} style={screen === 4 ? { backgroundColor: '#181c3f' } : {}}
             icon={({ color, size }) => (<Icon name="face-man-outline" size={21} color={screen === 4 ? ('white') : 'black'} />)}
             label={() => (<Text style={{ color: screen === 4 ? ('white') : 'black', fontSize: 15 }}>Handyman</Text>)}
 

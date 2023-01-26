@@ -1,13 +1,17 @@
-import { View, Text, ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, ActivityIndicator, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
-import Icon from 'react-native-vector-icons/EvilIcons'
+import PostDetailBox from './PostDetailBox'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
 const Posts = () => {
     const [list, setList] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [deleted, setDeleted] = useState(false)
+
     useEffect(() => {
         getPosts();
-    }, [])
+    }, [deleted])
 
     const getPosts = () => {
         const Data = [];
@@ -20,6 +24,7 @@ const Posts = () => {
                     const { name, email, address, phone, postalCode, budget, price, brief, category } = doc.data();
 
                     Data.push({
+                        id: doc.id,
                         name: name,
                         email: email,
                         address: address,
@@ -40,70 +45,47 @@ const Posts = () => {
 
             })
     }
+    const deletePost = (key) => {
+
+        firestore()
+            .collection('posts')
+            .doc(key)
+            .delete()
+            .then(() => {
+                Alert.alert('Post Deleted Successfully')
+                // setList(null)
+                setDeleted(!deleted)
+            })
+
+    }
     return (
         <View style={{ padding: 20 }}>
-            <View style={{ marginBottom: 20 }}>
+            <View style={styles.box}>
+                <View style={{ display: 'flex' }}>
+                    <Text style={{ fontSize: 18, color: "white", fontWeight: 'bold' }}>Total Posts</Text>
+                    <Text style={{ fontSize: 35, padding: 8, color: 'white', fontWeight: 'bold' }}>21</Text>
+                </View>
+
+                <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 20, padding: 10, paddingLeft: 20, paddingRight: 20, }}>
+                    <Icon name='post-outline' size={40} color={'black'} />
+                    {/* <Text style={{ fontSize: 16, borderBottomWidth: 1, borderBottomColor: 'lightgray' }}>View More</Text> */}
+                </View>
+
+            </View>
+
+            <View style={{ marginBottom: 15 }}>
                 <Text style={styles.primaryHeading}>Posts Details</Text>
             </View>
             <ScrollView>
-                {loading ? <ActivityIndicator /> : list.map((element, index) => {
-                    return <View style={{ marginTop: 10, display: "flex", gap: 10 }} key={index}>
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
+                    return <PostDetailBox deletePost={deletePost} element={element} index={index} />
+                }) :
+                    <View style={{display:"flex", alignItems:"center",  marginTop: 30, }}>
+                        <Icon name='folder-text-outline' size={35} color='black' />
+                        <Text style={{textAlign: "center", fontWeight: "bold" }}>No Posts Added</Text>
+                    </View>)}
+                <View style={{ paddingTop: 150 }}></View>
 
-                            <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                                <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Client Name</Text>
-                                <Text style={{ fontSize: 18 }}>{element.name}</Text>
-                            </View>
-                            <View style={{paddingTop:4}}>
-                                <Text style={{fontSize:24, fontWeight:'bold'}}>{index + 1}</Text>
-                            </View>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Client Email</Text>
-
-                            <Text style={{ fontSize: 18 }}>{element.email}</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Client Address</Text>
-
-                            <Text style={{ fontSize: 18 }}>{element.address}</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Client Ph one Number</Text>
-
-                            <Text style={{ fontSize: 18 }}>{element.phone}</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Postal Code</Text>
-
-                            <Text style={{ fontSize: 18 }}>{element.postalCode}</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Budget</Text>
-
-                            <Text style={{ fontSize: 18 }}>{element.budget}</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Price</Text>
-
-                            <Text style={{ fontSize: 18 }}>{element.price}</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Breif</Text>
-
-                            <Text style={{ fontSize: 18 }}>{element.brief}</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                                <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>{element.category}</Text>
-                                <Text style={{ fontSize: 18, }}>Category</Text>
-                            </View>
-                            <View style={{ paddingTop: 8 }}>
-                                <Icon name="trash" color='red' size={32} />
-                            </View>
-                        </View>
-                    </View>
-                })}
             </ScrollView>
         </View>
     )
@@ -117,6 +99,18 @@ const styles = StyleSheet.create({
         color: 'black',
         textDecorationLine: 'underline',
 
+    },
+    box: {
+        // #f8c42a
+        backgroundColor: '#4e75ec',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 20,
+        paddingRight: 15,
+        borderRadius: 15,
+        color: 'white',
+        marginBottom: 20
     },
 
 })

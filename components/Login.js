@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         gap: 35,
         // justifyContent: 'center',
-        backgroundColor: 'black',
+        backgroundColor: '#6b6b6b',
         padding: 40,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,

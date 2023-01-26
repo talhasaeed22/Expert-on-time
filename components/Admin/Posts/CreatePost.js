@@ -57,7 +57,7 @@ const [loading, setLoading] = useState(false)
     <>
       <ScrollView>
         <View style={{ marginTop: 20, padding: 10 }}>
-          <Text style={styles.primaryHeading}>CreatePost</Text>
+          <Text style={styles.primaryHeading}>Create Post</Text>
         </View>
         <View style={styles.form}>
 

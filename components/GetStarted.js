@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     },
     lowerContainer: {
         padding: 40,
-        backgroundColor: 'black',
+        backgroundColor: '#6b6b6b',
         display: 'flex',
         color: "white",
         gap: 30,
