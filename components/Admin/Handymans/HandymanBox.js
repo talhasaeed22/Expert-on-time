@@ -3,7 +3,7 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/EvilIcons'
 import Material from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-const HandymanBox = ({ element, index }) => {
+const HandymanBox = ({ element, index, deleteHandman }) => {
     return (
         <View style={{ padding: 20 }} key={index}>
             <View style={styles.box}>
@@ -47,8 +47,8 @@ const HandymanBox = ({ element, index }) => {
 
                 <View style={{display:'flex', alignItems:'flex-end', }}>
                     <View style={{ paddingTop: 8, display:'flex', flexDirection:'row', gap:20, alignItems:'center' }}>
-                        <FontAwesome name="edit" color='black' size={22} />
-                        <Icon name="trash" color='red' size={32} />
+                        {/* <FontAwesome name="edit" color='black' size={22} /> */}
+                        <Icon onPress={()=>{deleteHandman(element.id)}} name="trash" color='red' size={32} />
                     </View>
                 </View>
 

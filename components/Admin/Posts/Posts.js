@@ -3,18 +3,24 @@ import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import PostDetailBox from './PostDetailBox'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { useIsFocused } from "@react-navigation/native";
 
 const Posts = () => {
+    const isFocused = useIsFocused();
+
     const [list, setList] = useState([])
     const [loading, setLoading] = useState(false);
     const [deleted, setDeleted] = useState(false)
     const [count, setCount] = useState(0)
     useEffect(() => {
         getPosts();
-    }, [deleted])
+    }, [deleted, isFocused])
 
     const getPosts = () => {
         const Data = [];
+        setCount(0);
+        let counted = 0;
+
         setLoading(true)
         firestore()
             .collection('posts')
@@ -35,8 +41,10 @@ const Posts = () => {
                         brief: brief,
                         category: category
                     })
-                    setCount(count + 1);
+                    counted++;
+
                 })
+                setCount(counted);
                 setList(Data)
                 setLoading(false)
             }).catch((err) => {
@@ -79,7 +87,7 @@ const Posts = () => {
 
 
                 {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
-                    return <PostDetailBox deletePost={deletePost} element={element} index={index} />
+                    return <PostDetailBox key={index} deletePost={deletePost} element={element} index={index} />
                 }) :
                     <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>
                         <Icon name='folder-text-outline' size={35} color='black' />
