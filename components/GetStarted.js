@@ -11,6 +11,10 @@ const GetStarted = ({ navigation }) => {
                 navigation.dispatch(
                     StackActions.replace('AdminHome')
                 );
+            }else{
+                navigation.dispatch(
+                    StackActions.replace('HandymanHome')
+                );
             }
         } else {
             navigation.navigate('Login')

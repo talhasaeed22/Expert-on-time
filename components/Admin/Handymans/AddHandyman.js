@@ -4,6 +4,7 @@ import { Avatar, TextInput, Button } from 'react-native-paper';
 import { SelectList } from 'react-native-dropdown-select-list'
 import Icon from 'react-native-vector-icons/AntDesign'
 import firestore from '@react-native-firebase/firestore'
+import auth from '@react-native-firebase/auth'
 
 const AddHandyman = ({navigation}) => {
   const data = [
@@ -34,6 +35,7 @@ const AddHandyman = ({navigation}) => {
         category: category
       })
       .then(() => {
+       
         setLoading(false)
         console.log('Handyman Added')
         navigation.navigate('ViewHandymans')

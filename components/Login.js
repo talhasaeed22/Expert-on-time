@@ -24,9 +24,15 @@ const Login = ({ navigation }) => {
                 .signInWithEmailAndPassword(email, password)
                 .then((userCred) => {
                     setLoading(false)
+                   if(email === 'Admin@firebase.com'){
                     navigation.dispatch(
                         StackActions.replace('AdminHome')
                     );
+                   }else{
+                    navigation.dispatch(
+                        StackActions.replace('HandymanHome')
+                    );
+                   }
                 })
                 .catch((error) => {
                     setLoading(false)

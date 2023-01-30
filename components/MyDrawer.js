@@ -57,9 +57,9 @@ const MyDrawer = (props) => {
 
           />
 
-          <DrawerItem onPress={() => { props.navigation.navigate('Home'); setScreen(3) }} style={screen === 3 ? { backgroundColor: '#181c3f' } : {}}
-            icon={({ color, size }) => (<IonIcon name="restaurant-outline" size={21} color={screen === 3 ? ('white') : 'black'} />)}
-            label={() => (<Text style={{ color: screen === 3 ? ('white') : 'black', fontSize: 15 }}>Jobs</Text>)}
+          <DrawerItem onPress={() => { props.navigation.navigate('ActiveOrders'); setScreen(3) }} style={screen === 3 ? { backgroundColor: '#181c3f' } : {}}
+            icon={({ color, size }) => (<Icon name="hammer-wrench" size={21} color={screen === 3 ? ('white') : 'black'} />)}
+            label={() => (<Text style={{ color: screen === 3 ? ('white') : 'black', fontSize: 15 }}>Orders</Text>)}
 
           />
           <DrawerItem onPress={() => { props.navigation.navigate('Handymans'); setScreen(4) }} style={screen === 4 ? { backgroundColor: '#181c3f' } : {}}

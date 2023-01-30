@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Login from './components/Login';
 import AdminHome from './components/AdminHome';
 import GetStarted from './components/GetStarted';
+import HandymanHome from './components/HandymanHome';
 
 
 
@@ -22,6 +23,9 @@ function App() {
         <Stack.Screen options={{
                 title: '', headerShown:false
             }} name="AdminHome" component={AdminHome} />
+            <Stack.Screen options={{
+                title: '', headerShown:false
+            }} name="HandymanHome" component={HandymanHome} />
 
       </Stack.Navigator>
     </NavigationContainer>

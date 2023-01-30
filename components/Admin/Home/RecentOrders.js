@@ -44,10 +44,10 @@ const RecentOrders = () => {
                 <Text style={styles.primaryHeading}>Order Date</Text>
                 <Text style={{fontSize:16}}>21 Jan 2023</Text>
             </View>
-            <View style={{ display: 'flex', alignItems:'center', backgroundColor:'#39be5f', padding:15, borderRadius:20 }}>
+            <TouchableOpacity style={{ display: 'flex', alignItems:'center', backgroundColor:'#39be5f', padding:15, borderRadius:20 }}>
                 <Fontsinto name='prescription' size={31} color={'white'} />
                 <Text style={{fontSize:14, borderBottomWidth:1, borderBottomColor:'white', color:'white'}}>View Detail</Text>
-            </View>
+            </TouchableOpacity>
 
         </View>
     )

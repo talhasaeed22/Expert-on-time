@@ -5,7 +5,6 @@ import HandymanBox from './HandymanBox'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useIsFocused } from "@react-navigation/native";
 
-
 const ViewHandyman = () => {
   const isFocused = useIsFocused();
 

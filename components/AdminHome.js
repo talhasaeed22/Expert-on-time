@@ -10,6 +10,7 @@ import Jobs from './Admin/Home/Jobs';
 import Home from './Admin/Home/Home';
 import PostHome from './Admin/Posts/PostHome';
 import HomeHandyman from './Admin/Handymans/HomeHandyman';
+import ActiveOrders from './Admin/Orders/ActiveOrders';
 
 const AdminHome = () => {
  
@@ -44,10 +45,14 @@ const AdminHome = () => {
             },
 
           }} />
-          <Drawer.Screen name="Jobs" component={Jobs} options={{
-            title: '',
+          <Drawer.Screen name="ActiveOrders" component={ActiveOrders} options={{
+            title: 'Active Orders',
             headerShown: true,
-            headerTransparent: true,
+            headerTintColor: 'white',
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#6b6b6b' ,
+            },
           }} />
           <Drawer.Screen name="Handymans" component={HomeHandyman} options={{
             title: 'Handymans',
