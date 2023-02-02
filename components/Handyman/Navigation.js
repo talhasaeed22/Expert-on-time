@@ -6,14 +6,16 @@ import Material from 'react-native-vector-icons/MaterialIcons'
 import Antdesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
-const Navigation = ({ navigation }) => {
+const Navigation = ({navigation, changeFocus }) => {
 
     return (
         <>
             <View style={styles.container}>
                 <View style={{ paddingVertical: 15, display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <TouchableOpacity onPress={()=>{navigation.goBack()}}>
                     <Material name='keyboard-arrow-left' size={33} color='black' />
-                    <TouchableOpacity onPress={{}}>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>[changeFocus()]}>
                         <IconButton
                             icon={() => (<FontAwesome name='refresh' size={20} color='white' />)}
                             iconColor={'white'}

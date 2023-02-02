@@ -7,6 +7,7 @@ import auth from "@react-native-firebase/auth"
 const Stack = createStackNavigator();
 import Antdesign from 'react-native-vector-icons/AntDesign'
 import { StackActions } from '@react-navigation/native';
+import NewJob from './Handyman/Jobs/NewJob';
 
 
 const HandymanHome = ({ navigation }) => {
@@ -23,7 +24,7 @@ const HandymanHome = ({ navigation }) => {
       <Stack.Screen name="Home" component={Dashboard} options={{
         title: "Dashboard",
         // headerTitleAlign: "center",
-
+        headerLeft: ()=> null,
         headerRight: () => (
           <TouchableOpacity onPress={HandleLogout} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5, paddingRight: 10 }}>
             {/* <Text style={{ fontSize: 16, fontWeight: "bold" }}>Logout</Text> */}
@@ -42,6 +43,40 @@ const HandymanHome = ({ navigation }) => {
 
           backgroundColor: "#e7edf7",
           height: 70,
+        },
+        headerTitleStyle:{
+          fontSize:25,
+          fontWeight:"bold"
+        },
+      }} />
+
+      <Stack.Screen name="NewJobs" component={NewJob} options={{
+        title: "Jobs",
+        // headerTitleAlign: "center",
+        headerLeft: ()=> null,
+        headerRight: () => (
+          <TouchableOpacity onPress={HandleLogout} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5, paddingRight: 10 }}>
+            {/* <Text style={{ fontSize: 16, fontWeight: "bold" }}>Logout</Text> */}
+            <Button
+              icon={() => (<Antdesign name='logout' size={20} color='white' />)}
+              color='white'
+              buttonColor='#5e48db'
+              textColor='white'
+              style={{ backgroundColor: "#5e48db" }}
+
+            >Logout</Button>
+            {/*  */}
+          </TouchableOpacity>
+        ),
+        headerTitleStyle:{
+          fontSize:25,
+          fontWeight:"bold"
+        },
+        headerStyle: {
+
+          backgroundColor: "#e7edf7",
+          height: 70,
+          
         }
       }} />
 

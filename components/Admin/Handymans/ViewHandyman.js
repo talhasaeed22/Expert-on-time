@@ -74,7 +74,7 @@ const ViewHandyman = () => {
               <Text style={{ fontSize: 35, padding: 8, color: 'white', fontWeight: 'bold' }}>{count}</Text>
             </View>
 
-            <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 20, padding: 10, paddingLeft: 20, paddingRight: 20, }}>
+            <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 10, padding: 10, paddingLeft: 20, paddingRight: 20, }}>
               <Icon name='face-man-outline' size={40} color={'black'} />
               {/* <Text style={{ fontSize: 16, borderBottomWidth: 1, borderBottomColor: 'lightgray' }}>View More</Text> */}
             </View>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     padding: 60,
     paddingLeft: 30,
     paddingRight: 15,
-    borderRadius: 15,
+    borderRadius: 7,
     color: 'white',
     // marginBottom: 20
   },

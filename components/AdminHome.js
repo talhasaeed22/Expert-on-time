@@ -1,8 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
-import auth from '@react-native-firebase/auth'
-import { Avatar, TextInput, Button } from 'react-native-paper';
-import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import MyDrawer from './MyDrawer';

@@ -54,9 +54,9 @@ const PostDetailBox = ({ element, index, deletePost }) => {
             </View>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>{element.category}</Text>
+                    <Text style={{ fontSize: 17, }}>Category</Text>
 
-                    <Text style={{ fontSize: 15, }}>Category</Text>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'black' }}>{element.category}</Text>
                 </View>
                 <View style={{ paddingTop: 8 }}>
                     <TouchableOpacity onPress={()=>{deletePost(element.id)}}>

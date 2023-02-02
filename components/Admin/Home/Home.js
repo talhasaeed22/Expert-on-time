@@ -1,17 +1,43 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import HomeBox from './HomeBox'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import RecentOrders from './RecentOrders'
+import firestore from '@react-native-firebase/firestore'
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, }) => {
+  useEffect(() => {
+    getHandymans();
+}, [])
+const [count, setCount] = useState(0)
+const [loading, setLoading] = useState(false)
+const getHandymans = () => {
+    setLoading(true);
+    setCount(0);
+    let counted = 0;
+    firestore()
+        .collection('handymans')
+        .get()
+        .then((queryData) => {
+            queryData.forEach((doc) => {
+
+                counted++;
+            })
+            setCount(counted);
+            setLoading(false)
+        }).catch((err) => {
+            console.log(err)
+            setLoading(false)
+
+        })
+}
   return (
     <ScrollView>
       <View style={{ backgroundColor: 'white', paddingLeft: 20, paddingRight: 20, borderTopWidth: 1, borderColor: 'lightgray' }}>
 
         <View style={{ disple: 'flex', gap: 10, marginTop: 30 }}>
-          <HomeBox navigation={navigation} id="orders" Icon={Icon} bgcolor='#4e75ec' iconname='post-outline' heading="Total Active Orders" />
-          <HomeBox navigation={navigation} id="handyman" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Total Handymans" />
+          <HomeBox navigation={navigation} id="orders" Icon={Icon} bgcolor='#4e75ec' iconname='post-outline' heading="Total Active Orders" loading={loading} count={count} />
+          <HomeBox navigation={navigation} id="handyman" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Total Handymans" loading={loading} count={count} />
         </View>
 
         <View style={{ marginTop: 20 }}>

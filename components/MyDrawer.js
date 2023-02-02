@@ -7,6 +7,7 @@ import { StackActions } from '@react-navigation/native';
 import {
   DrawerContentScrollView,
   DrawerItem,
+
 } from '@react-navigation/drawer';
 // import { Drawer, Avatar, Switch } from 'react-native-paper';
 
@@ -15,26 +16,28 @@ import Material from 'react-native-vector-icons/MaterialIcons'
 import FAwesome from 'react-native-vector-icons/FontAwesome'
 import IonIcon from 'react-native-vector-icons/Ionicons'
 const MyDrawer = (props) => {
-
+  
+  const { state } = props
+  const { routes, index } = state; //Not sure about the name of index property. Do check it out by logging the 'state' variable.
+  const focusedRoute = routes[index].name;
+  
   const handleLogout = () => {
     auth().signOut().then(() => {
       console.log('signed out');
       props.navigation.navigate('Login');
-    //   navigation.dispatch(
-    //     StackActions.replace('Login')
-    // );
+      //   navigation.dispatch(
+      //     StackActions.replace('Login')
+      // );
     }).catch((err) => {
       console.log(err)
     })
   }
 
-  const [screen, setScreen] = useState(1);
-
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView  {...props}>
-        <View style={{ marginBottom: 20, paddingTop: 40,  display:'flex', alignItems:"center" }}>
-          <Image resizeMode='center' style={{height:60,}}   source={require('../images/Logo1.jpeg')} size={100} />
+        <View style={{ marginBottom: 20, paddingTop: 40, display: 'flex', alignItems: "center" }}>
+          <Image resizeMode='center' style={{ height: 60, }} source={require('../images/Logo1.jpeg')} size={100} />
 
           {/* <Text style={{ fontSize: 31, color: 'black', fontWeight: 'bold',}}>Expert on Time </Text> */}
         </View>
@@ -46,30 +49,30 @@ const MyDrawer = (props) => {
         </View>
         <View style={{ marginTop: 15, flexDirection: 'column', marginLeft: 10 }}>
 
-          <DrawerItem onPress={() => { props.navigation.navigate('Home'); setScreen(1) }} style={screen === 1 ? { backgroundColor: '#181c3f' } : {}}
-            icon={({ color, size }) => (<Icon name="home-outline" size={21} color={screen === 1 ? ('white') : 'black'} />)}
-            label={() => (<Text style={{ color: screen === 1 ? ('white') : 'black', fontSize: 15 }}>Home</Text>)}
+          <DrawerItem onPress={() => { props.navigation.navigate('Home'); }} style={focusedRoute==='Home' ? { backgroundColor: '#181c3f' } : {}}
+            icon={({ color, size }) => (<Icon name="home-outline" size={21} color={focusedRoute==='Home' ? ('white') : 'black'} />)}
+            label={() => (<Text style={{ color: focusedRoute==='Home' ? ('white') : 'black', fontSize: 15 }}>Home</Text>)}
 
           />
-          <DrawerItem onPress={() => { props.navigation.navigate('Posts'); setScreen(2) }} style={screen === 2 ? { backgroundColor: '#181c3f' } : {}}
-            icon={({ color, size }) => (<Icon name="post-outline" size={21} color={screen === 2 ? ('white') : 'black'} />)}
-            label={() => (<Text style={{ color: screen === 2 ? ('white') : 'black', fontSize: 15 }}>Posts</Text>)}
+          <DrawerItem onPress={() => { props.navigation.navigate('Posts');  }} style={focusedRoute==='Posts' ? { backgroundColor: '#181c3f' } : {}}
+            icon={({ color, size }) => (<Icon name="post-outline" size={21} color={focusedRoute==='Posts' ? ('white') : 'black'} />)}
+            label={() => (<Text style={{ color: focusedRoute==='Posts' ? ('white') : 'black', fontSize: 15 }}>Posts</Text>)}
 
           />
 
-          <DrawerItem onPress={() => { props.navigation.navigate('ActiveOrders'); setScreen(3) }} style={screen === 3 ? { backgroundColor: '#181c3f' } : {}}
-            icon={({ color, size }) => (<Icon name="hammer-wrench" size={21} color={screen === 3 ? ('white') : 'black'} />)}
-            label={() => (<Text style={{ color: screen === 3 ? ('white') : 'black', fontSize: 15 }}>Orders</Text>)}
+          <DrawerItem onPress={() => { props.navigation.navigate('ActiveOrders'); }} style={focusedRoute==='ActiveOrders'? { backgroundColor: '#181c3f' } : {}}
+            icon={({ color, size }) => (<Icon name="hammer-wrench" size={21} color={focusedRoute==='ActiveOrders' ? ('white') : 'black'} />)}
+            label={() => (<Text style={{ color: focusedRoute==='ActiveOrders' ? ('white') : 'black', fontSize: 15 }}>Orders</Text>)}
 
           />
-          <DrawerItem onPress={() => { props.navigation.navigate('Handymans'); setScreen(4) }} style={screen === 4 ? { backgroundColor: '#181c3f' } : {}}
-            icon={({ color, size }) => (<Icon name="face-man-outline" size={21} color={screen === 4 ? ('white') : 'black'} />)}
-            label={() => (<Text style={{ color: screen === 4 ? ('white') : 'black', fontSize: 15 }}>Handyman</Text>)}
+          <DrawerItem onPress={() => { props.navigation.navigate('Handymans'); }} style={focusedRoute==='Handymans' ? { backgroundColor: '#181c3f' } : {}}
+            icon={({ color, size }) => (<Icon name="face-man-outline" size={21} color={focusedRoute==='Handymans' ? ('white') : 'black'} />)}
+            label={() => (<Text style={{ color: focusedRoute==='Handymans' ? ('white') : 'black', fontSize: 15 }}>Handyman</Text>)}
 
           />
-          <DrawerItem onPress={() => { props.navigation.navigate('Home'); setScreen(5) }} style={screen === 5 ? { backgroundColor: '#181c3f' } : {}}
-            icon={({ color, size }) => (<Material name="settings" size={21} color={screen === 5 ? ('white') : 'black'} />)}
-            label={() => (<Text style={{ color: screen === 5 ? ('white') : 'black', fontSize: 15 }}>Settings</Text>)}
+          <DrawerItem onPress={() => { props.navigation.navigate('Home'); }} style={focusedRoute==='Setting' ? { backgroundColor: '#181c3f' } : {}}
+            icon={({ color, size }) => (<Material name="settings" size={21} color={focusedRoute==='Setting' ? ('white') : 'black'} />)}
+            label={() => (<Text style={{ color: focusedRoute==='Setting' ? ('white') : 'black', fontSize: 15 }}>Settings</Text>)}
 
           />
 

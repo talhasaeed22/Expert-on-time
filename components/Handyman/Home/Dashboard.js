@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Pressable, Alert } from 'react-native'
 import React from 'react'
 import Navigation from '../Navigation'
 import HomeBox from './HomeBox'
@@ -6,11 +6,11 @@ import FeatureBox from './FeatureBox'
 import MaterialComm from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
-const Dashboard = () => {
+const Dashboard = ({navigation}) => {
   return (
     <ScrollView>
     <View style={{ backgroundColor: '#e7edf7' }}>
-      <Navigation />
+      <Navigation navigation={navigation} />
       <View style={{ paddingVertical: 20, backgroundColor: "#5e48db", borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
         <View style={{ display: "flex", paddingHorizontal: 15, flexDirection: 'row', justifyContent: "space-around", paddingBottom: 15 }}>
           <HomeBox number={23} para1="Completed" para2={'Jobs'} />
@@ -23,20 +23,20 @@ const Dashboard = () => {
       <View style={{ backgroundColor: '#5e48db', }}>
           <View style={{ backgroundColor: "white", display: "flex", gap: 20, borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20 }}>
             <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
-              <View>
+              <TouchableOpacity onPress={()=>{navigation.navigate('NewJobs')}}>
                 <FeatureBox name='Jobs' Icon={MaterialComm} iconname='hammer-wrench' />
-              </View>
-              <View>
+              </TouchableOpacity>
+              <TouchableOpacity  onPress={()=>{Alert.alert("Functionality Comming Soon")}}>
                 <FeatureBox name='Profile' Icon={FontAwesome} iconname='user-circle' />
-              </View>
+              </TouchableOpacity>
             </View>
             <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
-              <View>
+              <TouchableOpacity  onPress={()=>{Alert.alert("Functionality Comming Soon")}}>
                 <FeatureBox name='Recent' Icon={MaterialComm} iconname='post-outline' />
-              </View>
-              <View>
+              </TouchableOpacity>
+              <TouchableOpacity  onPress={()=>{Alert.alert("Functionality Comming Soon")}}>
                 <FeatureBox name='Jobs' Icon={MaterialComm} iconname='hammer-wrench' />
-              </View>
+              </TouchableOpacity>
             </View>
             
           </View>

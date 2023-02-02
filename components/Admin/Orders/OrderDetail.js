@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
         padding: 15,
         paddingRight: 11,
         gap: 15,
-        borderRadius: 20
+        borderRadius: 15
 
 
     },
