@@ -8,7 +8,7 @@ const OrderDetail = ({navigation}) => {
     return (
         <ScrollView >
             <View style={{ padding: 20, paddingBottom: 5 }}>
-                <Text style={{ fontSize: 22, fontWeight: 'bold', color: "black" }}>Order Detail</Text>
+                <Text style={{ fontSize: 22, fontWeight: 'bold', color: "black" }}>Job Detail</Text>
             </View>
             <View style={{ padding: 20 }}>
                 {/* <View style={styles.box}>
@@ -51,7 +51,7 @@ const OrderDetail = ({navigation}) => {
 
                     <View style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
                         <View style={{ display: 'flex' }}>
-                            <Text style={styles.bold}>Order ID</Text>
+                            <Text style={styles.bold}>Job ID</Text>
                             <Text>#324235a2asd34</Text>
                         </View>
                         <View>
@@ -131,7 +131,7 @@ const OrderDetail = ({navigation}) => {
 
                         </View>
                         <View style={{ paddingRight: 20 }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 17, color: "orangered" }}>Pending</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 17, color: "orangered" }}>Ongoing</Text>
 
                         </View>
                     </View>

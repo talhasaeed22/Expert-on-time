@@ -2,13 +2,14 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import HomeBox from './HomeBox'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import RecentOrders from './RecentOrders'
 import firestore from '@react-native-firebase/firestore'
+import { useIsFocused } from '@react-navigation/native'
 
 const Home = ({ navigation, }) => {
+  const isFocus = useIsFocused();
   useEffect(() => {
     getHandymans();
-}, [])
+}, [isFocus])
 const [count, setCount] = useState(0)
 const [loading, setLoading] = useState(false)
 const getHandymans = () => {
@@ -16,7 +17,7 @@ const getHandymans = () => {
     setCount(0);
     let counted = 0;
     firestore()
-        .collection('handymans')
+        .collection('posts')
         .get()
         .then((queryData) => {
             queryData.forEach((doc) => {
@@ -36,23 +37,13 @@ const getHandymans = () => {
       <View style={{ backgroundColor: 'white', paddingLeft: 20, paddingRight: 20, borderTopWidth: 1, borderColor: 'lightgray' }}>
 
         <View style={{ disple: 'flex', gap: 10, marginTop: 30 }}>
-          <HomeBox navigation={navigation} id="orders" Icon={Icon} bgcolor='#4e75ec' iconname='post-outline' heading="Total Active Orders" loading={loading} count={count} />
-          <HomeBox navigation={navigation} id="handyman" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Total Handymans" loading={loading} count={count} />
+          <HomeBox navigation={navigation} id="Posts" Icon={Icon} bgcolor='#4e75ec' iconname='post-outline' heading="Total Posts" loading={loading} count={count} />
+          <HomeBox navigation={navigation} id="Active Posts" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Active Posts" loading={loading} count={count} />
+          <HomeBox navigation={navigation} id="Pendings" Icon={Icon} bgcolor='#4e75ec' iconname='post-outline' heading="Waiting for Approval" loading={loading} count={count} />
+          <HomeBox navigation={navigation} id="Accepted" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Accepted Posts" loading={loading} count={count} />
         </View>
 
-        <View style={{ marginTop: 20 }}>
-          <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={styles.primary_Heading}>Recent Orders</Text>
-            <Text style={{ fontSize: 17, fontWeight: '800', borderBottomWidth: 1, borderBottomColor: 'lightgray' }}>View All</Text>
-          </View>
-          <View style={{ display: 'flex', gap: 30, marginTop: 20 }}>
-            <RecentOrders />
-            <RecentOrders />
-            <RecentOrders />
-            <RecentOrders />
-
-          </View>
-        </View>
+       
 
       </View>
     </ScrollView>
@@ -64,7 +55,9 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     // textAlign: 'center',
     paddingTop: 10,
-    color: 'black'
+    color: 'black',
+    borderBottomWidth:1,
+    borderBottomColor:'lightgray',
   },
 })
 

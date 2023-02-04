@@ -25,10 +25,12 @@ const HomeBox = ({ iconname, Icon, heading, bgcolor, id, navigation, loading, co
     })
 
     const handleOnPress = () => {
-        if (id === 'handyman') {
-            navigation.navigate('Handymans')
-        }else{
+        if(id === 'Active Posts'){
             navigation.navigate('ActiveOrders')
+        }else if(id === 'Pendings'){
+            navigation.navigate('PendingRequests')
+        }else if(id === 'Posts'){
+            navigation.navigate('Posts')
         }
     }
     return (

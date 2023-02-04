@@ -4,18 +4,19 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Fontsinto from 'react-native-vector-icons/Fontisto'
 import OrderDetail from './OrderDetail'
 import { createStackNavigator } from '@react-navigation/stack';
+import OrderBox from './OrderBox'
 const Stack = createStackNavigator();
 
 const Home = ({navigation}) => {
     return(
         <ScrollView>
         <View style={{ padding: 20, paddingBottom: 5 }}>
-            <Text style={{ fontSize: 22, fontWeight: 'bold', }}>Active Orders Detail</Text>
+            <Text style={{ fontSize: 22, fontWeight: 'bold', }}>Active Jobs Detail</Text>
         </View>
         <View style={{ padding: 20 }}>
             <View style={styles.box}>
                 <View style={{ display: 'flex' }}>
-                    <Text style={{ fontSize: 20, color: "white", fontWeight: 'bold' }}>Total Active Orders</Text>
+                    <Text style={{ fontSize: 20, color: "white", fontWeight: 'bold' }}>Total Active Jobs</Text>
                     <Text style={{ fontSize: 35, padding: 8, color: 'white', fontWeight: 'bold' }}>23</Text>
                 </View>
 
@@ -27,23 +28,7 @@ const Home = ({navigation}) => {
             </View>
         </View>
         <View style={{ padding: 20 }}>
-            <View style={styles.Lowerbox}>
-                <View>
-                    <Text style={styles.primaryHeading}>Client Name</Text>
-                    <Text style={{ fontSize: 16 }}>ABC</Text>
-                    <Text>{'\n'}</Text>
-                    <Text style={styles.primaryHeading}>Handyman Name</Text>
-                    <Text style={{ fontSize: 16 }}>DEF</Text>
-                    <Text>{'\n'}</Text>
-                    <Text style={styles.primaryHeading}>Order Date</Text>
-                    <Text style={{ fontSize: 16 }}>21 Jan 2023</Text>
-                </View>
-                <TouchableOpacity onPress={()=>{navigation.navigate('Details')}} style={{ display: 'flex', alignItems: 'center', backgroundColor: '#39be5f', padding: 15, borderRadius: 10 }}>
-                    <Fontsinto name='prescription' size={31} color={'white'} />
-                    <Text style={{ fontSize: 14, borderBottomWidth: 1, borderBottomColor: 'white', color: 'white' }}>View Detail</Text>
-                </TouchableOpacity>
-
-            </View>
+            <OrderBox navigation={navigation}/>
         </View>
     </ScrollView>
     )

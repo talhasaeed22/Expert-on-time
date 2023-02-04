@@ -24,7 +24,7 @@ const Login = ({ navigation }) => {
                 .signInWithEmailAndPassword(email, password)
                 .then((userCred) => {
                     setLoading(false)
-                   if(email === 'Admin@firebase.com'){
+                   if(email === 'Admin@firebase.com' || email === 'admin@firebase.com'){
                     navigation.dispatch(
                         StackActions.replace('AdminHome')
                     );
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         // backgroundColor: 'yellow',
         padding: 40,
-        paddingTop: 40,
+        paddingTop: 0,
         gap: 10,
         marginTop: 30
     },

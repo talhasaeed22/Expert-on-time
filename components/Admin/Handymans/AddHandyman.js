@@ -35,7 +35,14 @@ const AddHandyman = ({navigation}) => {
         category: category
       })
       .then(() => {
-       
+        auth().signOut().then(()=>{
+          auth().createUserWithEmailAndPassword(email, password)
+          .then(()=>{
+            auth().signOut().then(()=>{
+              auth().signInWithEmailAndPassword('admin@firebase.com', 'Admin123')
+            }).catch((err)=>{console.log(err)})
+          }).catch((err)=>{console.log(err)})
+        }).catch((err)=>{console.log(err)})
         setLoading(false)
         console.log('Handyman Added')
         navigation.navigate('ViewHandymans')

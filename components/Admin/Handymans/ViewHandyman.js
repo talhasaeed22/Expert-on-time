@@ -55,7 +55,7 @@ const ViewHandyman = () => {
       .doc(key)
       .delete()
       .then(() => {
-        Alert.alert('Post Deleted Successfully')
+        Alert.alert('Success', 'Deleted Successfully')
         // setList(null)
         setDeleted(!deleted)
       })

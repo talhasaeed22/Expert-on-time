@@ -2,8 +2,10 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'rea
 import React from 'react'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { Avatar, TextInput, Button } from 'react-native-paper';
-
+import { useRoute } from '@react-navigation/native';
 const JobsBox = ({ index,element }) => {
+    const route = useRoute();
+
     return (
         <ScrollView>
             <View style={{borderBottomWidth:1, borderBottomColor:'lightgray'}}>
@@ -55,7 +57,7 @@ const JobsBox = ({ index,element }) => {
                 </View>
                 <View style={{  alignItems: 'flex-end' }}>
                     <View style={{ paddingVertical: 15, display:'flex', flexDirection:"row", gap:10 }}>
-                        <TouchableOpacity onPress={()=>{Alert.alert("Functionality Comming Soon")}}>
+                        <TouchableOpacity style={route.name === 'RecentJobs' && {display: 'none'}} onPress={()=>{Alert.alert("Functionality Comming Soon")}}>
                             <Button icon={()=>(<Icon name='check' size={20} color='white' />)} buttonColor='#03b944' labelStyle={{fontSize:15, fontWeight:"bold", textAlign:"center"}} color='white' style={{  padding: 5, borderRadius: 10 }} mode="contained">
                                 Accept
                             </Button>
@@ -63,6 +65,7 @@ const JobsBox = ({ index,element }) => {
                     </View>
                 </View>
             </View>
+            
         </ScrollView>
     )
 }

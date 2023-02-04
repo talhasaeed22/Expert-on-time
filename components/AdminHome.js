@@ -2,12 +2,12 @@ import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import MyDrawer from './MyDrawer';
-import Jobs from './Admin/Home/Jobs';
 import Home from './Admin/Home/Home';
 import PostHome from './Admin/Posts/PostHome';
 import HomeHandyman from './Admin/Handymans/HomeHandyman';
 import ActiveOrders from './Admin/Orders/ActiveOrders';
-
+import RecentOrdersPage from './Admin/Recent/RecentOrdersPage';
+import PendingRequest from './Admin/Pendings/PendingRequests'
 const AdminHome = () => {
  
   const Drawer = createDrawerNavigator();
@@ -42,7 +42,7 @@ const AdminHome = () => {
 
           }} />
           <Drawer.Screen name="ActiveOrders" component={ActiveOrders} options={{
-            title: 'Active Orders',
+            title: 'Active Jobs',
             headerShown: true,
             headerTintColor: 'white',
             headerTitleAlign: 'center',
@@ -58,11 +58,21 @@ const AdminHome = () => {
               backgroundColor: '#6b6b6b' ,
             },
           }} />
-          <Drawer.Screen name="Settings" component={Jobs} options={{
-            title: '',
-            headerShown: true,
-            headerTransparent: true,
+          <Drawer.Screen name="RecentJobs" component={RecentOrdersPage} options={{
+            title: 'Recent Orders',
             headerTintColor: 'white',
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#6b6b6b' ,
+            },
+          }} />
+          <Drawer.Screen name="PendingRequests" component={PendingRequest} options={{
+            title: 'Recent Orders',
+            headerTintColor: 'white',
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#6b6b6b' ,
+            },
           }} />
         </Drawer.Navigator>
      

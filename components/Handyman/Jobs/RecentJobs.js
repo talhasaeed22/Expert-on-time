@@ -7,8 +7,8 @@ import { useIsFocused } from "@react-navigation/native";
 import firestore from '@react-native-firebase/firestore'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const NewJob = ({navigation, route}) => {
-  const isFocused = useIsFocused();
+const RecentJobs = ({navigation, route}) => {
+    const isFocused = useIsFocused();
   const [list, setList] = useState([])
   const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(false)
@@ -22,7 +22,7 @@ const NewJob = ({navigation, route}) => {
     const Data = [];
     setLoading(true)
     firestore()
-      .collection('posts')
+      .collection('Recent')
       .get()
       .then((queryData) => {
         queryData.forEach((doc) => {
@@ -58,7 +58,7 @@ const NewJob = ({navigation, route}) => {
         <Navigation changeFocus={changeFocus} navigation={navigation}  />
         <View style={{ paddingVertical: 20, backgroundColor: "#5e48db", borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
           <View style={{ display: "flex", flexDirection: 'row', justifyContent: "space-around", }}>
-            <Text style={{ color: "white", fontSize: 25, fontWeight: 'bold' }}>New Jobs</Text>
+            <Text style={{ color: "white", fontSize: 25, fontWeight: 'bold' }}>Recent Jobs</Text>
             {/* <HomeBox /> */}
           </View>
 
@@ -80,4 +80,4 @@ const NewJob = ({navigation, route}) => {
   )
 }
 
-export default NewJob
+export default RecentJobs

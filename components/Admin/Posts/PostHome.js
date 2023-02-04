@@ -45,17 +45,17 @@ const PostHome = () => {
         return route.name === 'CreatePost' ? <Ionicons name={iconName} size={size} color={color} /> : <Material name={iconName} size={size} color={color} />;
       }
     })}>
+      <Tab.Screen name="PostDetails" component={Posts}options={{
+        title: '',
+        headerShown: true,
+        headerTransparent: true,
+      }} />
         <Tab.Screen name="CreatePost" component={CreatePost}options={{
           title: '',
           headerShown: true,
           headerTransparent: true,
         }} />
         
-        <Tab.Screen name="PostDetails" component={Posts}options={{
-          title: '',
-          headerShown: true,
-          headerTransparent: true,
-        }} />
         
       </Tab.Navigator>
   )
