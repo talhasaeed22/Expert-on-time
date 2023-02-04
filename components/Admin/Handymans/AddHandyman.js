@@ -37,7 +37,10 @@ const AddHandyman = ({navigation}) => {
       .then(() => {
         auth().signOut().then(()=>{
           auth().createUserWithEmailAndPassword(email, password)
-          .then(()=>{
+          .then((userCred)=>{
+            userCred.user.updateProfile({
+              displayName: fname + ' ' + lname
+            })
             auth().signOut().then(()=>{
               auth().signInWithEmailAndPassword('admin@firebase.com', 'Admin123')
             }).catch((err)=>{console.log(err)})

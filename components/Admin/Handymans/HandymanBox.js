@@ -39,9 +39,10 @@ const HandymanBox = ({ element, index, deleteHandman }) => {
                         <Text style={{ fontSize: 15 }}>{element.phone}</Text>
                     </View>
                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'black' }}>{element.category}</Text>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'black'}}>Category</Text>
 
-                        <Text style={{ fontSize: 15, }}>Category</Text>
+                        <Text style={{ fontSize: 15 }}>{element.category}</Text>
+
                     </View>
                 </View>
 

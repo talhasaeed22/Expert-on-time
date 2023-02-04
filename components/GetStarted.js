@@ -45,13 +45,15 @@ const styles = StyleSheet.create({
     mainContainer: {
         display: 'flex',
         flex: 1,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        backgroundColor:'white'
     },
     upperContainer: {
         display: 'flex',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor:"white"
     }, title: {
         color: "black",
         fontSize: 35,

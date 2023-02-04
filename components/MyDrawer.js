@@ -15,6 +15,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Material from 'react-native-vector-icons/MaterialIcons'
 import FAwesome from 'react-native-vector-icons/FontAwesome'
 import IonIcon from 'react-native-vector-icons/Ionicons'
+import Entypo from 'react-native-vector-icons/Entypo'
+
 const MyDrawer = (props) => {
 
   const { state } = props
@@ -77,7 +79,7 @@ const MyDrawer = (props) => {
 
           />
           <DrawerItem onPress={() => { props.navigation.navigate('PendingRequests'); }} style={focusedRoute === 'PendingRequests' ? { backgroundColor: '#181c3f' } : {}}
-            icon={({ color, size }) => (<Icon name="check" size={21} color={focusedRoute === 'PendingRequests' ? ('white') : 'black'} />)}
+            icon={({ color, size }) => (<Entypo name="hour-glass" size={21} color={focusedRoute === 'PendingRequests' ? ('white') : 'black'} />)}
             label={() => (<Text style={{ color: focusedRoute === 'PendingRequests' ? ('white') : 'black', fontSize: 15 }}>Pending Requests</Text>)}
 
           />

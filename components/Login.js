@@ -146,13 +146,13 @@ const styles = StyleSheet.create({
 
         display: 'flex',
         flexDirection: "column",
-        gap: 35,
+        gap: 15,
         // justifyContent: 'center',
         backgroundColor: '#6b6b6b',
         padding: 40,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        paddingBottom: 70
+        // paddingBottom: 70
 
     }
 });

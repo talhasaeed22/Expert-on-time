@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import React from 'react'
-import {Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 
-const PendingsBox = () => {
-    
+const AdminPendingsBox = ({ element, index }) => {
+
     const styles = StyleSheet.create({
 
-        
+
         box: {
             marginTop: 10,
             display: "flex",
@@ -18,49 +18,72 @@ const PendingsBox = () => {
         }
 
     })
-  return (
-    <>
-    <View style={styles.box} >
+    return (
+        <View key={index} style={{ padding: 20, borderBottomWidth:1, borderBottomColor:'lightgray' }}>
+            <View style={styles.box} >
                 <View style={{ display: "flex", flexDirection: 'column', gap: 10, }}>
                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                         <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Name</Text>
 
-                        <Text style={{ fontSize: 15 }}>{'element.name'}</Text>
+                        <Text style={{ fontSize: 15 }}>{element.post.name}</Text>
                     </View>
 
                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                         <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Email</Text>
 
-                        <Text style={{ fontSize: 15 }}>{'element.email'}</Text>
+                        <Text style={{ fontSize: 15 }}>{element.post.email}</Text>
                     </View>
                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                         <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Phone Number</Text>
 
-                        <Text style={{ fontSize: 15 }}>{'element.phone'}</Text>
+                        <Text style={{ fontSize: 15 }}>{element.post.phone}</Text>
                     </View>
                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                         <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Address</Text>
 
-                        <Text style={{ fontSize: 15 }}>{'element.address'}</Text>
+                        <Text style={{ fontSize: 15 }}>{element.post.address}</Text>
                     </View>
                 </View>
 
                 <View style={{ display: "flex", flexDirection: 'column', gap: 10, }}>
                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Category</Text>
-                        <Text style={{ fontSize: 17, color: 'red', fontWeight: 'bold' }}>{'element.category'}</Text>
+                        <Text style={{ fontSize: 17, color: 'red', fontWeight: 'bold' }}>{element.post.category}</Text>
 
                     </View>
                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                         <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Budget</Text>
 
-                        <Text style={{ fontSize: 15 }}>{'element.budget'}</Text>
+                        <Text style={{ fontSize: 15 }}>{element.post.budget}</Text>
                     </View>
 
                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                         <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Breif</Text>
 
-                        <Text style={{ fontSize: 15 }}>{'element.brief'}</Text>
+                        <Text style={{ fontSize: 15 }}>{element.post.brief}</Text>
+                    </View>
+
+                </View>
+
+            </View>
+
+            <View style={{ borderBottomWidth: 1, borderBottomColor: "lightgray", paddingVertical: 10 }}></View>
+
+            <View style={{display:"flex", gap:20, padding:10}} >
+                <View style={{ display: "flex", flexDirection: 'column', gap: 10, }}>
+                    <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Handyman Name</Text>
+
+                        <Text style={{ fontSize: 15 }}>{'element.HandymanName'}</Text>
+                    </View>
+                    
+                </View>
+
+                <View style={{ display: "flex", flexDirection: 'column', gap: 10, }}>
+                    <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>HandyMan Email</Text>
+
+                        <Text style={{ fontSize: 15 }}>{'element.HandymanEmail'}</Text>
                     </View>
 
                 </View>
@@ -73,15 +96,11 @@ const PendingsBox = () => {
                             Accept
                         </Button>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { Alert.alert("Functionality Comming Soon") }}>
-                        <Button buttonColor='red' labelStyle={{ fontSize: 15, fontWeight: "bold", textAlign: "center" }} color='white' style={{ padding: 5, borderRadius: 10 }} mode="contained">
-                            Reject
-                        </Button>
-                    </TouchableOpacity>
+
                 </View>
             </View>
-            </>
-  )
+        </View>
+    )
 }
 
-export default PendingsBox
+export default AdminPendingsBox

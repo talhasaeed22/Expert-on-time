@@ -5,6 +5,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import Material from 'react-native-vector-icons/MaterialIcons'
 import Antdesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import auth from '@react-native-firebase/auth'
 
 const Navigation = ({navigation, changeFocus }) => {
 
@@ -31,8 +32,8 @@ const Navigation = ({navigation, changeFocus }) => {
                         <Entypo name='user' size={42} color='#5e48db' />
                     </View>
                     <View style={{ display: 'flex' }}>
-                        <Text style={{fontSize:23, fontWeight:'bold', color:'black'}}>Hi, John Williams</Text>
-                        <Text style={{fontSize:17, fontWeight:"bold", }}>Abc@nutel.com</Text>
+                        <Text style={{fontSize:23, fontWeight:'bold', color:'black'}}>Hi, {auth().currentUser && auth().currentUser.displayName}</Text>
+                        <Text style={{fontSize:17, fontWeight:"bold", }}>{auth().currentUser && auth().currentUser.email}</Text>
                     </View>
                 </View>
             </View>

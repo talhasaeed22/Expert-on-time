@@ -3,9 +3,26 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { Avatar, TextInput, Button } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
-const JobsBox = ({ index,element }) => {
+import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
+const JobsBox = ({ index,element, changeFocus, navigation }) => {
     const route = useRoute();
-
+    const handleAccept = ()=>{
+        firestore()
+        .collection('Pendings')
+        .add({
+            postID:element.id,
+            handymanID:auth().currentUser.uid,
+            post:element,
+        })
+        .then(()=>{
+            Alert.alert('Please wait for confirmation');
+            navigation.navigate('Pendings')
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
     return (
         <ScrollView>
             <View style={{borderBottomWidth:1, borderBottomColor:'lightgray'}}>
@@ -22,16 +39,7 @@ const JobsBox = ({ index,element }) => {
 
                             <Text style={{ fontSize: 15 }}>{element.email}</Text>
                         </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Phone Number</Text>
-
-                            <Text style={{ fontSize: 15 }}>{element.phone}</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Address</Text>
-
-                            <Text style={{ fontSize: 15 }}>{element.address}</Text>
-                        </View>
+                        
                     </View>
 
                     <View style={{ display: "flex", flexDirection: 'column', gap: 10, }}>
@@ -40,24 +48,14 @@ const JobsBox = ({ index,element }) => {
                             <Text style={{ fontSize: 17, color:'red', fontWeight:'bold'}}>{element.category}</Text>
 
                         </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Budget</Text>
-
-                            <Text style={{ fontSize: 15 }}>{element.budget}</Text>
-                        </View>
-
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Breif</Text>
-
-                            <Text style={{ fontSize: 15 }}>{element.brief}</Text>
-                        </View>
+                       
                         
                     </View>
 
                 </View>
                 <View style={{  alignItems: 'flex-end' }}>
                     <View style={{ paddingVertical: 15, display:'flex', flexDirection:"row", gap:10 }}>
-                        <TouchableOpacity style={route.name === 'RecentJobs' && {display: 'none'}} onPress={()=>{Alert.alert("Functionality Comming Soon")}}>
+                        <TouchableOpacity style={route.name === 'RecentJobs' && {display: 'none'}} onPress={handleAccept}>
                             <Button icon={()=>(<Icon name='check' size={20} color='white' />)} buttonColor='#03b944' labelStyle={{fontSize:15, fontWeight:"bold", textAlign:"center"}} color='white' style={{  padding: 5, borderRadius: 10 }} mode="contained">
                                 Accept
                             </Button>

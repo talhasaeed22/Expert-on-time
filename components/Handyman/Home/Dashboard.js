@@ -5,7 +5,7 @@ import HomeBox from './HomeBox'
 import FeatureBox from './FeatureBox'
 import MaterialComm from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
+import Entypo from 'react-native-vector-icons/Entypo'
 const Dashboard = ({navigation}) => {
   const [updated, setUpdated] = useState(false)
   useEffect(()=>{
@@ -34,15 +34,15 @@ const Dashboard = ({navigation}) => {
                 <FeatureBox name='Jobs' Icon={MaterialComm} iconname='hammer-wrench' />
               </TouchableOpacity>
               <TouchableOpacity  onPress={()=>{Alert.alert("Functionality Comming Soon")}}>
-                <FeatureBox name='ongoing' Icon={FontAwesome} iconname='user-circle' />
+                <FeatureBox name='ongoing' Icon={MaterialComm} iconname='clock-check-outline' />
               </TouchableOpacity>
             </View>
             <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
               <TouchableOpacity  onPress={()=>{navigation.navigate('RecentJobs')}}>
                 <FeatureBox name='Recent' Icon={MaterialComm} iconname='post-outline' />
               </TouchableOpacity>
-              <TouchableOpacity  onPress={()=>{Alert.alert("Functionality Comming Soon")}}>
-                <FeatureBox name='Jobs' Icon={MaterialComm} iconname='hammer-wrench' />
+              <TouchableOpacity  onPress={()=>{navigation.navigate('Pendings')}}>
+                <FeatureBox name='Pending' Icon={Entypo} iconname='hour-glass' />
               </TouchableOpacity>
             </View>
             
