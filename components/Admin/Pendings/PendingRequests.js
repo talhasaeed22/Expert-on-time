@@ -11,7 +11,7 @@ const PendingRequests = () => {
     const [update, setUpdate] = useState(false)
     useEffect(() => {
         getPendings();
-    }, [isFocus])
+    }, [isFocus, update])
     const getPendings = () => {
         const Data = [];
         setLoading(true)
@@ -20,12 +20,14 @@ const PendingRequests = () => {
             .get()
             .then((queryData) => {
                 queryData.forEach((doc) => {
-                    const { handymanID, postID, post } = doc.data();
+                    const { handymanID, postID, post, handymanName, handymanEmail } = doc.data();
                     Data.push({
                         id: doc.id,
                         handymanID, handymanID,
                         postID: postID,
-                        post: post
+                        post: post,
+                        handymanName:handymanName,
+                        handymanEmail:handymanEmail
                     })
                 })
 
@@ -37,6 +39,23 @@ const PendingRequests = () => {
 
             })
     }
+
+    const acceptJob = (post, key)=>{
+        firestore()
+        .collection('Accepted')
+        .add({
+            acceptedPost:post
+        }).then(()=>{
+            Alert.alert('Post Accepted')
+            firestore().collection('Pendings').doc(key)
+            .delete()
+            .then(() => {
+              setUpdate(!update)
+            })
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
     return (
 
         <ScrollView>
@@ -47,7 +66,7 @@ const PendingRequests = () => {
                     <Text style={styles.primaryHeading}>Pending Requests</Text>
                 </View>
                 {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
-                    return <AdminPendingsBox key={index} element={element} index={index} />
+                    return <AdminPendingsBox acceptJob={acceptJob} key={index} element={element} index={index} />
                     
                 }) :
                     <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>

@@ -13,8 +13,9 @@ const PostDetailBox = ({ element, index, deletePost }) => {
 
                     <Text style={{ fontSize: 15 }}>{element.name}</Text>
                 </View>
-                <View style={{ paddingTop: 4 }}>
-                    <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{index + 1}</Text>
+                <View >
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: element.status === 'Ongoing' ? 'orange' : "black" }}>{element.status}</Text>
+                    <Text style={{ fontSize: 15 }}>{''}</Text>
                 </View>
             </View>
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>

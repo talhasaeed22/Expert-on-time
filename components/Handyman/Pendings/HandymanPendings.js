@@ -59,7 +59,7 @@ const HandymanPendings = ({ navigation }) => {
         <View style={{ backgroundColor: '#5e48db', }}>
           <View style={{ backgroundColor: "white", display: "flex", gap: 20, borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, }}>
             {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
-              return <PendingsBox element={element} index={index} />
+              return <PendingsBox key={index} element={element} index={index} />
             }) :
               <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>
                 <Icon name='folder-text-outline' size={35} color='black' />

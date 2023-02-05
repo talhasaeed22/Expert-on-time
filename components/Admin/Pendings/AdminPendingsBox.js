@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'rea
 import React from 'react'
 import { Button } from 'react-native-paper';
 
-const AdminPendingsBox = ({ element, index }) => {
+const AdminPendingsBox = ({ element, index, acceptJob }) => {
 
     const styles = StyleSheet.create({
 
@@ -74,7 +74,7 @@ const AdminPendingsBox = ({ element, index }) => {
                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                         <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Handyman Name</Text>
 
-                        <Text style={{ fontSize: 15 }}>{'element.HandymanName'}</Text>
+                        <Text style={{ fontSize: 15 }}>{element.handymanName}</Text>
                     </View>
                     
                 </View>
@@ -83,7 +83,7 @@ const AdminPendingsBox = ({ element, index }) => {
                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                         <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>HandyMan Email</Text>
 
-                        <Text style={{ fontSize: 15 }}>{'element.HandymanEmail'}</Text>
+                        <Text style={{ fontSize: 15 }}>{element.handymanEmail}</Text>
                     </View>
 
                 </View>
@@ -91,7 +91,7 @@ const AdminPendingsBox = ({ element, index }) => {
             </View>
             <View style={{ alignItems: 'flex-end' }}>
                 <View style={{ paddingVertical: 15, display: 'flex', flexDirection: "row", gap: 10 }}>
-                    <TouchableOpacity onPress={() => { Alert.alert("Functionality Comming Soon") }}>
+                    <TouchableOpacity onPress={() => {acceptJob(element, element.id)  }}>
                         <Button buttonColor='#03b944' labelStyle={{ fontSize: 15, fontWeight: "bold", textAlign: "center" }} color='white' style={{ padding: 5, borderRadius: 10 }} mode="contained">
                             Accept
                         </Button>

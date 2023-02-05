@@ -1,13 +1,47 @@
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Fontsinto from 'react-native-vector-icons/Fontisto'
-import OrderDetail from './OrderDetail'
 import { createStackNavigator } from '@react-navigation/stack';
-import OrderBox from './OrderBox'
 const Stack = createStackNavigator();
+import firestore from '@react-native-firebase/firestore'
+import OrderBox from './OrderBox'
+import OrderDetail from './OrderDetail'
 
 const Home = ({navigation}) => {
+    const [list, setList] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [count, setCount] = useState(0)
+
+    useEffect(() => {
+        getActive();
+    }, [])
+
+    const getActive = () => {
+        const Data = [];
+        setLoading(true)
+        let counted = 0;
+        firestore()
+            .collection('Accepted')
+            .get()
+            .then((querryData) => {
+                querryData.forEach((doc) => {
+                    const { acceptedPost } = doc.data();
+                    Data.push({
+                        id:doc.id,
+                        acceptedPost: acceptedPost
+                    })
+                    counted ++
+                })
+                setList(Data)
+                setLoading(false)
+                setCount(counted)
+            }).catch((err) => {
+                console.log(err)
+                setLoading(false)
+
+            })
+    }
     return(
         <ScrollView>
         <View style={{ padding: 20, paddingBottom: 5 }}>
@@ -17,7 +51,7 @@ const Home = ({navigation}) => {
             <View style={styles.box}>
                 <View style={{ display: 'flex' }}>
                     <Text style={{ fontSize: 20, color: "white", fontWeight: 'bold' }}>Total Active Jobs</Text>
-                    <Text style={{ fontSize: 35, padding: 8, color: 'white', fontWeight: 'bold' }}>23</Text>
+                    <Text style={{ fontSize: 35, padding: 8, color: 'white', fontWeight: 'bold' }}>{count}</Text>
                 </View>
 
                 <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 10, padding: 10, paddingLeft: 20, paddingRight: 20, }}>
@@ -27,9 +61,16 @@ const Home = ({navigation}) => {
 
             </View>
         </View>
-        <View style={{ padding: 20 }}>
-            <OrderBox navigation={navigation}/>
-        </View>
+        {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
+                return <View key={index} style={{ padding: 20 }}>
+                <OrderBox element={element} navigation={navigation}/>
+            </View>
+            }) :
+                <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>
+                    <Icon name='folder-text-outline' size={35} color='black' />
+                    <Text style={{ textAlign: "center", fontWeight: "bold" }}>No Active Jobs</Text>
+                </View>)}
+        
     </ScrollView>
     )
 }

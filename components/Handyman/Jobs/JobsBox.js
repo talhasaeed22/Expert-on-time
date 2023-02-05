@@ -13,10 +13,18 @@ const JobsBox = ({ index,element, changeFocus, navigation }) => {
         .add({
             postID:element.id,
             handymanID:auth().currentUser.uid,
+            handymanName:auth().currentUser.displayName,
+            handymanEmail:auth().currentUser.email,
             post:element,
         })
         .then(()=>{
             Alert.alert('Please wait for confirmation');
+            firestore()
+            .collection('posts')
+            .doc(element.id)
+            .update({
+                handyman:auth().currentUser.uid
+            })
             navigation.navigate('Pendings')
         })
         .catch((err)=>{

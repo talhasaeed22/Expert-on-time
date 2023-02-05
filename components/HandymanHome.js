@@ -10,6 +10,7 @@ import { StackActions } from '@react-navigation/native';
 import NewJob from './Handyman/Jobs/NewJob';
 import RecentJobs from './Handyman/Jobs/RecentJobs';
 import HandymanPendings from './Handyman/Pendings/HandymanPendings';
+import Ongoing from './Handyman/Ongoing/Ongoing';
 
 
 const HandymanHome = ({ navigation }) => {
@@ -114,6 +115,36 @@ const HandymanHome = ({ navigation }) => {
 
       <Stack.Screen name="RecentJobs" component={RecentJobs} options={{
         title: "Recent Jobs",
+        // headerTitleAlign: "center",
+        headerLeft: () => null,
+        headerRight: () => (
+          <TouchableOpacity onPress={HandleLogout} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5, paddingRight: 10 }}>
+            {/* <Text style={{ fontSize: 16, fontWeight: "bold" }}>Logout</Text> */}
+            <Button
+              icon={() => (<Antdesign name='logout' size={20} color='white' />)}
+              color='white'
+              buttonColor='#5e48db'
+              textColor='white'
+              style={{ backgroundColor: "#5e48db" }}
+
+            >Logout</Button>
+            {/*  */}
+          </TouchableOpacity>
+        ),
+        headerTitleStyle: {
+          fontSize: 25,
+          fontWeight: "bold"
+        },
+        headerStyle: {
+
+          backgroundColor: "#e7edf7",
+          height: 70,
+
+        }
+      }} />
+
+<Stack.Screen name="ongoing" component={Ongoing} options={{
+        title: "Ongoing Jobs",
         // headerTitleAlign: "center",
         headerLeft: () => null,
         headerRight: () => (

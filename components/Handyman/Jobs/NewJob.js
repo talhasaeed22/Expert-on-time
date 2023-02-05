@@ -22,9 +22,9 @@ const NewJob = ({ navigation, route }) => {
     getPosts();
   }, [isFocused, update])
 
-  const checkPending = async (id) => {
+  const checkPending =  (id) => {
 
-    await firestore()
+      firestore()
       .collection('Pendings')
       .get()
       .then((queryData) => {
@@ -43,18 +43,40 @@ const NewJob = ({ navigation, route }) => {
 
     // Alert.alert(found === true ? 'true' : 'false')
   }
+  const checkAccepted =  (id) => {
+    
+     firestore()
+     .collection('Accepted')
+     .get()
+     .then((queryData) => {
 
-  const getPosts = async () => {
+       queryData.forEach((doc) => {
+         const { acceptedPost } = doc.data();
+
+         if (acceptedPost.post.id === id ) {
+           setFound(true)
+         }
+       })
+     })
+     .catch((err) => {
+       console.log(err)
+     })
+
+   // Alert.alert(found === true ? 'true' : 'false')
+ }
+
+  const getPosts =  () => {
     const Data = [];
     setLoading(true)
     firestore()
       .collection('posts')
       .get()
       .then((queryData) => {
-        queryData.forEach(async (doc) => {
-          const { name, email, address, phone, postalCode, budget, brief, price, category } = doc.data();
-          await checkPending(doc.id)
-          if (!found) {
+        queryData.forEach((doc) => {
+          const { name, email, address, phone, postalCode, budget, brief, price, category, status, handyman } = doc.data();
+          //  checkPending(doc.id)
+          //  checkAccepted(doc.id)
+          if (status === 'new' && handyman !== auth().currentUser.uid) {
             Data.push({
               id: doc.id,
               name: name,
@@ -65,7 +87,8 @@ const NewJob = ({ navigation, route }) => {
               budget: budget,
               price: price,
               brief: brief,
-              category: category
+              category: category,
+              status:status
             })
           }
 

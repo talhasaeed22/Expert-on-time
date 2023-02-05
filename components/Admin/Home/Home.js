@@ -9,10 +9,12 @@ import Entypo from 'react-native-vector-icons/Entypo'
 const Home = ({ navigation, }) => {
   const isFocus = useIsFocused();
   useEffect(() => {
-    setLoading(true);
+    
     getPosts();
     getPendings();
-    setLoading(false)
+    getOrders();
+    getAccepted();
+    
   }, [isFocus])
   const [postCount, setpostCount] = useState(0)
   const [pendingCount, setpendingCount] = useState(0)
@@ -20,7 +22,7 @@ const Home = ({ navigation, }) => {
   const [recentPost, setRecentPost] = useState(0)
   const [loading, setLoading] = useState(false)
   const getPosts = () => {
-
+    setLoading(true);
     setpostCount(0);
     let counted = 0;
     firestore()
@@ -79,13 +81,36 @@ const Home = ({ navigation, }) => {
 
       })
   }
+
+  const getAccepted = ()=>{
+    setActiveCount(0);
+    let counted = 0;
+    firestore()
+      .collection('Accepted')
+      .get()
+      .then((queryData) => {
+        queryData.forEach((doc) => {
+
+          counted++;
+        })
+        setActiveCount(counted);
+
+      }).catch((err) => {
+        console.log(err)
+
+
+      })
+      setLoading(false)
+  }
   return (
     <ScrollView>
       <View style={{ backgroundColor: 'white', paddingLeft: 20, paddingRight: 20, borderTopWidth: 1, borderColor: 'lightgray' }}>
 
         <View style={{ disple: 'flex', gap: 10, marginTop: 30 }}>
           <HomeBox navigation={navigation} id="Posts" Icon={Icon} bgcolor='#4e75ec' iconname='post-outline' heading="Total Posts" loading={loading} count={postCount} />
-          <HomeBox navigation={navigation} id="Active Posts" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Active Posts" loading={loading} count={postCount} />
+
+          <HomeBox navigation={navigation} id="Active Posts" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Active Posts" loading={loading} count={activeCount} />
+
           <HomeBox navigation={navigation} id="Pendings" Icon={Entypo} bgcolor='#4e75ec' iconname='hour-glass' heading="Waiting for Approval" loading={loading} count={pendingCount} />
           <HomeBox navigation={navigation} id="Recent" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Orders Completed" loading={loading} count={recentPost} />
         </View>

@@ -1,39 +1,37 @@
-import { View, Text, ScrollView, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, ActivityIndicator, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import HomeBox from '../Home/HomeBox'
 import Navigation from '../Navigation'
-import JobsBox from './JobsBox'
 import { useIsFocused } from "@react-navigation/native";
 import firestore from '@react-native-firebase/firestore'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import RecentJobBox from './RecentJobBox'
+import OngoingBox from './OngoingBox';
 
-const RecentJobs = ({navigation, route}) => {
+const Ongoing = ({navigation}) => {
     const isFocused = useIsFocused();
+
   const [list, setList] = useState([])
   const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(false)
-  const changeFocus = ()=>{
+  const changeFocus = () => {
     setUpdate(!update)
   }
   useEffect(() => {
-    getPosts();
+    getAccepted();
   }, [isFocused, update])
-  const getPosts = () => {
+  const getAccepted = () => {
     const Data = [];
     setLoading(true)
     firestore()
-      .collection('Recent')
+      .collection('Accepted')
       .get()
       .then((queryData) => {
         queryData.forEach((doc) => {
-          const { JobDone } = doc.data();
-
+          const { acceptedPost } = doc.data();
           Data.push({
-            JobDone:JobDone
+            id:doc.id,
+            acceptedJobs:acceptedPost
           })
-          
-
         })
 
         setList(Data)
@@ -44,32 +42,55 @@ const RecentJobs = ({navigation, route}) => {
 
       })
   }
+
+  const FinishJob = (job, key)=>{
+    console.log(key)
+    firestore()
+        .collection('Recent')
+        .add({
+            JobDone:job.acceptedJobs
+        }).then(()=>{
+            firestore().collection('Accepted').doc(key)
+            .delete()
+            .then(() => {
+                setUpdate(!update)
+                firestore().collection('posts').doc(job.acceptedJobs.post.id)
+                .update({
+                  status:"Finished"
+                })
+                Alert.alert('Job Finished')
+            })
+        }).catch((err)=>{
+            console.log(err)
+        })
+  }
   return (
     <ScrollView>
       <View style={{ backgroundColor: '#e7edf7' }}>
-        <Navigation changeFocus={changeFocus} navigation={navigation}  />
+        <Navigation changeFocus={changeFocus} navigation={navigation} />
         <View style={{ paddingVertical: 20, backgroundColor: "#5e48db", borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
           <View style={{ display: "flex", flexDirection: 'row', justifyContent: "space-around", }}>
-            <Text style={{ color: "white", fontSize: 25, fontWeight: 'bold' }}>Recent Jobs</Text>
+            <Text style={{ color: "white", fontSize: 25, fontWeight: 'bold' }}>Accepted Jobs</Text>
             {/* <HomeBox /> */}
           </View>
 
 
         </View>
         <View style={{ backgroundColor: '#5e48db', }}>
-          <View style={{ backgroundColor: "white", display: "flex", gap: 20, borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20,  }}>
+          <View style={{ backgroundColor: "white", display: "flex", gap: 20, borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, }}>
             {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
-              return <RecentJobBox route={route} key={index} element={element} index={index} />
+              return <OngoingBox FinishJob={FinishJob} key={index} element={element} index={index} />
             }) :
-              <View style={{ display: "flex", alignItems: "center", marginTop: 30,}}>
+              <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>
                 <Icon name='folder-text-outline' size={35} color='black' />
                 <Text style={{ textAlign: "center", fontWeight: "bold" }}>No Jobs</Text>
               </View>)}
           </View>
         </View>
+
       </View>
     </ScrollView>
   )
 }
 
-export default RecentJobs
+export default Ongoing

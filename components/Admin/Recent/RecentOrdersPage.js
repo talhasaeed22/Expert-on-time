@@ -1,42 +1,104 @@
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Fontsinto from 'react-native-vector-icons/Fontisto'
-const RecentOrdersPage = () => {
+import RecentAdminDetail from './RecentAdminDetail'
+import { createStackNavigator } from '@react-navigation/stack';
+const Stack = createStackNavigator();
+import firestore from '@react-native-firebase/firestore'
+const Home = ({ navigation }) => {
+
+    const [list, setList] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [count, setCount] = useState(0)
+
+    useEffect(() => {
+        getRecent();
+    }, [])
+
+    const getRecent = () => {
+        const Data = [];
+        setLoading(true)
+        let counted = 0;
+        firestore()
+            .collection('Recent')
+            .get()
+            .then((querryData) => {
+                querryData.forEach((doc) => {
+                    const { JobDone } = doc.data();
+                    Data.push({
+                        id:doc.id,
+                        JobDone: JobDone
+                    })
+                    counted ++
+                })
+                setList(Data)
+                setLoading(false)
+                setCount(counted)
+            }).catch((err) => {
+                console.log(err)
+                setLoading(false)
+
+            })
+    }
     return (
         <ScrollView>
             <View style={{ padding: 20 }}>
+            
                 <View style={styles.box}>
                     <View style={{ display: 'flex' }}>
                         <Text style={{ fontSize: 24, color: "white", fontWeight: 'bold' }}>Recent Jobs</Text>
-                        <Text style={{ fontSize: 35, padding: 8, color: 'white', fontWeight: 'bold' }}>23</Text>
+                        <Text style={{ fontSize: 35, padding: 8, color: 'white', fontWeight: 'bold' }}>{count}</Text>
                     </View>
 
-                    <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 10, padding:30 }}>
+                    <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 10, padding: 30 }}>
                         <Icon name="clock-check-outline" size={35} color={'black'} />
                         {/* <Text style={{ fontSize: 16, borderBottomWidth: 1, borderBottomColor: 'lightgray' }}>View More</Text> */}
                     </View>
 
                 </View>
-            </View>
-            <View style={styles.Lowerbox}>
-                <View>
-                    <Text style={styles.primaryHeading}>Client Name</Text>
-                    <Text style={{ fontSize: 16 }}>ABC</Text>
-                    <Text>{'\n'}</Text>
-                    <Text style={styles.primaryHeading}>Handyman Name</Text>
-                    <Text style={{ fontSize: 16 }}>DEF</Text>
-                    <Text>{'\n'}</Text>
-                    <Text style={styles.primaryHeading}>Order Date</Text>
-                    <Text style={{ fontSize: 16 }}>21 Jan 2023</Text>
-                </View>
-                <TouchableOpacity  style={{ display: 'flex', alignItems: 'center', backgroundColor: '#39be5f', padding: 15, borderRadius: 10 }}>
-                    <Fontsinto name='prescription' size={31} color={'white'} />
-                    <Text style={{ fontSize: 14, borderBottomWidth: 1, borderBottomColor: 'white', color: 'white' }}>View Detail</Text>
-                </TouchableOpacity>
+           
 
+            {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
+                return <View key={index} style={styles.Lowerbox}>
+                    <View>
+                        <Text style={styles.primaryHeading}>Client Name</Text>
+                        <Text style={{ fontSize: 16 }}>{element.JobDone.post.name}</Text>
+                        <Text>{'\n'}</Text>
+                        <Text style={styles.primaryHeading}>Handyman Name</Text>
+                        <Text style={{ fontSize: 16 }}>{element.JobDone.handymanName}</Text>
+                        <Text>{'\n'}</Text>
+                        <Text style={styles.primaryHeading}>Handyman Email</Text>
+                        <Text style={{ fontSize: 16 }}>{element.JobDone.handymanEmail}</Text>
+                    </View>
+                    <TouchableOpacity onPress={() => { navigation.navigate('RecentDetails', {JobDone:element.JobDone}) }} style={{ display: 'flex', alignItems: 'center', backgroundColor: '#39be5f', padding: 15, borderRadius: 10 }}>
+                        <Fontsinto name='prescription' size={31} color={'white'} />
+                        <Text style={{ fontSize: 14, borderBottomWidth: 1, borderBottomColor: 'white', color: 'white' }}>View Detail</Text>
+                    </TouchableOpacity>
+
+                </View>
+            }) :
+                <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>
+                    <Icon name='folder-text-outline' size={35} color='black' />
+                    <Text style={{ textAlign: "center", fontWeight: "bold" }}>No Jobs</Text>
+                </View>)}
             </View>
         </ScrollView>
+    )
+}
+
+const RecentOrdersPage = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="RecentOrderHome" component={Home} options={{
+                headerShown: false
+            }} />
+            <Stack.Screen name="RecentDetails" component={RecentAdminDetail} options={{
+                headerShown: false
+            }} />
+
+        </Stack.Navigator>
+
     )
 }
 
@@ -68,6 +130,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 20,
+        marginTop:20,
         paddingRight: 15,
         borderRadius: 15,
         color: 'white',

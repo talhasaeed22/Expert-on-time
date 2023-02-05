@@ -64,14 +64,14 @@ const MyDrawer = (props) => {
             label={() => (<Text style={{ color: focusedRoute === 'Posts' ? ('white') : 'black', fontSize: 15 }}>Posts</Text>)}
 
           />
-          <DrawerItem onPress={() => { props.navigation.navigate('ActiveOrders'); }} style={focusedRoute === 'ActiveOrders' ? { backgroundColor: '#181c3f' } : {}}
-            icon={({ color, size }) => (<Icon name="hammer-wrench" size={21} color={focusedRoute === 'ActiveOrders' ? ('white') : 'black'} />)}
-            label={() => (<Text style={{ color: focusedRoute === 'ActiveOrders' ? ('white') : 'black', fontSize: 15 }}>Jobs</Text>)}
-
-          />
           <DrawerItem onPress={() => { props.navigation.navigate('Handymans'); }} style={focusedRoute === 'Handymans' ? { backgroundColor: '#181c3f' } : {}}
             icon={({ color, size }) => (<Icon name="face-man-outline" size={21} color={focusedRoute === 'Handymans' ? ('white') : 'black'} />)}
             label={() => (<Text style={{ color: focusedRoute === 'Handymans' ? ('white') : 'black', fontSize: 15 }}>Handyman</Text>)}
+
+          />
+          <DrawerItem onPress={() => { props.navigation.navigate('ActiveOrders'); }} style={focusedRoute === 'ActiveOrders' ? { backgroundColor: '#181c3f' } : {}}
+            icon={({ color, size }) => (<Icon name="hammer-wrench" size={21} color={focusedRoute === 'ActiveOrders' ? ('white') : 'black'} />)}
+            label={() => (<Text style={{ color: focusedRoute === 'ActiveOrders' ? ('white') : 'black', fontSize: 15 }}>Active Jobs</Text>)}
 
           />
           <DrawerItem onPress={() => { props.navigation.navigate('RecentJobs'); }} style={focusedRoute === 'RecentJobs' ? { backgroundColor: '#181c3f' } : {}}
@@ -89,16 +89,16 @@ const MyDrawer = (props) => {
         </View>
 
         <View style={{ borderTopWidth: 1, marginBottom: 15, borderTopColor: 'lightgray' }}></View>
-        <View style={{ paddingHorizontal: 20, paddingVertical: 10,  }}>
+        <View style={{ paddingHorizontal: 20, paddingVertical: 10, }}>
           <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Stats</Text>
-          <TouchableOpacity onPress={()=>{props.navigation.navigate('stats')}} style={{  marginTop: 15, padding: 20 , borderRadius:12, backgroundColor:'#181c3f', display:'flex', flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
+          <TouchableOpacity onPress={() => { props.navigation.navigate('stats') }} style={{ marginTop: 15, padding: 20, borderRadius: 9, borderWidth:2, borderColor:'orange', backgroundColor: '#181c3f', display: 'flex', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
             <View style={{ display: 'flex' }}>
-              <Text style={{color:'white', fontSize:17}}>Profit</Text>
-              <Text style={{color:'white', fontSize:17}}>Profit</Text>
-              <Text style={{color:'orange', fontWeight:'bold', fontSize:17}}>$600</Text>
+              <Text style={{ color: 'white', fontSize: 20 }}>Stats</Text>
+              <Text style={{ color: 'orange', fontWeight: 'bold', fontSize: 20 }}>Profit</Text>
+
             </View>
             <View>
-              <Image resizeMode='center' style={{width:70, height:70}} source={require('../images/dollar.png')} />
+              <Image resizeMode='center' style={{ width: 70, height: 70 }} source={require('../images/dollar.png')} />
             </View>
           </TouchableOpacity>
         </View>

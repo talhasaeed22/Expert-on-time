@@ -33,7 +33,7 @@ const Dashboard = ({navigation}) => {
               <TouchableOpacity onPress={()=>{navigation.navigate('NewJobs')}}>
                 <FeatureBox name='Jobs' Icon={MaterialComm} iconname='hammer-wrench' />
               </TouchableOpacity>
-              <TouchableOpacity  onPress={()=>{Alert.alert("Functionality Comming Soon")}}>
+              <TouchableOpacity  onPress={()=>{navigation.navigate('ongoing')}}>
                 <FeatureBox name='ongoing' Icon={MaterialComm} iconname='clock-check-outline' />
               </TouchableOpacity>
             </View>

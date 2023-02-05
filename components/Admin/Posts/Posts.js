@@ -7,6 +7,7 @@ import { useIsFocused } from "@react-navigation/native";
 
 const Posts = () => {
     const isFocused = useIsFocused();
+    const [foundPending, setFoundPending] = useState(false)
 
     const [list, setList] = useState([])
     const [loading, setLoading] = useState(false);
@@ -16,7 +17,24 @@ const Posts = () => {
         getPosts();
     }, [deleted, isFocused])
 
-    const getPosts = () => {
+    const checkPending = (id)=>{
+         firestore()
+        .collection('Pendings')
+        .get()
+        .then((querryData)=>{
+            querryData.forEach((doc)=>{
+                const {post} = doc.data();
+                if(post.id === id){
+                    setFoundPending(true)
+                }
+            })
+            
+        })
+       
+    }
+
+    const getPosts = async () => {
+        setFoundPending(false)
         const Data = [];
         setCount(0);
         let counted = 0;
@@ -26,21 +44,23 @@ const Posts = () => {
             .collection('posts')
             .get()
             .then((queryData) => {
-                queryData.forEach((doc) => {
-                    const { name, email, address, phone, postalCode, budget, price, brief, category } = doc.data();
-
-                    Data.push({
-                        id: doc.id,
-                        name: name,
-                        email: email,
-                        address: address,
-                        phone: phone,
-                        postalCode: postalCode,
-                        budget: budget,
-                        price: price,
-                        brief: brief,
-                        category: category
-                    })
+                queryData.forEach( async (doc) => {
+                    const { name, status, email, address, phone, postalCode, budget, price, brief, category } = doc.data();
+                    
+                        Data.push({
+                            id: doc.id,
+                            name: name,
+                            email: email,
+                            address: address,
+                            phone: phone,
+                            postalCode: postalCode,
+                            budget: budget,
+                            price: price,
+                            brief: brief,
+                            category: category,
+                            status:status
+                        })
+                    
                     counted++;
 
                 })
