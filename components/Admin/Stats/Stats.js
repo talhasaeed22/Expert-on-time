@@ -51,7 +51,7 @@ const Stats = () => {
 
   const widthAndHeight = 250
   const series = [budget, profit, price]
-  const sliceColor = ['#FF0000', '#99CC99', '#00008B']
+  const sliceColor = ['#FF0000', '#228b22', '#00008B']
 
   return (
     <>
@@ -82,7 +82,7 @@ const Stats = () => {
           <Text style={{ fontSize: 20, color: '#FF0000', fontWeight: 'bold' }}>{budget}$</Text>
         </View>
         <View style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: "center" }}>
-          <Entypo name='dot-single' size={23} color='#99CC99' />
+          <Entypo name='dot-single' size={23} color='#228b22' />
           <Text style={{ fontSize: 20, color: "#228b22", fontWeight: 'bold' }}>{profit}$</Text>
         </View>
       </View>
@@ -105,8 +105,8 @@ const Stats = () => {
           <Text style={{ fontSize: 20, color: '#FF0000', fontWeight: 'bold' }}>Budget</Text>
         </View>
         <View style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: "center" }}>
-          <Entypo name='dot-single' size={23} color='#99CC99' />
-          <Text style={{ fontSize: 20, color: "#99CC99", fontWeight: 'bold' }}>Profit</Text>
+          <Entypo name='dot-single' size={23} color='#228b22' />
+          <Text style={{ fontSize: 20, color: "#228b22", fontWeight: 'bold' }}>Profit</Text>
         </View>
       </View>
     </ScrollView> }

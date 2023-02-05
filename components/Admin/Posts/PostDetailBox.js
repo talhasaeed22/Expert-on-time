@@ -14,7 +14,7 @@ const PostDetailBox = ({ element, index, deletePost }) => {
                     <Text style={{ fontSize: 15 }}>{element.name}</Text>
                 </View>
                 <View >
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: element.status === 'Ongoing' ? 'orange' : "black" }}>{element.status}</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: element.status === 'Ongoing' ? 'orange' : (element.status === 'New' ? "black" : 'green') }}>{element.status}</Text>
                     <Text style={{ fontSize: 15 }}>{''}</Text>
                 </View>
             </View>

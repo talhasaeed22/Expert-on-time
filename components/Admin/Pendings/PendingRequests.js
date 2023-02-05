@@ -26,8 +26,8 @@ const PendingRequests = () => {
                         handymanID, handymanID,
                         postID: postID,
                         post: post,
-                        handymanName:handymanName,
-                        handymanEmail:handymanEmail
+                        handymanName: handymanName,
+                        handymanEmail: handymanEmail
                     })
                 })
 
@@ -40,21 +40,38 @@ const PendingRequests = () => {
             })
     }
 
-    const acceptJob = (post, key)=>{
+    const acceptJob = (post, key, postid) => {
         firestore()
-        .collection('Accepted')
-        .add({
-            acceptedPost:post
-        }).then(()=>{
-            Alert.alert('Post Accepted')
-            firestore().collection('Pendings').doc(key)
+            .collection('Accepted')
+            .add({
+                acceptedPost: post
+            }).then(() => {
+                Alert.alert('Post Accepted')
+                firestore().collection('Pendings').doc(key)
+                    .delete()
+                    .then(() => {
+                        firestore()
+                            .collection('posts')
+                            .doc(postid)
+                            .update({
+                                status: 'Ongoing'
+                            })
+                        setUpdate(!update)
+                    })
+            }).catch((err) => {
+                console.log(err)
+            })
+    }
+
+    const rejectJob = (key) => {
+        firestore()
+            .collection('Pendings').doc(key)
             .delete()
             .then(() => {
-              setUpdate(!update)
+                setUpdate(!update)
+            }).catch((err)=>{
+                console.log(err);
             })
-        }).catch((err)=>{
-            console.log(err)
-        })
     }
     return (
 
@@ -66,8 +83,8 @@ const PendingRequests = () => {
                     <Text style={styles.primaryHeading}>Pending Requests</Text>
                 </View>
                 {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
-                    return <AdminPendingsBox acceptJob={acceptJob} key={index} element={element} index={index} />
-                    
+                    return <AdminPendingsBox rejectJob={rejectJob} acceptJob={acceptJob} key={index} element={element} index={index} />
+
                 }) :
                     <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>
                         <Icon name='folder-text-outline' size={35} color='black' />
