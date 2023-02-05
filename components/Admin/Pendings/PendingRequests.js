@@ -47,7 +47,7 @@ const PendingRequests = () => {
                     <Text style={styles.primaryHeading}>Pending Requests</Text>
                 </View>
                 {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
-                    return <AdminPendingsBox element={element} index={index} />
+                    return <AdminPendingsBox key={index} element={element} index={index} />
                     
                 }) :
                     <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>

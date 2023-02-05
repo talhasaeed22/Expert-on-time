@@ -17,6 +17,7 @@ const Home = ({ navigation, }) => {
   const [postCount, setpostCount] = useState(0)
   const [pendingCount, setpendingCount] = useState(0)
   const [activeCount, setActiveCount] = useState(0)
+  const [recentPost, setRecentPost] = useState(0)
   const [loading, setLoading] = useState(false)
   const getPosts = () => {
 
@@ -58,6 +59,26 @@ const Home = ({ navigation, }) => {
 
       })
   }
+  const getOrders = () => {
+
+    setRecentPost(0);
+    let counted = 0;
+    firestore()
+      .collection('Recent')
+      .get()
+      .then((queryData) => {
+        queryData.forEach((doc) => {
+
+          counted++;
+        })
+        setRecentPost(counted);
+
+      }).catch((err) => {
+        console.log(err)
+
+
+      })
+  }
   return (
     <ScrollView>
       <View style={{ backgroundColor: 'white', paddingLeft: 20, paddingRight: 20, borderTopWidth: 1, borderColor: 'lightgray' }}>
@@ -66,7 +87,7 @@ const Home = ({ navigation, }) => {
           <HomeBox navigation={navigation} id="Posts" Icon={Icon} bgcolor='#4e75ec' iconname='post-outline' heading="Total Posts" loading={loading} count={postCount} />
           <HomeBox navigation={navigation} id="Active Posts" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Active Posts" loading={loading} count={postCount} />
           <HomeBox navigation={navigation} id="Pendings" Icon={Entypo} bgcolor='#4e75ec' iconname='hour-glass' heading="Waiting for Approval" loading={loading} count={pendingCount} />
-          <HomeBox navigation={navigation} id="Accepted" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Accepted Posts" loading={loading} count={pendingCount} />
+          <HomeBox navigation={navigation} id="Recent" Icon={Icon} bgcolor='#f8c42a' iconname="face-man-outline" heading="Orders Completed" loading={loading} count={recentPost} />
         </View>
 
 

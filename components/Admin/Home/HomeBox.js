@@ -31,6 +31,8 @@ const HomeBox = ({ iconname, Icon, heading, bgcolor, id, navigation, loading, co
             navigation.navigate('PendingRequests')
         }else if(id === 'Posts'){
             navigation.navigate('Posts')
+        }else if(id === 'Recent'){
+            navigation.navigate('RecentJobs')
         }
     }
     return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button, Image, View, Text, Alert } from 'react-native';
+import { Button, Image, View, Text, Alert, TouchableOpacity } from 'react-native';
 import auth from '@react-native-firebase/auth'
 import { Avatar } from 'react-native-paper';
 import { StackActions } from '@react-navigation/native';
@@ -16,6 +16,7 @@ import Material from 'react-native-vector-icons/MaterialIcons'
 import FAwesome from 'react-native-vector-icons/FontAwesome'
 import IonIcon from 'react-native-vector-icons/Ionicons'
 import Entypo from 'react-native-vector-icons/Entypo'
+import HomeBox from './Admin/Home/HomeBox';
 
 const MyDrawer = (props) => {
 
@@ -49,7 +50,7 @@ const MyDrawer = (props) => {
             <Text style={{ marginLeft: 15, fontWeight: 'bold', color: 'gray' }}> {auth().currentUser && auth().currentUser.email} </Text>
           </View>
         </View>
-        <View style={{ borderTopWidth: 1, marginBottom:15, borderTopColor: 'lightgray' }}></View>
+        <View style={{ borderTopWidth: 1, marginBottom: 15, borderTopColor: 'lightgray' }}></View>
 
         <View style={{ marginTop: 15, flexDirection: 'column', marginLeft: 10 }}>
 
@@ -85,6 +86,21 @@ const MyDrawer = (props) => {
           />
 
 
+        </View>
+
+        <View style={{ borderTopWidth: 1, marginBottom: 15, borderTopColor: 'lightgray' }}></View>
+        <View style={{ paddingHorizontal: 20, paddingVertical: 10,  }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Stats</Text>
+          <TouchableOpacity onPress={()=>{props.navigation.navigate('stats')}} style={{  marginTop: 15, padding: 20 , borderRadius:12, backgroundColor:'#181c3f', display:'flex', flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
+            <View style={{ display: 'flex' }}>
+              <Text style={{color:'white', fontSize:17}}>Profit</Text>
+              <Text style={{color:'white', fontSize:17}}>Profit</Text>
+              <Text style={{color:'orange', fontWeight:'bold', fontSize:17}}>$600</Text>
+            </View>
+            <View>
+              <Image resizeMode='center' style={{width:70, height:70}} source={require('../images/dollar.png')} />
+            </View>
+          </TouchableOpacity>
         </View>
 
 
