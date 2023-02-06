@@ -39,7 +39,9 @@ const [loading, setLoading] = useState(false)
         budget:budget,
         price:price,
         brief:brief,
-        category:category
+        handyman:[],
+        category:category,
+        status:'New'
       })
       .then(() => {
         setLoading(false)

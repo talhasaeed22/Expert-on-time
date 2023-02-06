@@ -76,7 +76,14 @@ const NewJob = ({ navigation, route }) => {
           const { name, email, address, phone, postalCode, budget, brief, price, category, status, handyman } = doc.data();
           //  checkPending(doc.id)
           //  checkAccepted(doc.id)
-          if (status === 'new' && handyman !== auth().currentUser.uid) {
+          let found = false
+          handyman.forEach((doc)=>{
+            if(doc === auth().currentUser.uid){
+              found = true;
+            }
+          })
+          
+          if (status === 'New' && !found) {
             Data.push({
               id: doc.id,
               name: name,
@@ -88,7 +95,8 @@ const NewJob = ({ navigation, route }) => {
               price: price,
               brief: brief,
               category: category,
-              status:status
+              status:status,
+              handyman:handyman
             })
           }
 

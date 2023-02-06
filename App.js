@@ -10,16 +10,10 @@ import HandymanHome from './components/HandymanHome';
 
 
 function App() {
-  const navTheme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      background: 'transparent',
-    },
-  };
+  
   const Stack = createStackNavigator();
   return (
-    <NavigationContainer theme={navTheme}>
+    <NavigationContainer >
       <Stack.Navigator>
       <Stack.Screen options={{
                 title: '', headerShown:false

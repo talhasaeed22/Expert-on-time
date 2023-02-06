@@ -91,7 +91,7 @@ const AdminPendingsBox = ({ element, index, acceptJob, rejectJob }) => {
             </View>
             <View style={{ alignItems: 'flex-end' }}>
                 <View style={{ paddingVertical: 15, display: 'flex', flexDirection: "row", gap: 10 }}>
-                    <TouchableOpacity onPress={() => {acceptJob(element, element.id, element.post.id)  }}>
+                    <TouchableOpacity onPress={() => {acceptJob(element, element.id, element.post)  }}>
                         <Button buttonColor='#03b944' labelStyle={{ fontSize: 15, fontWeight: "bold", textAlign: "center" }} color='white' style={{ padding: 5, borderRadius: 10 }} mode="contained">
                             Accept
                         </Button>

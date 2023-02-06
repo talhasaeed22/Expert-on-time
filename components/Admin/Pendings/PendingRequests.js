@@ -40,27 +40,112 @@ const PendingRequests = () => {
             })
     }
 
-    const acceptJob = (post, key, postid) => {
-        firestore()
-            .collection('Accepted')
-            .add({
-                acceptedPost: post
-            }).then(() => {
-                Alert.alert('Post Accepted')
-                firestore().collection('Pendings').doc(key)
-                    .delete()
-                    .then(() => {
+    const acceptJob = (toBePost, key, post) => {
+        let handymans = [];
+        firestore().collection('posts').get().then((snapshot) => {
+            snapshot.forEach((doc) => {
+                if (doc.id === post.id) {
+                    const { handyman } = doc.data();
+                    handyman.forEach((handy) => {
+                        handymans.push(handy);
+                    })
+                }
+            })
+            firestore()
+                .collection('Accepted')
+                .add({
+                    acceptedPost: toBePost
+                }).then(() => {
+                    //Deleting from Pendings
+                    let ids = []
+                    firestore().collection('Pendings').get().then((document) => {
+                        document.forEach((doc) => {
+                            const { handymanID, postID } = doc.data();
+                            handymans.forEach((hand) => {
+                                if (hand === handymanID && post.id === postID) {
+                                    ids.push(doc.id)
+                                }
+                            })
+                        })
+                        ids.forEach((id) => {
+                            firestore().collection('Pendings').doc(id).delete().then(()=>{})
+                        })
                         firestore()
                             .collection('posts')
-                            .doc(postid)
+                            .doc(post.id)
                             .update({
                                 status: 'Ongoing'
+                            }).then(()=>{
+                                Alert.alert('Request Accepted');
+                                setUpdate(!update)
+                            }).catch((err) => {
+                                console.log(err)
                             })
-                        setUpdate(!update)
+                    }).catch((err) => {
+                        console.log(err)
                     })
-            }).catch((err) => {
-                console.log(err)
-            })
+
+                }).catch(() => {
+                    console.log(err);
+                })
+        }).catch((err) => {
+            console.log(err)
+        })
+
+        // firestore()
+        //     .collection('Accepted')
+        //     .add({
+        //         acceptedPost: toBePost
+        //     }).then(() => {
+        //         firestore()
+        //             .collection('posts')
+        //             .doc(post.id)
+        //             .update({
+        //                 status: 'Ongoing',
+        //                 handyman: toBePost.handymanID
+        //             }).then(() => {
+        //                 let handymans = [];
+        //                 firestore().collection('posts').get().then((snapshot)=>{
+        //                     snapshot.forEach((doc)=>{
+        //                         if(doc.id === post.id){
+        //                             const {handyman} = doc.data();
+        //                             handyman.forEach((handy)=>{
+        //                                 handymans.push(handy);
+        //                             })
+        //                         }
+        //                     })
+        //                 })
+
+        //                 let ids = []
+        //                 firestore().collection('Pendings').get().then((document)=>{
+        //                     document.forEach((doc)=>{
+        //                         const {handymanID} = doc.data();
+        //                         handymans.forEach((hand)=>{
+        //                             if(hand === handymanID){
+        //                                 ids.push(doc.id)
+        //                             }
+        //                         })
+        //                     })
+        //                 }).then(()=>{
+        //                     ids.forEach((id)=>{
+        //                         firestore()
+        //                         .collection('Pendings').doc(id).delete()
+        //                     })
+        //                 })
+        //                 firestore().collection('Pendings').doc(key)
+        //                     .delete()
+        //                     .then(() => {
+        //                         Alert.alert('Post Accepted')
+        //                         setUpdate(!update)
+        //                     })
+        //             }).catch((err) => {
+        //                 console.log(err)
+        //             })
+        //     }).catch((err) => {
+        //         console.log(err)
+        //     })
+
+
     }
 
     const rejectJob = (key) => {
@@ -69,7 +154,7 @@ const PendingRequests = () => {
             .delete()
             .then(() => {
                 setUpdate(!update)
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(err);
             })
     }

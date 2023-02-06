@@ -6,7 +6,7 @@ import { useIsFocused } from "@react-navigation/native";
 import firestore from '@react-native-firebase/firestore'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import PendingsBox from './PendingsBox';
-
+import auth from '@react-native-firebase/auth'
 const HandymanPendings = ({ navigation }) => {
   const isFocused = useIsFocused();
 
@@ -28,12 +28,14 @@ const HandymanPendings = ({ navigation }) => {
       .then((queryData) => {
         queryData.forEach((doc) => {
           const { handymanID, postID, post } = doc.data();
-          Data.push({
-            id: doc.id,
-            handymanID, handymanID,
-            postID: postID,
-            post: post
-          })
+          if(handymanID === auth().currentUser.uid){
+            Data.push({
+              id: doc.id,
+              handymanID, handymanID,
+              postID: postID,
+              post: post
+            })
+          }
         })
 
         setList(Data)
