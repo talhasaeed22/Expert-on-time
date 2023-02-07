@@ -6,13 +6,80 @@ import FeatureBox from './FeatureBox'
 import MaterialComm from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Entypo from 'react-native-vector-icons/Entypo'
+import firestore from '@react-native-firebase/firestore'
+import auth from '@react-native-firebase/auth'
+import { useIsFocused } from '@react-navigation/native'
 const Dashboard = ({navigation}) => {
+  const isFocus = useIsFocused();
   const [updated, setUpdated] = useState(false)
   useEffect(()=>{
-    navigation.navigate('Home')
-  }, [updated])
+    
+    getOngoing();
+    getPendings();
+    getCompleted();
+  }, [updated, isFocus])
   const changeFocus = ()=>{
     setUpdated(!updated)
+  }
+  const [ongoingCount, setOngoingCount] = useState('-')
+  const [pendingCount, setPendingCount] = useState('-')
+  const [completedCount, setCompletedCount] = useState('-')
+  const getOngoing = ()=>{
+    let counted = 0;
+    firestore()
+      .collection('Accepted')
+      .get()
+      .then((queryData) => {
+        queryData.forEach((doc) => {
+          const { acceptedPost } = doc.data();
+          if(acceptedPost.handymanID === auth().currentUser.uid){
+            counted ++;
+          }
+        })
+        setOngoingCount(counted)
+      }).catch((err) => {
+        console.log(err)
+        
+      })
+  }
+  const getPendings = ()=>{
+    let counted = 0;
+    firestore()
+      .collection('Pendings')
+      .get()
+      .then((queryData) => {
+        queryData.forEach((doc) => {
+          const { handymanID } = doc.data();
+          if(handymanID === auth().currentUser.uid){
+            counted ++;
+          }
+        })
+        setPendingCount(counted)
+      }).catch((err) => {
+        console.log(err)
+        
+
+      })
+  }
+  const getCompleted = ()=>{
+    let counted = 0;
+    firestore()
+      .collection('Recent')
+      .get()
+      .then((queryData) => {
+        queryData.forEach((doc) => {
+          const { JobDone } = doc.data();
+          if(JobDone.handymanID === auth().currentUser.uid){
+            counted++
+          }
+        })
+        setCompletedCount(counted)
+        
+      }).catch((err) => {
+        console.log(err)
+        
+
+      })
   }
   return (
     <ScrollView>
@@ -20,9 +87,9 @@ const Dashboard = ({navigation}) => {
       <Navigation changeFocus={changeFocus} navigation={navigation} />
       <View style={{ paddingVertical: 20, backgroundColor: "#5e48db", borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
         <View style={{ display: "flex", paddingHorizontal: 15, flexDirection: 'row', justifyContent: "space-around", paddingBottom: 15 }}>
-          <HomeBox number={23} para1="Completed" para2={'Jobs'} />
-          <HomeBox number={12} para1="New Posts" para2={'View'} />
-          {/* <HomeBox /> */}
+          <HomeBox number={completedCount} para1="Completed" para2={'Jobs'} />
+          <HomeBox number={pendingCount} para1="  Pending  " para2={'Jobs'} />
+          <HomeBox number={ongoingCount} para1="  Ongoing  " para2={'Jobs'} />
         </View>
 
 

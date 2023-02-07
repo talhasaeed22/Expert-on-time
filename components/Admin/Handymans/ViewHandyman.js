@@ -4,6 +4,7 @@ import firestore from '@react-native-firebase/firestore'
 import HandymanBox from './HandymanBox'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useIsFocused } from "@react-navigation/native";
+import Messagemodal from '../../Messagemodal'
 
 const ViewHandyman = () => {
   const isFocused = useIsFocused();
@@ -12,7 +13,12 @@ const ViewHandyman = () => {
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0)
   const [deleted, setDeleted] = useState(false)
-
+  const [modalVisible, setModalVisible] = useState(false)
+  const [message, setMessage] = useState('')
+  const [title, setTitle] = useState('')
+  const CloseModal = () => {
+      setModalVisible(false);
+  }
   useEffect(() => {
     getHandymans();
   }, [deleted, isFocused])
@@ -55,7 +61,9 @@ const ViewHandyman = () => {
       .doc(key)
       .delete()
       .then(() => {
-        Alert.alert('Success', 'Deleted Successfully')
+        setTitle('Success')
+        setMessage('Handyman Deleted')
+        setModalVisible(true);
         // setList(null)
         setDeleted(!deleted)
       })
@@ -91,6 +99,8 @@ const ViewHandyman = () => {
 
         }
         <View style={{ paddingTop: 100 }}></View>
+        <Messagemodal title={title} modalVisible={modalVisible} CloseModal={CloseModal} message={message} />
+
       </ScrollView>
     </>
   )

@@ -1,7 +1,7 @@
 import { View, Text, Modal, Alert, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 
-const Messagemodal = ({modalVisible, CloseModal, message}) => {
+const Messagemodal = ({modalVisible, CloseModal, message, title}) => {
   return (
     <Modal
     animationType="slide"
@@ -13,7 +13,11 @@ const Messagemodal = ({modalVisible, CloseModal, message}) => {
     }}>
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
-        <Text style={styles.warningText}>Warning!</Text>
+        <Text style={{textAlign: 'left',
+        fontSize: 25,
+        marginBottom: 15,
+        fontWeight: 'bold',
+        color: title === 'Warning' ? '#FFCC00' : 'green'}}>{title}!</Text>
         <Text style={styles.modalText}>{message}</Text>
         <TouchableOpacity
           style={[styles.button, styles.buttonClose]}
@@ -81,11 +85,7 @@ const styles = StyleSheet.create({
         fontSize:17
       },
       warningText: {
-        textAlign: 'left',
-        fontSize: 25,
-        marginBottom: 15,
-        fontWeight: 'bold',
-        color: '#FFCC00'
+        
       }
 })
 export default Messagemodal

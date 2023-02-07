@@ -1,9 +1,10 @@
-import { View, Text, ScrollView, StyleSheet, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import PostDetailBox from './PostDetailBox'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useIsFocused } from "@react-navigation/native";
+import Messagemodal from '../../Messagemodal'
 
 const Posts = () => {
     const isFocused = useIsFocused();
@@ -13,24 +14,30 @@ const Posts = () => {
     const [loading, setLoading] = useState(false);
     const [deleted, setDeleted] = useState(false)
     const [count, setCount] = useState(0)
+    const [modalVisible, setModalVisible] = useState(false)
+    const [message, setMessage] = useState('')
+    const [title, setTitle] = useState('')
+    const CloseModal = () => {
+        setModalVisible(false);
+    }
     useEffect(() => {
         getPosts();
     }, [deleted, isFocused])
 
-    const checkPending = (id)=>{
-         firestore()
-        .collection('Pendings')
-        .get()
-        .then((querryData)=>{
-            querryData.forEach((doc)=>{
-                const {post} = doc.data();
-                if(post.id === id){
-                    setFoundPending(true)
-                }
+    const checkPending = (id) => {
+        firestore()
+            .collection('Pendings')
+            .get()
+            .then((querryData) => {
+                querryData.forEach((doc) => {
+                    const { post } = doc.data();
+                    if (post.id === id) {
+                        setFoundPending(true)
+                    }
+                })
+
             })
-            
-        })
-       
+
     }
 
     const getPosts = async () => {
@@ -44,23 +51,23 @@ const Posts = () => {
             .collection('posts')
             .get()
             .then((queryData) => {
-                queryData.forEach( async (doc) => {
+                queryData.forEach(async (doc) => {
                     const { name, status, email, address, phone, postalCode, budget, price, brief, category } = doc.data();
-                    
-                        Data.push({
-                            id: doc.id,
-                            name: name,
-                            email: email,
-                            address: address,
-                            phone: phone,
-                            postalCode: postalCode,
-                            budget: budget,
-                            price: price,
-                            brief: brief,
-                            category: category,
-                            status:status
-                        })
-                    
+
+                    Data.push({
+                        id: doc.id,
+                        name: name,
+                        email: email,
+                        address: address,
+                        phone: phone,
+                        postalCode: postalCode,
+                        budget: budget,
+                        price: price,
+                        brief: brief,
+                        category: category,
+                        status: status
+                    })
+
                     counted++;
 
                 })
@@ -80,8 +87,9 @@ const Posts = () => {
             .doc(key)
             .delete()
             .then(() => {
-                Alert.alert('Post Deleted Successfully')
-                // setList(null)
+                setTitle('Success')
+                setMessage('Post Deleted')
+                setModalVisible(true);
                 setDeleted(!deleted)
             })
 
@@ -114,6 +122,7 @@ const Posts = () => {
                         <Text style={{ textAlign: "center", fontWeight: "bold" }}>No Posts Added</Text>
                     </View>)}
                 <View style={{ paddingTop: 150 }}></View>
+                <Messagemodal title={title} modalVisible={modalVisible} CloseModal={CloseModal} message={message} />
 
             </ScrollView>
         </View>

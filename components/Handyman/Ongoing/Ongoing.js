@@ -6,7 +6,7 @@ import { useIsFocused } from "@react-navigation/native";
 import firestore from '@react-native-firebase/firestore'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import OngoingBox from './OngoingBox';
-
+import auth from '@react-native-firebase/auth'
 const Ongoing = ({navigation}) => {
     const isFocused = useIsFocused();
 
@@ -28,10 +28,12 @@ const Ongoing = ({navigation}) => {
       .then((queryData) => {
         queryData.forEach((doc) => {
           const { acceptedPost } = doc.data();
-          Data.push({
-            id:doc.id,
-            acceptedJobs:acceptedPost
-          })
+          if(acceptedPost.handymanID === auth().currentUser.uid){
+            Data.push({
+              id:doc.id,
+              acceptedJobs:acceptedPost
+            })
+          }
         })
 
         setList(Data)
@@ -58,7 +60,7 @@ const Ongoing = ({navigation}) => {
                 .update({
                   status:"Finished"
                 })
-                Alert.alert('Job Finished')
+                Alert.alert('Success', 'Job Finished')
             })
         }).catch((err)=>{
             console.log(err)

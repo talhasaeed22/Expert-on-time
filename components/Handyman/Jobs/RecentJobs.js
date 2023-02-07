@@ -7,7 +7,7 @@ import { useIsFocused } from "@react-navigation/native";
 import firestore from '@react-native-firebase/firestore'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import RecentJobBox from './RecentJobBox'
-
+import auth from '@react-native-firebase/auth'
 const RecentJobs = ({navigation, route}) => {
     const isFocused = useIsFocused();
   const [list, setList] = useState([])
@@ -28,10 +28,11 @@ const RecentJobs = ({navigation, route}) => {
       .then((queryData) => {
         queryData.forEach((doc) => {
           const { JobDone } = doc.data();
-
-          Data.push({
-            JobDone:JobDone
-          })
+          if(JobDone.handymanID === auth().currentUser.uid){
+            Data.push({
+              JobDone:JobDone
+            })
+          }
           
 
         })

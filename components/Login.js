@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Avatar, TextInput, Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import { StackActions } from '@react-navigation/native';
+import Messagemodal from './Messagemodal';
 
 
 const Login = ({ navigation }) => {
@@ -10,12 +11,19 @@ const Login = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
+    const [message, setMessage] = useState('')
+    const [title, setTitle] = useState('')
+    const CloseModal = () => {
+        setModalVisible(false);
+    }
     const handleLogin = () => {
         if (email === '' || password === '') {
-            Alert.alert(
-                'Warning',
-                'Please fill all the required Fields!'
-            );
+
+            setTitle('Warning')
+            setMessage('Please fill all the required Fields!')
+            setModalVisible(true);
+
         } else {
             Keyboard.dismiss();
             setEmail(email.toLowerCase())
@@ -24,34 +32,34 @@ const Login = ({ navigation }) => {
                 .signInWithEmailAndPassword(email, password)
                 .then((userCred) => {
                     setLoading(false)
-                   if(email === 'Admin@firebase.com' || email === 'admin@firebase.com'){
-                    navigation.dispatch(
-                        StackActions.replace('AdminHome')
-                    );
-                   }else{
-                    navigation.dispatch(
-                        StackActions.replace('HandymanHome')
-                    );
-                   }
+                    if (email === 'Admin@firebase.com' || email === 'admin@firebase.com') {
+                        navigation.dispatch(
+                            StackActions.replace('AdminHome')
+                        );
+                    } else {
+                        navigation.dispatch(
+                            StackActions.replace('HandymanHome')
+                        );
+                    }
                 })
                 .catch((error) => {
                     setLoading(false)
 
                     if (error.code === 'auth/invalid-email') {
-                        Alert.alert(
-                            'Warning',
-                            'That email address is invalid!'
-                        );
+                        setTitle('Warning')
+                        setMessage('That email address is invalid!')
+                        setModalVisible(true);
+
                     } else if (error.code === 'auth/wrong-password') {
-                        Alert.alert(
-                            'Warning',
-                            'The Password is invalid!'
-                        );
+                        setTitle('Warning')
+                        setMessage('The Password is invalid!')
+                        setModalVisible(true);
+                        
                     } else if (error.code === 'auth/user-not-found') {
-                        Alert.alert(
-                            'Warning',
-                            'Please Enter Valid Credentials'
-                        );
+                        setTitle('Warning')
+                        setMessage('Please Enter Valid Credentials!')
+                        setModalVisible(true);
+                     
                     }
                 })
         }
@@ -63,7 +71,7 @@ const Login = ({ navigation }) => {
                 <ScrollView>
                     <View style={styles.container}>
                         <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <Image resizeMode='center' style={{ height: 60, }} source={require('../images/Logo1.jpeg')} size={100} />
+                            <Image resizeMode='center' style={{ height: 60, }} source={require('../images/mainlogo.jpeg')} size={100} />
                             {/* <Text style={styles.title}>Expert on Time</Text> */}
                             <Text>EST 2021</Text>
                         </View>
@@ -96,6 +104,8 @@ const Login = ({ navigation }) => {
               Signup with google
             </Button> */}
                 </View>
+                <Messagemodal title={title} modalVisible={modalVisible} CloseModal={CloseModal} message={message} />
+
             </View>
 
 

@@ -26,12 +26,14 @@ const AddHandyman = ({navigation}) => {
   const [category, setCategory] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const [message, setMessage] = useState('')
+
   const CloseModal = ()=>{
     setModalVisible(false);
   }
   const handleHandyman = () => {
    if(fname === '' || lname === '' || email === '' || password === '' || cpassword === '' || phone === '' || category === ''){
     setMessage('Please fill all the required fields!')
+    
     setModalVisible(true);
    }else if(password !== cpassword){
     setMessage('Password does not match!')
@@ -59,12 +61,14 @@ const AddHandyman = ({navigation}) => {
               displayName: fname + ' ' + lname
             })
             auth().signOut().then(()=>{
-              auth().signInWithEmailAndPassword('admin@firebase.com', 'Admin123')
+              auth().signInWithEmailAndPassword('admin@firebase.com', 'Admin123').then(()=>{
+                console.log('hello');
+              })
             }).catch((err)=>{console.log(err)})
           }).catch((err)=>{console.log(err)})
         }).catch((err)=>{console.log(err)})
         setLoading(false)
-        console.log('Handyman Added')
+        
         navigation.navigate('ViewHandymans')
       })
       .catch((err) => {
@@ -133,7 +137,7 @@ const AddHandyman = ({navigation}) => {
 
       </View>
       <View style={{ paddingTop: 70 }}></View>
-      <Messagemodal modalVisible={modalVisible} CloseModal={CloseModal} message={message} />
+      <Messagemodal title={'Warning'} modalVisible={modalVisible} CloseModal={CloseModal} message={message} />
 
     </ScrollView>
   )

@@ -30,12 +30,13 @@ const CreatePost = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [message, setMessage] = useState('')
+ 
   const CloseModal = ()=>{
     setModalVisible(false);
   }
   const handlePosts = () => {
     if (fname === '' || lname === '' || email === '' || address === '' || phone === '' || postalCode === '' || budget === '' || price === '' || brief === '' || category === '') {
-      // Alert.alert('Please Fill All the Required Fields')
+      
       setMessage('Please fill all the required fields!')
       setModalVisible(true);
     }else if(parseInt(budget) < parseInt(price)){
@@ -152,7 +153,7 @@ const CreatePost = ({ navigation }) => {
 
         </View>
         <View style={{ paddingTop: 70 }}></View>
-        <Messagemodal modalVisible={modalVisible} CloseModal={CloseModal} message={message} />
+        <Messagemodal title={'Warning'} modalVisible={modalVisible} CloseModal={CloseModal} message={message} />
       </ScrollView>
     </>
   )

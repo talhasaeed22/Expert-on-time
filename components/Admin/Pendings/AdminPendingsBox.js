@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native'
 import React from 'react'
 import { Button } from 'react-native-paper';
 
-const AdminPendingsBox = ({ element, index, acceptJob, rejectJob }) => {
+const AdminPendingsBox = ({ element, index, acceptJob, rejectJob, acceptLoading }) => {
 
     const styles = StyleSheet.create({
 
@@ -101,14 +101,14 @@ const AdminPendingsBox = ({ element, index, acceptJob, rejectJob }) => {
             </View>
             <View style={{ alignItems: 'flex-end' }}>
                 <View style={{ paddingVertical: 15, display: 'flex', flexDirection: "row", gap: 10 }}>
-                    <TouchableOpacity onPress={() => { acceptJob(element, element.id, element.post) }}>
-                        <Button buttonColor='#03b944' labelStyle={{ fontSize: 15, fontWeight: "bold", textAlign: "center" }} color='white' style={{ padding: 5, borderRadius: 10 }} mode="contained">
-                            Accept
+                    <TouchableOpacity onPress={() => { !acceptLoading && acceptJob(element, element.id, element.post) }}>
+                        <Button disabled={acceptLoading} buttonColor='#03b944' labelStyle={{ fontSize: 15, fontWeight: "bold", textAlign: "center" }} color='white' style={{ padding: 5, borderRadius: 10 }} mode="contained">
+                            {acceptLoading ? <ActivityIndicator/> : 'Accept'}
                         </Button>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { rejectJob(element.id) }}>
+                    <TouchableOpacity onPress={() => { !acceptLoading && rejectJob(element.id)  }}>
                         <Button buttonColor='red' labelStyle={{ fontSize: 15, fontWeight: "bold", textAlign: "center" }} color='white' style={{ padding: 5, borderRadius: 10 }} mode="contained">
-                            Reject
+                        {acceptLoading ? <ActivityIndicator /> : 'Reject'}
                         </Button>
                     </TouchableOpacity>
 

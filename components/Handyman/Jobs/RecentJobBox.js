@@ -44,7 +44,7 @@ const RecentJobBox = ({ index, element, }) => {
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Status</Text>
-                            <Text style={{ fontSize: 17, color: '#0d98ba', fontWeight: 'bold' }}>{'Finished'}</Text>
+                            <Text style={{ fontSize: 17, color: 'green', fontWeight: 'bold' }}>{'Finished'}</Text>
 
                         </View>
 

@@ -30,7 +30,7 @@ const JobsBox = ({ index,element, changeFocus, navigation }) => {
             .update({
                 handyman:handymans
             })
-            Alert.alert('Please wait for confirmation');
+            Alert.alert('Success', 'Please wait for confirmation');
             navigation.navigate('Pendings')
         })
         .catch((err)=>{
