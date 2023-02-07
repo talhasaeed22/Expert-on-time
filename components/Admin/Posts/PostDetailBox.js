@@ -9,15 +9,20 @@ const PostDetailBox = ({ element, index, deletePost }) => {
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
 
                 <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Name</Text>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Post ID</Text>
 
-                    <Text style={{ fontSize: 15 }}>{element.name}</Text>
+                    <Text style={{ fontSize: 15, fontWeight:"bold" }}>{element.id}</Text>
                 </View>
                 <View >
                     <Text style={{ fontSize: 18, fontWeight: 'bold', color: element.status === 'Ongoing' ? 'orange' : (element.status === 'New' ? "black" : 'green') }}>{element.status}</Text>
                     <Text style={{ fontSize: 15 }}>{''}</Text>
                 </View>
             </View>
+            <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Name</Text>
+
+                    <Text style={{ fontSize: 15 }}>{element.name}</Text>
+                </View>
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                 <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Email</Text>
 
@@ -55,9 +60,9 @@ const PostDetailBox = ({ element, index, deletePost }) => {
             </View>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                    <Text style={{ fontSize: 17, }}>Category</Text>
+                    <Text style={{ fontSize: 17,fontWeight: 'bold', color: 'black' }}>Category</Text>
 
-                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'black' }}>{element.category}</Text>
+                    <Text style={{ fontSize: 15,  }}>{element.category}</Text>
                 </View>
                 <View style={{ paddingTop: 8 }}>
                     <TouchableOpacity onPress={()=>{deletePost(element.id)}}>

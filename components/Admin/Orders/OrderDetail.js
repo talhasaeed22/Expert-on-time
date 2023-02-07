@@ -50,13 +50,13 @@ const OrderDetail = ({navigation, route}) => {
                     <Text style={styles.bold}>Handyman Name</Text>
                     <Text>{acceptedPost.handymanName}</Text>
                 </View>
-                <View>
+                <View style={{borderBottomWidth:1, paddingBottom:10, borderBottomColor:"lightgray"}}>
                     <Text style={styles.bold}>Handyman Email</Text>
                     <Text>{acceptedPost.handymanEmail}</Text>
                 </View>
                 
 
-                <View style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', marginTop: 20 }}>
+                <View style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', marginTop: 10, }}>
                     <View>
                         <Text style={{ fontSize: 17 }}>Category</Text>
 

@@ -1,19 +1,21 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Alert, Modal } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Avatar, TextInput, Button } from 'react-native-paper';
 import SelectDropdown from 'react-native-select-dropdown'
 import { SelectList } from 'react-native-dropdown-select-list'
 import Icon from 'react-native-vector-icons/AntDesign'
 import firestore from '@react-native-firebase/firestore'
-
-const CreatePost = ({navigation}) => {
+import Foundation from 'react-native-vector-icons/Foundation'
+import Messagemodal from '../../Messagemodal';
+const CreatePost = ({ navigation }) => {
 
   const data = [
-    { key: '1', value: 'Plumber', },
-    { key: '2', value: 'Architect' },
-    { key: '3', value: 'Sweeper' },
-    { key: '4', value: 'Painter', },
-
+    { key: '1', value: 'Handyman', },
+    { key: '2', value: 'Builder' },
+    { key: '3', value: 'Roofer' },
+    { key: '4', value: 'Electrician', },
+    { key: '5', value: 'Pest Control', },
+    { key: '4', value: 'Damp & Mould', },
   ]
   const [fname, setfname] = useState('')
   const [lname, setlname] = useState('')
@@ -25,40 +27,55 @@ const CreatePost = ({navigation}) => {
   const [price, setPrice] = useState('')
   const [brief, setBrief] = useState('')
   const [category, setCategory] = useState('')
-const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [message, setMessage] = useState('')
+  const CloseModal = ()=>{
+    setModalVisible(false);
+  }
   const handlePosts = () => {
-    setLoading(true);
-    firestore()
-      .collection('posts')
-      .add({
-        name: fname + lname,
-        email: email,
-        address: address,
-        phone: phone,
-        postalCode:postalCode,
-        budget:budget,
-        price:price,
-        brief:brief,
-        handyman:[],
-        category:category,
-        status:'New'
-      })
-      .then(() => {
-        setLoading(false)
-        console.log('Post Added')
-        navigation.navigate('PostDetails')
-      })
-      .catch((err)=>{
-        setLoading(false)
-        console.log(err)
-      })
-      
+    if (fname === '' || lname === '' || email === '' || address === '' || phone === '' || postalCode === '' || budget === '' || price === '' || brief === '' || category === '') {
+      // Alert.alert('Please Fill All the Required Fields')
+      setMessage('Please fill all the required fields!')
+      setModalVisible(true);
+    }else if(parseInt(budget) < parseInt(price)){
+      setMessage('Budget should be greater than Price')
+      setModalVisible(true)
+    }
+    else {
+      setLoading(true);
+      firestore()
+        .collection('posts')
+        .add({
+          name: fname + lname,
+          email: email,
+          address: address,
+          phone: phone,
+          postalCode: postalCode,
+          budget: budget,
+          price: price,
+          brief: brief,
+          handyman: [],
+          category: category,
+          status: 'New'
+        })
+        .then(() => {
+          setLoading(false)
+          console.log('Post Added')
+          navigation.navigate('PostDetails')
+        })
+        .catch((err) => {
+          setLoading(false)
+          console.log(err)
+        })
+    }
+
   }
 
   return (
     <>
       <ScrollView>
-        <View style={{ marginTop: 20, padding: 10 }}>
+        <View style={{ marginTop: 20, padding: 10, }}>
           <Text style={styles.primaryHeading}>Create Post</Text>
         </View>
         <View style={styles.form}>
@@ -85,11 +102,11 @@ const [loading, setLoading] = useState(false)
 
             <View style={{ display: 'flex', width: '50%' }}>
               <Text>Client's Phone Number</Text>
-              <TextInput value={phone} onChangeText={setPhone} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Phone Number' mode='outlined' />
+              <TextInput maxLength={10} keyboardType='numeric' value={phone} onChangeText={setPhone} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Phone Number' mode='outlined' />
             </View>
             <View style={{ display: 'flex', width: '50%' }}>
               <Text>Postal Code</Text>
-              <TextInput value={postalCode} onChangeText={setPostalCode} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Postal Code' mode='outlined' />
+              <TextInput keyboardType='numeric' value={postalCode} onChangeText={setPostalCode} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Postal Code' mode='outlined' />
             </View>
 
           </View>
@@ -106,7 +123,7 @@ const [loading, setLoading] = useState(false)
 
           <View style={{ display: 'flex', width: '100%', }}>
             <Text style={{ marginBottom: 10 }}>Select Category</Text>
-           
+
             <SelectList
               setSelected={(val) => setCategory(val)}
               data={data}
@@ -114,27 +131,28 @@ const [loading, setLoading] = useState(false)
             />
           </View>
 
-          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", gap: 4 }}>
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", gap: 4, marginTop: 10 }}>
 
-            <View style={{ display: 'flex', width: '50%' }}>
+            <View style={{ display: 'flex', width: '50%', }}>
               <Text>Budget</Text>
-              <TextInput value={budget} onChangeText={setBudget} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Budget' mode='outlined' />
+              <TextInput keyboardType='numeric' right={<TextInput.Icon icon={() => (<Foundation name='pound' size={30} color='#5e5c5a' />)} style={{ paddingTop: 10 }} />} value={budget} onChangeText={setBudget} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Budget' mode='outlined' />
             </View>
             <View style={{ display: 'flex', width: '50%' }}>
               <Text>Price</Text>
-              <TextInput value={price} onChangeText={setPrice} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Price' mode='outlined' />
+              <TextInput keyboardType='numeric' right={<TextInput.Icon icon={() => (<Foundation name='pound' size={30} color='#5e5c5a' />)} style={{ paddingTop: 10 }} />} value={price} onChangeText={setPrice} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Price' mode='outlined' />
             </View>
 
           </View>
 
-          {loading ? <ActivityIndicator/> : <TouchableOpacity onPress={handlePosts} style={{ display: 'flex', alignItems: 'flex-end', paddingTop: 10, paddingBottom: 10 }}>
-            <Button color='white' style={{ width: 100, padding: 5 }} icon={() => (<Icon name='pluscircleo' size={23} color='white' />)} mode="contained">
+          {loading ? <ActivityIndicator /> : <TouchableOpacity onPress={handlePosts} style={{ display: 'flex', alignItems: 'flex-end', paddingTop: 10, paddingBottom: 10 }}>
+            <Button labelStyle={{ fontSize: 17 }} color='white' style={{ width: 150, padding: 5 }} icon={() => (<Icon name='pluscircleo' size={23} color='white' />)} mode="contained">
               Add
             </Button>
           </TouchableOpacity>}
 
         </View>
         <View style={{ paddingTop: 70 }}></View>
+        <Messagemodal modalVisible={modalVisible} CloseModal={CloseModal} message={message} />
       </ScrollView>
     </>
   )
@@ -152,7 +170,9 @@ const styles = StyleSheet.create({
   form: {
     // borderWidth: 1,
     padding: 10
-  }
+  },
+
+  
 
 })
 

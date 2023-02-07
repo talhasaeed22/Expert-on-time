@@ -5,14 +5,16 @@ import { SelectList } from 'react-native-dropdown-select-list'
 import Icon from 'react-native-vector-icons/AntDesign'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
+import Messagemodal from '../../Messagemodal';
 
 const AddHandyman = ({navigation}) => {
   const data = [
-    { key: '1', value: 'Plumber', },
-    { key: '2', value: 'Architect' },
-    { key: '3', value: 'Sweeper' },
-    { key: '4', value: 'Painter', },
-
+    { key: '1', value: 'Handyman', },
+    { key: '2', value: 'Builder' },
+    { key: '3', value: 'Roofer' },
+    { key: '4', value: 'Electrician', },
+    { key: '5', value: 'Pest Control', },
+    { key: '4', value: 'Damp & Mould', },
   ]
   const [loading, setLoading] = useState(false)
   const [fname, setfname] = useState('')
@@ -22,8 +24,23 @@ const AddHandyman = ({navigation}) => {
   const [cpassword, setCPassword] = useState('')
   const [phone, setPhone] = useState('')
   const [category, setCategory] = useState('')
-
+  const [modalVisible, setModalVisible] = useState(false)
+  const [message, setMessage] = useState('')
+  const CloseModal = ()=>{
+    setModalVisible(false);
+  }
   const handleHandyman = () => {
+   if(fname === '' || lname === '' || email === '' || password === '' || cpassword === '' || phone === '' || category === ''){
+    setMessage('Please fill all the required fields!')
+    setModalVisible(true);
+   }else if(password !== cpassword){
+    setMessage('Password does not match!')
+    setModalVisible(true);
+   }else if(password.length < 6){
+    setMessage('Password should be of length 6 or greater!')
+    setModalVisible(true);
+   }
+   else{
     setLoading(true);
     firestore()
       .collection('handymans')
@@ -54,6 +71,7 @@ const AddHandyman = ({navigation}) => {
         setLoading(false)
         console.log(err)
       })
+   }
 
   }
 
@@ -94,7 +112,7 @@ const AddHandyman = ({navigation}) => {
 
           <View style={{ display: 'flex', width: '100%' }}>
             <Text>Client's Phone Number</Text>
-            <TextInput value={phone} onChangeText={setPhone} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Phone Number' mode='outlined' />
+            <TextInput keyboardType='numeric' value={phone} onChangeText={setPhone} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Phone Number' mode='outlined' />
           </View>
       
         <View style={{ display: 'flex', width: '100%', }}>
@@ -115,6 +133,8 @@ const AddHandyman = ({navigation}) => {
 
       </View>
       <View style={{ paddingTop: 70 }}></View>
+      <Messagemodal modalVisible={modalVisible} CloseModal={CloseModal} message={message} />
+
     </ScrollView>
   )
 }
