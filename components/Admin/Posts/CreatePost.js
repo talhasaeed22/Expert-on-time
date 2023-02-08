@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import firestore from '@react-native-firebase/firestore'
 import Foundation from 'react-native-vector-icons/Foundation'
 import Messagemodal from '../../Messagemodal';
+import SendSMS from 'react-native-sms'
+
 const CreatePost = ({ navigation }) => {
 
   const data = [
@@ -30,16 +32,19 @@ const CreatePost = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [message, setMessage] = useState('')
- 
-  const CloseModal = ()=>{
+
+  const CloseModal = () => {
     setModalVisible(false);
   }
   const handlePosts = () => {
     if (fname === '' || lname === '' || email === '' || address === '' || phone === '' || postalCode === '' || budget === '' || price === '' || brief === '' || category === '') {
-      
+
       setMessage('Please fill all the required fields!')
       setModalVisible(true);
-    }else if(parseInt(budget) < parseInt(price)){
+
+
+
+    } else if (parseInt(budget) < parseInt(price)) {
       setMessage('Budget should be greater than Price')
       setModalVisible(true)
     }
@@ -63,6 +68,18 @@ const CreatePost = ({ navigation }) => {
         .then(() => {
           setLoading(false)
           console.log('Post Added')
+          const arr = ['12345778', '4567890']
+
+          SendSMS.send({
+            body: 'The default body of the SMS!',
+            recipients: arr,
+            successTypes: ['sent', 'queued'],
+            allowAndroidSendWithoutReadPermission: true
+          }, (completed, cancelled, error) => {
+
+            console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+
+          });
           navigation.navigate('PostDetails')
         })
         .catch((err) => {
@@ -173,7 +190,7 @@ const styles = StyleSheet.create({
     padding: 10
   },
 
-  
+
 
 })
 
