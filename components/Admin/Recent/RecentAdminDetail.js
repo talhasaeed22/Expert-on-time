@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import { StackActions } from '@react-navigation/native';
 
 const RecentAdminDetail = ({route, navigation}) => {
-    const {JobDone} = route.params;
+    const {JobDone, date, year, month} = route.params;
   return (
     <ScrollView >
             <View style={{ padding: 20, paddingBottom: 5 }}>
@@ -24,7 +24,7 @@ const RecentAdminDetail = ({route, navigation}) => {
                         </View>
                     </View>
                     <View >
-                        <Text style={{ fontWeight: "bold", fontSize: 17, color: 'orangered' }}>25 January, 2022</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 17, color: 'orangered' }}>{date}/{month}/{year}</Text>
                     </View>
                     <View>
                         <Text style={styles.bold}>Client Name</Text>

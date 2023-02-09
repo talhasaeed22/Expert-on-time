@@ -27,6 +27,11 @@ const RecentJobBox = ({ index, element, }) => {
 
                             <Text style={{ fontSize: 15 }}>{element.JobDone.post.address}</Text>
                         </View>
+                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
+                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Date</Text>
+
+                            <Text style={{ fontSize: 15, color:'red' }}>{element.date}/{element.month}/{element.year}</Text>
+                        </View>
 
                     </View>
 

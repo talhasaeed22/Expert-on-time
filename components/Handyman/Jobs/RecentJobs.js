@@ -27,10 +27,13 @@ const RecentJobs = ({navigation, route}) => {
       .get()
       .then((queryData) => {
         queryData.forEach((doc) => {
-          const { JobDone } = doc.data();
+          const { JobDone, date, month, year } = doc.data();
           if(JobDone.handymanID === auth().currentUser.uid){
             Data.push({
-              JobDone:JobDone
+              JobDone:JobDone,
+              date:date,
+              month:month,
+              year:year
             })
           }
           

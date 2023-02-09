@@ -25,10 +25,13 @@ const Home = ({ navigation }) => {
             .get()
             .then((querryData) => {
                 querryData.forEach((doc) => {
-                    const { JobDone } = doc.data();
+                    const { JobDone, date, month, year } = doc.data();
                     Data.push({
                         id:doc.id,
-                        JobDone: JobDone
+                        JobDone: JobDone,
+                        date:date,
+                        year:year,
+                        month:month
                     })
                     counted ++
                 })
@@ -71,7 +74,7 @@ const Home = ({ navigation }) => {
                         <Text style={styles.primaryHeading}>Handyman Email</Text>
                         <Text style={{ fontSize: 16 }}>{element.JobDone.handymanEmail}</Text>
                     </View>
-                    <TouchableOpacity onPress={() => { navigation.navigate('RecentDetails', {JobDone:element.JobDone}) }} style={{ display: 'flex', alignItems: 'center', backgroundColor: '#39be5f', padding: 15, borderRadius: 10 }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate('RecentDetails', {JobDone:element.JobDone, year:element.year, month:element.month, date:element.date}) }} style={{ display: 'flex', alignItems: 'center', backgroundColor: '#39be5f', padding: 15, borderRadius: 10 }}>
                         <Fontsinto name='prescription' size={31} color={'white'} />
                         <Text style={{ fontSize: 14, borderBottomWidth: 1, borderBottomColor: 'white', color: 'white' }}>View Detail</Text>
                     </TouchableOpacity>

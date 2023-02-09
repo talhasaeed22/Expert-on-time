@@ -11,44 +11,63 @@ const Stats = () => {
   const [price, setPrice] = useState(0)
   const [budget, setBudget] = useState(0)
   const [profit, setProfit] = useState(0)
+  const [filter, setFilter] = useState('')
+  const [update, setUpdate] = useState(false)
   useEffect(() => {
     getSats()
-  }, [])
+  }, [update])
 
   const getSats = () => {
     let pricee = 0;
     let budgett = 0;
+
 
     firestore()
       .collection('Recent')
       .get()
       .then((qs) => {
         qs.forEach((doc) => {
-          const { JobDone } = doc.data();
-          pricee = pricee + parseInt(JobDone.post.price)
-          budgett = budgett + parseInt(JobDone.post.budget)
+          const { JobDone, date, year, month } = doc.data();
+          const getDate = new Date();
+          if (filter === '') {
+            pricee = pricee + parseInt(JobDone.post.price)
+            budgett = budgett + parseInt(JobDone.post.budget)
+          } else if (filter === '1 Month') {
+            if (month === getDate.getMonth() + 1 && year === getDate.getFullYear()) {
+              pricee = pricee + parseInt(JobDone.post.price)
+              budgett = budgett + parseInt(JobDone.post.budget)
+            }
+          } else if (filter === '1 Year') {
+            if (year === getDate.getFullYear()) {
+              pricee = pricee + parseInt(JobDone.post.price)
+              budgett = budgett + parseInt(JobDone.post.budget)
+            }
+
+          } else if (filter === 'All') {
+
+            pricee = pricee + parseInt(JobDone.post.price)
+            budgett = budgett + parseInt(JobDone.post.budget)
+
+
+          }
 
         })
         setPrice(pricee)
         setBudget(budgett)
         setProfit(budgett - pricee)
-        console.log(price)
-        // setPrice(pricee)
-        // setBudget(budgett)
-        // let profitt = budget - price
-        // setProfit(profitt)
-        // setUpdate(profitt);
-        // console.log(budget)
-
 
       }).catch((err) => {
         console.log(err)
       })
   }
+  const changeFilter = (val) => {
+    setFilter(val)
+    setUpdate(!update)
+  }
   const data = [
     { key: '1', value: '1 Year', },
     { key: '2', value: '1 Month' },
-    { key: '3', value: '1 Week' },
+    { key: '2', value: 'All' },
   ]
 
   const widthAndHeight = 250
@@ -57,38 +76,40 @@ const Stats = () => {
 
   return (
     <>
-      {(price === 0 || budget === 0 || profit === 0) ? <View style={{ display: "flex", alignItems: "center", marginTop: 30, flex:1, justifyContent:'center' }}>
+      <View style={{ padding: 20 }}>
+        <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'orange' }}>Profit Statistics</Text>
+      </View>
+      <View style={{ display: "flex", flexDirection: 'row', justifyContent: "space-between", paddingHorizontal: 50, alignItems: "center", }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: "black" }}>Filter</Text>
+        <View>
+          <SelectList
+            placeholder='Select'
+            setSelected={(val) => changeFilter(val)}
+            data={data}
+            save="value"
+          />
+        </View>
+      </View>
+      {(price === 0 || budget === 0 || profit === 0) ? <View style={{ display: "flex", alignItems: "center", marginTop: 30, flex: 1, justifyContent: 'center' }}>
         <Icon name='folder-text-outline' size={35} color='black' />
         <Text style={{ textAlign: "center", fontWeight: "bold" }}>No Recent Activity</Text>
       </View> : <ScrollView style={{ flex: 1 }}>
-        <View style={{ padding: 20 }}>
-          <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'orange' }}>Profit Statistics</Text>
-        </View>
-        <View style={{ display: "flex", flexDirection: 'row', justifyContent: "space-between", paddingHorizontal: 50, alignItems: "center" }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: "black" }}>Filter</Text>
-          <View>
-            <SelectList
-              placeholder='Select'
-              setSelected={(val) => console.log(val)}
-              data={data}
-              save="value"
-            />
-          </View>
-        </View>
+
+
         <View style={styles.container}>
 
           <View style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between', padding: 25 }}>
             <View style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: "center" }}>
               <Entypo name='dot-single' size={23} color='#00008B' />
-              <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#00008B' }}>{price}$</Text>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#00008B' }}>{price}£</Text>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: "center" }}>
               <Entypo name='dot-single' size={23} color='#FF0000' />
-              <Text style={{ fontSize: 20, color: '#FF0000', fontWeight: 'bold' }}>{budget}$</Text>
+              <Text style={{ fontSize: 20, color: '#FF0000', fontWeight: 'bold' }}>{budget}£</Text>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: "center" }}>
               <Entypo name='dot-single' size={23} color='#228b22' />
-              <Text style={{ fontSize: 20, color: "#228b22", fontWeight: 'bold' }}>{profit}$</Text>
+              <Text style={{ fontSize: 20, color: "#228b22", fontWeight: 'bold' }}>{profit}£</Text>
             </View>
           </View>
           {(price === 0 || budget === 0 || profit === 0) ? <ActivityIndicator /> : <PieChart

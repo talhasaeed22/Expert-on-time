@@ -24,9 +24,7 @@ const OrderDetail = ({navigation, route}) => {
                         <Text style={{ color: "green", fontWeight: "bold" }}>Ongoing</Text>
                     </View>
                 </View>
-                <View >
-                    <Text style={{ fontWeight: "bold", fontSize: 17, color: 'orangered' }}>25 January, 2022</Text>
-                </View>
+                
                 <View>
                     <Text style={styles.bold}>Client Name</Text>
                     <Text>{acceptedPost.post.name}</Text>

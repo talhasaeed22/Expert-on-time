@@ -47,10 +47,15 @@ const Ongoing = ({navigation}) => {
 
   const FinishJob = (job, key)=>{
     console.log(key)
+    const date = new Date();
+    
     firestore()
         .collection('Recent')
         .add({
-            JobDone:job.acceptedJobs
+            JobDone:job.acceptedJobs,
+            date:date.getDate(),
+            year:date.getFullYear(),
+            month:date.getMonth() + 1
         }).then(()=>{
             firestore().collection('Accepted').doc(key)
             .delete()
@@ -85,7 +90,7 @@ const Ongoing = ({navigation}) => {
             }) :
               <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>
                 <Icon name='folder-text-outline' size={35} color='black' />
-                <Text style={{ textAlign: "center", fontWeight: "bold" }}>No Jobs</Text>
+                <Text style={{ textAlign: "center", fontWeight: "bold" }}>No Ongoing Jobs</Text>
               </View>)}
           </View>
         </View>
