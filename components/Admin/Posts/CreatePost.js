@@ -8,8 +8,11 @@ import firestore from '@react-native-firebase/firestore'
 import Foundation from 'react-native-vector-icons/Foundation'
 import Messagemodal from '../../Messagemodal';
 import SendSMS from 'react-native-sms'
+import { useIsFocused } from '@react-navigation/native';
 
 const CreatePost = ({ navigation }) => {
+  const isFocus = useIsFocused()
+  
 
   const data = [
     { key: '1', value: 'Handyman', },
@@ -32,7 +35,20 @@ const CreatePost = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [message, setMessage] = useState('')
-
+  useEffect(() => {
+    setfname('')
+    setlname('')
+    setEmail('')
+    setAddress('')
+    setPhone('')
+    setPostalCode('')
+    setBudget('')
+    setPrice('')
+    setBrief('')
+    setCategory('')
+    
+    setMessage('')
+  }, [isFocus])
   const CloseModal = () => {
     setModalVisible(false);
   }
@@ -68,19 +84,27 @@ const CreatePost = ({ navigation }) => {
         .then(() => {
           setLoading(false)
           console.log('Post Added')
-          const arr = ['12345778', '4567890']
+          let arr = []
+          firestore().collection('handymans').get().then((numbers) => {
+            numbers.forEach((doc) => {
+              const { phone } = doc.data();
+              arr.push(phone);
+            })
+            SendSMS.send({
+              body: 'New Post is Uploaded!',
+              recipients: arr,
+              successTypes: ['sent', 'queued'],
+              allowAndroidSendWithoutReadPermission: true
+            }, (completed, cancelled, error) => {
 
-          SendSMS.send({
-            body: 'The default body of the SMS!',
-            recipients: arr,
-            successTypes: ['sent', 'queued'],
-            allowAndroidSendWithoutReadPermission: true
-          }, (completed, cancelled, error) => {
+              console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
 
-            console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+            });
+            navigation.navigate('PostDetails')
+          }).catch((err) => {
+            console.log(err)
+          })
 
-          });
-          navigation.navigate('PostDetails')
         })
         .catch((err) => {
           setLoading(false)

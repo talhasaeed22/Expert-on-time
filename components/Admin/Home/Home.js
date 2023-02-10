@@ -16,14 +16,14 @@ const Home = ({ navigation, }) => {
     getAccepted();
     
   }, [isFocus])
-  const [postCount, setpostCount] = useState(0)
-  const [pendingCount, setpendingCount] = useState(0)
-  const [activeCount, setActiveCount] = useState(0)
-  const [recentPost, setRecentPost] = useState(0)
+  const [postCount, setpostCount] = useState('-')
+  const [pendingCount, setpendingCount] = useState('-')
+  const [activeCount, setActiveCount] = useState('-')
+  const [recentPost, setRecentPost] = useState('-')
   const [loading, setLoading] = useState(false)
   const getPosts = () => {
     setLoading(true);
-    setpostCount(0);
+    setpostCount('-');
     let counted = 0;
     firestore()
       .collection('posts')
@@ -43,7 +43,7 @@ const Home = ({ navigation, }) => {
   }
   const getPendings = () => {
 
-    setpendingCount(0);
+    setpendingCount('-');
     let counted = 0;
     firestore()
       .collection('Pendings')
@@ -63,7 +63,7 @@ const Home = ({ navigation, }) => {
   }
   const getOrders = () => {
 
-    setRecentPost(0);
+    setRecentPost('-');
     let counted = 0;
     firestore()
       .collection('Recent')
@@ -83,7 +83,7 @@ const Home = ({ navigation, }) => {
   }
 
   const getAccepted = ()=>{
-    setActiveCount(0);
+    setActiveCount('-');
     let counted = 0;
     firestore()
       .collection('Accepted')

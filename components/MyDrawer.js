@@ -26,11 +26,10 @@ const MyDrawer = (props) => {
 
   const handleLogout = () => {
     auth().signOut().then(() => {
-      console.log('signed out');
-      props.navigation.navigate('Login');
-      //   navigation.dispatch(
-      //     StackActions.replace('Login')
-      // );
+      
+        props.navigation.dispatch(
+          StackActions.replace('Login')
+      );
     }).catch((err) => {
       console.log(err)
     })
