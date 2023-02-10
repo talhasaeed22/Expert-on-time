@@ -1,6 +1,8 @@
 import { View, Text, Modal, Alert, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
-
+import Ant from 'react-native-vector-icons/AntDesign'
+import { Dimensions } from 'react-native'
+import IonIcon from 'react-native-vector-icons/Ionicons'
 const Messagemodal = ({modalVisible, CloseModal, message, title}) => {
   return (
     <Modal
@@ -13,11 +15,11 @@ const Messagemodal = ({modalVisible, CloseModal, message, title}) => {
     }}>
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
-        <Text style={{textAlign: 'left',
+        <Text style={{textAlign: 'left', borderBottomWidth:1, borderBottomColor:'lightgray', paddingBottom:10,
         fontSize: 25,
         marginBottom: 15,
         fontWeight: 'bold',
-        color: title === 'Warning' ? '#FFCC00' : 'green'}}>{title}!</Text>
+        color: title === 'Warning' ? '#FFCC00' : 'green'}}>{title=== 'Warning'? <IonIcon name='ios-warning' size={26} color='#FFCC00' /> : <Ant name='checkcircle' size={23} color='green' />} {title}!</Text>
         <Text style={styles.modalText}>{message}</Text>
         <TouchableOpacity
           style={[styles.button, styles.buttonClose]}
@@ -54,7 +56,8 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
         borderWidth: 1,
-        borderColor: '#FFCC00'
+        borderColor: '#FFCC00',
+        width:Dimensions.get('window').width - 20
       },
       button: {
         borderRadius: 20,
@@ -75,14 +78,16 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
-        fontSize:17
+        fontSize:17,
+        
       },
       modalText: {
         // marginBottom: 15,
-        textAlign: 'center',
+        color:'black',
+        // textAlign: 'center',
         marginBottom: 15,
         fontWeight:"normal",
-        fontSize:17
+        fontSize:18
       },
       warningText: {
         
