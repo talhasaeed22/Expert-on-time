@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Alert, Modal } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, ToastAndroid, Modal } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Avatar, TextInput, Button } from 'react-native-paper';
 import SelectDropdown from 'react-native-select-dropdown'
@@ -12,7 +12,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 const CreatePost = ({ navigation }) => {
   const isFocus = useIsFocused()
-  
+
 
   const data = [
     { key: '1', value: 'Handyman', },
@@ -46,7 +46,7 @@ const CreatePost = ({ navigation }) => {
     setPrice('')
     setBrief('')
     setCategory('')
-    
+
     setMessage('')
   }, [isFocus])
   const CloseModal = () => {
@@ -65,6 +65,7 @@ const CreatePost = ({ navigation }) => {
       setModalVisible(true)
     }
     else {
+      const date = new Date();
       setLoading(true);
       firestore()
         .collection('posts')
@@ -79,11 +80,16 @@ const CreatePost = ({ navigation }) => {
           brief: brief,
           handyman: [],
           category: category,
-          status: 'New'
+          status: 'New',
+          date: date.getDate(),
+          year: date.getFullYear(),
+          month: date.getMonth() + 1
+
         })
         .then(() => {
           setLoading(false)
-          console.log('Post Added')
+          // console.log('Post Added')
+          
           let arr = []
           firestore().collection('handymans').get().then((numbers) => {
             numbers.forEach((doc) => {
@@ -100,6 +106,12 @@ const CreatePost = ({ navigation }) => {
               console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
 
             });
+            ToastAndroid.showWithGravity(
+              'Post Created',
+              ToastAndroid.LONG,
+              ToastAndroid.CENTER,
+          );
+
             navigation.navigate('PostDetails')
           }).catch((err) => {
             console.log(err)

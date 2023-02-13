@@ -11,7 +11,7 @@ const Messagemodal = ({modalVisible, CloseModal, message, title}) => {
     visible={modalVisible}
     onRequestClose={() => {
       Alert.alert('Modal has been closed.');
-      CloseModal()
+      CloseModal();
     }}>
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-        borderWidth: 1,
-        borderColor: '#FFCC00',
+        // borderWidth: 1,
+        // borderColor: '#FFCC00',
         width:Dimensions.get('window').width - 20
       },
       button: {

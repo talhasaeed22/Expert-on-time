@@ -1,10 +1,11 @@
-import { View, Text, ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, ActivityIndicator, ToastAndroid, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import PostDetailBox from './PostDetailBox'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useIsFocused } from "@react-navigation/native";
 import Messagemodal from '../../Messagemodal'
+import { SelectList } from 'react-native-dropdown-select-list'
 
 const Posts = () => {
     const isFocused = useIsFocused();
@@ -17,6 +18,8 @@ const Posts = () => {
     const [modalVisible, setModalVisible] = useState(false)
     const [message, setMessage] = useState('')
     const [title, setTitle] = useState('')
+    const [filter, setFilter] = useState('')
+
     const CloseModal = () => {
         setModalVisible(false);
     }
@@ -39,6 +42,15 @@ const Posts = () => {
             })
 
     }
+    const data = [
+        { key: '1', value: '1 Year', },
+        { key: '2', value: '1 Month' },
+        { key: '2', value: 'All' },
+    ]
+    const changeFilter = (val) => {
+        setFilter(val)
+        setDeleted(!deleted)
+    }
 
     const getPosts = async () => {
         setFoundPending(false)
@@ -52,22 +64,67 @@ const Posts = () => {
             .get()
             .then((queryData) => {
                 queryData.forEach(async (doc) => {
-                    const { name, status, email, address, phone, postalCode, budget, price, brief, category } = doc.data();
-
-                    Data.push({
-                        id: doc.id,
-                        name: name,
-                        email: email,
-                        address: address,
-                        phone: phone,
-                        postalCode: postalCode,
-                        budget: budget,
-                        price: price,
-                        brief: brief,
-                        category: category,
-                        status: status
-                    })
-
+                    const { name, status, email, address, phone, postalCode, budget, price, brief, category, month, date, year } = doc.data();
+                    const getDate = new Date();
+                    if (filter === '') {
+                        Data.push({
+                            id: doc.id,
+                            name: name,
+                            email: email,
+                            address: address,
+                            phone: phone,
+                            postalCode: postalCode,
+                            budget: budget,
+                            price: price,
+                            brief: brief,
+                            category: category,
+                            status: status
+                        })
+                    } else if (filter === '1 Month') {
+                        if (month === getDate.getMonth() + 1 && year === getDate.getFullYear()) {
+                            Data.push({
+                                id: doc.id,
+                                name: name,
+                                email: email,
+                                address: address,
+                                phone: phone,
+                                postalCode: postalCode,
+                                budget: budget,
+                                price: price,
+                                brief: brief,
+                                category: category,
+                                status: status
+                            })
+                        }
+                    } else if (filter === '1 Year') {
+                        Data.push({
+                            id: doc.id,
+                            name: name,
+                            email: email,
+                            address: address,
+                            phone: phone,
+                            postalCode: postalCode,
+                            budget: budget,
+                            price: price,
+                            brief: brief,
+                            category: category,
+                            status: status
+                        })
+                    } else if (filter === 'All') {
+                        Data.push({
+                            id: doc.id,
+                            name: name,
+                            email: email,
+                            address: address,
+                            phone: phone,
+                            postalCode: postalCode,
+                            budget: budget,
+                            price: price,
+                            brief: brief,
+                            category: category,
+                            status: status
+                        })
+                    }
                     counted++;
 
                 })
@@ -87,15 +144,23 @@ const Posts = () => {
             .doc(key)
             .delete()
             .then(() => {
-                setTitle('Success')
-                setMessage('Post Deleted')
-                setModalVisible(true);
+
+                // setTitle('Success')
+                // setMessage('Post Deleted')
+                // setModalVisible(true);
+
+                ToastAndroid.showWithGravity(
+                    'Post Deleted',
+                    ToastAndroid.LONG,
+                    ToastAndroid.CENTER,
+                );
+
                 setDeleted(!deleted)
             })
 
     }
     return (
-        <View style={{ padding: 20 }}>
+        <View style={{ padding: 15 }}>
             <ScrollView>
                 <View style={{ marginBottom: 15 }}>
                     <Text style={styles.primaryHeading}>Posts Details</Text>
@@ -111,6 +176,18 @@ const Posts = () => {
                         {/* <Text style={{ fontSize: 16, borderBottomWidth: 1, borderBottomColor: 'lightgray' }}>View More</Text> */}
                     </View>
 
+                </View>
+                <View style={{ display: "flex", flexDirection: 'row', justifyContent: "space-between", paddingHorizontal: 50, alignItems: "center", marginBottom: 20 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 20, color: "black" }}>Filter</Text>
+                    <View>
+                        <SelectList
+                            boxStyles={{ backgroundColor: 'white', width: 150 }}
+                            placeholder='Select'
+                            setSelected={(val) => changeFilter(val)}
+                            data={data}
+                            save="value"
+                        />
+                    </View>
                 </View>
 
 
