@@ -177,11 +177,14 @@ const Posts = () => {
                     </View>
 
                 </View>
-                <View style={{ display: "flex", flexDirection: 'row', justifyContent: "space-between", paddingHorizontal: 50, alignItems: "center", marginBottom: 20 }}>
+                <View style={{ display: "flex", flexDirection: 'row', justifyContent: "space-between", paddingHorizontal: 10, alignItems: "center", marginBottom: 20 }}>
                     <Text style={{ fontWeight: 'bold', fontSize: 20, color: "black" }}>Filter</Text>
                     <View>
                         <SelectList
                             boxStyles={{ backgroundColor: 'white', width: 150 }}
+                            dropdownStyles={{backgroundColor:"white"}}
+                            dropdownTextStyles={{fontWeight:'bold', color:"black"}}
+                            inputStyles={{fontWeight:"bold", color:"black"}}
                             placeholder='Select'
                             setSelected={(val) => changeFilter(val)}
                             data={data}
