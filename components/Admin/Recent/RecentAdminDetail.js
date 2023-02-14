@@ -72,7 +72,7 @@ const RecentAdminDetail = ({route, navigation}) => {
 
                         </View>
                         <View style={{ paddingRight: 20 }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 17, color: "black" }}>{JobDone.post.budget}</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 17, color: "black" }}>{JobDone.post.budget} £</Text>
 
                         </View>
                     </View>
@@ -82,7 +82,7 @@ const RecentAdminDetail = ({route, navigation}) => {
 
                         </View>
                         <View style={{ paddingRight: 20 }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 17, color: "black" }}>{JobDone.post.price}</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 17, color: "black" }}>{JobDone.post.price} £</Text>
 
                         </View>
                     </View>

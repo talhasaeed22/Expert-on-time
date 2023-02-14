@@ -46,10 +46,10 @@ const PendingRequests = () => {
 
             })
     }
-    const [loadingAccept, setLoadingAccept] = useState(false)
+
     const acceptJob = (toBePost, key, post) => {
         let handymans = [];
-        setLoadingAccept(true)
+        setLoading(true)
         firestore().collection('posts').get().then((snapshot) => {
             snapshot.forEach((doc) => {
                 if (doc.id === post.id) {
@@ -76,75 +76,77 @@ const PendingRequests = () => {
                             })
                         })
                         ids.forEach((id) => {
-                            firestore().collection('Pendings').doc(id).delete().then(() => { })
+                            firestore().collection('Pendings').doc(id).delete().then(() => {
+                                firestore()
+                                    .collection('posts')
+                                    .doc(post.id)
+                                    .update({
+                                        status: 'Ongoing'
+                                    }).then(() => {
+                                        setTitle('Success')
+                                        setMessage('Request Accepted')
+                                        setModalVisible(true);
+                                        setLoading(false)
+                                        setUpdate(!update)
+                                    }).catch((err) => {
+                                        console.log(err)
+                                        setLoading(false)
+                                    })
+                            }).catch((err)=>{console.log(err);setLoading(false)})
                         })
-                        firestore()
-                            .collection('posts')
-                            .doc(post.id)
-                            .update({
-                                status: 'Ongoing'
-                            }).then(() => {
-                                setTitle('Success')
-                                setMessage('Request Accepted')
-                                setModalVisible(true);
-                                setLoadingAccept(false)
-                                setUpdate(!update)
-                            }).catch((err) => {
-                                console.log(err)
-                                setLoadingAccept(false)
-                            })
+
                     }).catch((err) => {
                         console.log(err)
-                        setLoadingAccept(false)
+                        setLoading(false)
                     })
 
                 }).catch(() => {
                     console.log(err);
-                    setLoadingAccept(false)
+                    setLoading(false)
                 })
         }).catch((err) => {
             console.log(err)
-            setLoadingAccept(false)
+            setLoading(false)
         })
 
 
     }
 
     const rejectJob = (key) => {
-        setLoadingAccept(true)
+        setLoading(true)
         firestore()
             .collection('Pendings').doc(key)
             .delete()
             .then(() => {
                 setUpdate(!update)
-                setLoadingAccept(false)
+                setLoading(false)
             }).catch((err) => {
                 console.log(err);
-                setLoadingAccept(false)
+                setLoading(false)
             })
     }
     return (
 
-        <ScrollView>
-            <View style={{ backgroundColor: 'white', padding: 5 }}>
+        <View style={{ backgroundColor: 'white', padding: 5, height: Dimensions.get('window').height }}>
+            <ScrollView>
 
 
                 <View style={{ marginTop: 20, padding: 10 }}>
                     <Text style={styles.primaryHeading}>Pending Requests</Text>
                 </View>
                 {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
-                    return <AdminPendingsBox loadingAccept={loadingAccept} rejectJob={rejectJob} acceptJob={acceptJob} key={index} element={element} index={index} />
+                    return <AdminPendingsBox rejectJob={rejectJob} acceptJob={acceptJob} key={index} element={element} index={index} />
 
                 }) :
-                    <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>
+                    <View style={{ display: "flex", alignItems: "center", marginTop: 30, flex: 1, justifyContent: "center" }}>
                         <Icon name='folder-text-outline' size={35} color='black' />
                         <Text style={{ textAlign: "center", fontWeight: "bold" }}>No Pending Requests</Text>
                     </View>)}
 
-            </View>
+            </ScrollView>
             <Messagemodal title={title} modalVisible={modalVisible} CloseModal={CloseModal} message={message} />
+        </View>
 
-        </ScrollView>
     )
 }
 const styles = StyleSheet.create({

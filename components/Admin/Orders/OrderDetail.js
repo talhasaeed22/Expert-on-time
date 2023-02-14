@@ -71,7 +71,7 @@ const OrderDetail = ({navigation, route}) => {
 
                     </View>
                     <View style={{ paddingRight: 20 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 17, color: "black" }}>{acceptedPost.post.budget}</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 17, color: "black" }}>{acceptedPost.post.budget} £</Text>
 
                     </View>
                 </View>
@@ -81,7 +81,7 @@ const OrderDetail = ({navigation, route}) => {
 
                     </View>
                     <View style={{ paddingRight: 20 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 17, color: "black" }}>{acceptedPost.post.price}</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 17, color: "black" }}>{acceptedPost.post.price} £</Text>
 
                     </View>
                 </View>

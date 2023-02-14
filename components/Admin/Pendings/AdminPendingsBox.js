@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, ActivityIn
 import React from 'react'
 import { Button } from 'react-native-paper';
 
-const AdminPendingsBox = ({ element, index, acceptJob, rejectJob, acceptLoading }) => {
+const AdminPendingsBox = ({ element, index, acceptJob, rejectJob }) => {
 
     const styles = StyleSheet.create({
 
@@ -101,14 +101,14 @@ const AdminPendingsBox = ({ element, index, acceptJob, rejectJob, acceptLoading 
             </View>
             <View style={{ alignItems: 'flex-end' }}>
                 <View style={{ paddingVertical: 15, display: 'flex', flexDirection: "row", gap: 10 }}>
-                    <TouchableOpacity onPress={() => { !acceptLoading && acceptJob(element, element.id, element.post) }}>
-                        <Button disabled={acceptLoading} buttonColor='#03b944' labelStyle={{ fontSize: 15, fontWeight: "bold", textAlign: "center" }} color='white' style={{ padding: 5, borderRadius: 10 }} mode="contained">
-                            {acceptLoading ? <ActivityIndicator/> : 'Accept'}
+                    <TouchableOpacity onPress={() => { acceptJob(element, element.id, element.post) }}>
+                        <Button buttonColor='#03b944' labelStyle={{ fontSize: 15, fontWeight: "bold", textAlign: "center" }} color='white' style={{ padding: 5, borderRadius: 10 }} mode="contained">
+                            {'Accept'}
                         </Button>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { !acceptLoading && rejectJob(element.id)  }}>
+                    <TouchableOpacity onPress={() => { rejectJob(element.id)  }}>
                         <Button buttonColor='red' labelStyle={{ fontSize: 15, fontWeight: "bold", textAlign: "center" }} color='white' style={{ padding: 5, borderRadius: 10 }} mode="contained">
-                        {acceptLoading ? <ActivityIndicator /> : 'Reject'}
+                        { 'Reject'}
                         </Button>
                     </TouchableOpacity>
 

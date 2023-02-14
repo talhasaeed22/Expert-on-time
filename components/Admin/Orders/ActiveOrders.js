@@ -7,15 +7,15 @@ const Stack = createStackNavigator();
 import firestore from '@react-native-firebase/firestore'
 import OrderBox from './OrderBox'
 import OrderDetail from './OrderDetail'
-
+import { useIsFocused } from '@react-navigation/native';
 const Home = ({navigation}) => {
     const [list, setList] = useState([])
     const [loading, setLoading] = useState(false);
     const [count, setCount] = useState(0)
-
+    const isFocus = useIsFocused();
     useEffect(() => {
         getActive();
-    }, [])
+    }, [isFocus])
 
     const getActive = () => {
         const Data = [];

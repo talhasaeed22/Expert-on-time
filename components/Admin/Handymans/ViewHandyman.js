@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, ActivityIndicator, ToastAndroid } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import HandymanBox from './HandymanBox'
@@ -61,9 +61,14 @@ const ViewHandyman = () => {
       .doc(key)
       .delete()
       .then(() => {
-        setTitle('Success')
-        setMessage('Handyman Deleted')
-        setModalVisible(true);
+        ToastAndroid.showWithGravity(
+          'Handyman Deleted',
+          ToastAndroid.LONG,
+          ToastAndroid.CENTER,
+      );
+        // setTitle('Success')
+        // setMessage('Handyman Deleted')
+        // setModalVisible(true);
         // setList(null)
         setDeleted(!deleted)
       })

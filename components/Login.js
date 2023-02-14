@@ -83,7 +83,7 @@ const Login = ({ navigation }) => {
                             <View style={{ padding: 20 }}>
                                 <Text>Let's Login To Your Account</Text>
                                 <View style={{ display: "flex", flexDirection: 'column', gap: 3, marginTop: 20 }}>
-                                    <TextInput value={email} onChangeText={setEmail} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', background: 'transparent' } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Email' mode='flat' />
+                                    <TextInput autoCapitalize='none' value={email} onChangeText={setEmail} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', background: 'transparent' } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Email' mode='flat' />
                                     <TextInput onChangeText={setPassword} secureTextEntry value={password} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', background: 'transparent' } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5' }} label='Password' mode='flat' />
                                 </View>
                             </View>

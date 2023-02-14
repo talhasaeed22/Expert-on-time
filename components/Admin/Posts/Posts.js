@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet, ActivityIndicator, ToastAndroid, Platform } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, ActivityIndicator, ToastAndroid, Platform, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import PostDetailBox from './PostDetailBox'
@@ -18,7 +18,7 @@ const Posts = () => {
     const [modalVisible, setModalVisible] = useState(false)
     const [message, setMessage] = useState('')
     const [title, setTitle] = useState('')
-    const [filter, setFilter] = useState('')
+    const [filter, setFilter] = useState('All')
 
     const CloseModal = () => {
         setModalVisible(false);
@@ -27,21 +27,7 @@ const Posts = () => {
         getPosts();
     }, [deleted, isFocused])
 
-    const checkPending = (id) => {
-        firestore()
-            .collection('Pendings')
-            .get()
-            .then((querryData) => {
-                querryData.forEach((doc) => {
-                    const { post } = doc.data();
-                    if (post.id === id) {
-                        setFoundPending(true)
-                    }
-                })
 
-            })
-
-    }
     const data = [
         { key: '1', value: '1 Year', },
         { key: '2', value: '1 Month' },
@@ -66,21 +52,7 @@ const Posts = () => {
                 queryData.forEach(async (doc) => {
                     const { name, status, email, address, phone, postalCode, budget, price, brief, category, month, date, year } = doc.data();
                     const getDate = new Date();
-                    if (filter === '') {
-                        Data.push({
-                            id: doc.id,
-                            name: name,
-                            email: email,
-                            address: address,
-                            phone: phone,
-                            postalCode: postalCode,
-                            budget: budget,
-                            price: price,
-                            brief: brief,
-                            category: category,
-                            status: status
-                        })
-                    } else if (filter === '1 Month') {
+                    if (filter === '1 Month') {
                         if (month === getDate.getMonth() + 1 && year === getDate.getFullYear()) {
                             Data.push({
                                 id: doc.id,
@@ -93,7 +65,10 @@ const Posts = () => {
                                 price: price,
                                 brief: brief,
                                 category: category,
-                                status: status
+                                status: status,
+                                date: date,
+                                month: month,
+                                year: year,
                             })
                         }
                     } else if (filter === '1 Year') {
@@ -108,7 +83,10 @@ const Posts = () => {
                             price: price,
                             brief: brief,
                             category: category,
-                            status: status
+                            status: status,
+                            date: date,
+                            month: month,
+                            year: year,
                         })
                     } else if (filter === 'All') {
                         Data.push({
@@ -122,7 +100,10 @@ const Posts = () => {
                             price: price,
                             brief: brief,
                             category: category,
-                            status: status
+                            status: status,
+                            date: date,
+                            month: month,
+                            year: year,
                         })
                     }
                     counted++;
@@ -138,29 +119,44 @@ const Posts = () => {
             })
     }
     const deletePost = (key) => {
-
         firestore()
-            .collection('posts')
-            .doc(key)
-            .delete()
-            .then(() => {
+            .collection('Accepted')
+            .get()
+            .then((snapshot) => {
+                let foundongoing = false;
+                snapshot.forEach((doc) => {
+                    const { acceptedPost } = doc.data();
+                    if (acceptedPost.post.id === key) {
+                        foundongoing = true;
+                    }
+                })
+                if (foundongoing) {
+                    setTitle('Warning')
+                    setMessage('Job is already ongoing!')
+                    setModalVisible(true);
+                }else{
+                    firestore()
+                        .collection('posts')
+                        .doc(key)
+                        .delete()
+                        .then(() => {
+            
+                            ToastAndroid.showWithGravity(
+                                'Post Deleted',
+                                ToastAndroid.LONG,
+                                ToastAndroid.CENTER,
+                            );
+            
+                            setDeleted(!deleted)
+                        }).catch((err)=>{console.log(err)})
+                }
 
-                // setTitle('Success')
-                // setMessage('Post Deleted')
-                // setModalVisible(true);
-
-                ToastAndroid.showWithGravity(
-                    'Post Deleted',
-                    ToastAndroid.LONG,
-                    ToastAndroid.CENTER,
-                );
-
-                setDeleted(!deleted)
-            })
+            }).catch((err) => { console.log(err); })
+        
 
     }
     return (
-        <View style={{ padding: 15 }}>
+        <View style={{ padding: 15, backgroundColor: "white", height: Dimensions.get('window').height }}>
             <ScrollView>
                 <View style={{ marginBottom: 15 }}>
                     <Text style={styles.primaryHeading}>Posts Details</Text>
@@ -182,9 +178,9 @@ const Posts = () => {
                     <View>
                         <SelectList
                             boxStyles={{ backgroundColor: 'white', width: 150 }}
-                            dropdownStyles={{backgroundColor:"white"}}
-                            dropdownTextStyles={{fontWeight:'bold', color:"black"}}
-                            inputStyles={{fontWeight:"bold", color:"black"}}
+                            dropdownStyles={{ backgroundColor: "white" }}
+                            dropdownTextStyles={{ fontWeight: 'bold', color: "black" }}
+                            inputStyles={{ fontWeight: "bold", color: "black" }}
                             placeholder='Select'
                             setSelected={(val) => changeFilter(val)}
                             data={data}
@@ -195,14 +191,16 @@ const Posts = () => {
 
 
                 {loading ? <ActivityIndicator /> : (list.length !== 0 ? list.map((element, index) => {
-                    return <PostDetailBox key={index} deletePost={deletePost} element={element} index={index} />
+                    return <View style={{ paddingHorizontal: 5 }} key={index}>
+                        <PostDetailBox deletePost={deletePost} element={element} index={index} />
+                    </View>
                 }) :
                     <View style={{ display: "flex", alignItems: "center", marginTop: 30, }}>
                         <Icon name='folder-text-outline' size={35} color='black' />
                         <Text style={{ textAlign: "center", fontWeight: "bold" }}>No Posts Added</Text>
                     </View>)}
-                <View style={{ paddingTop: 150 }}></View>
                 <Messagemodal title={title} modalVisible={modalVisible} CloseModal={CloseModal} message={message} />
+                <View style={{ paddingTop: 150 }}></View>
 
             </ScrollView>
         </View>

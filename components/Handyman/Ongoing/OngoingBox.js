@@ -6,9 +6,9 @@ import { useRoute } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 const OngoingBox = ({ index, element, FinishJob }) => {
-  return (
-    <ScrollView>
-            <View style={{ borderBottomWidth: 1, borderBottomColor: 'lightgray', paddingBottom:20 }}>
+    return (
+        <ScrollView>
+            <View style={{ borderBottomWidth: 1, borderBottomColor: 'lightgray', paddingBottom: 20 }}>
                 <View style={styles.box} key={index}>
                     <View style={{ display: "flex", flexDirection: 'column', gap: 25, }}>
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
@@ -23,10 +23,11 @@ const OngoingBox = ({ index, element, FinishJob }) => {
                             <Text style={{ fontSize: 15 }}>{element.acceptedJobs.post.email}</Text>
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Address</Text>
+                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Price</Text>
 
-                            <Text style={{ fontSize: 15 }}>{element.acceptedJobs.post.address}</Text>
+                            <Text style={{ fontSize: 15 }}>{element.acceptedJobs.post.price}£</Text>
                         </View>
+
 
                     </View>
 
@@ -40,20 +41,23 @@ const OngoingBox = ({ index, element, FinishJob }) => {
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Status</Text>
                             <Text style={{ fontSize: 17, color: '#eed202', fontWeight: 'bold' }}>{'Ongoing'}</Text>
-
                         </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Price</Text>
-
-                            <Text style={{ fontSize: 15 }}>{element.acceptedJobs.post.price}</Text>
-                        </View>
-
-
                     </View>
 
                 </View>
+                <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Address</Text>
+
+                    <Text style={{ fontSize: 15 }}>{element.acceptedJobs.post.address}</Text>
+                </View>
+
+                <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginTop:13 }}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Brief</Text>
+
+                    <Text style={{ fontSize: 15 }}>{element.acceptedJobs.post.brief}</Text>
+                </View>
                 <View style={{ alignItems: 'flex-end' }}>
-                    <TouchableOpacity onPress={()=>{FinishJob(element, element.id)}} style={{ paddingVertical: 15, display: 'flex', flexDirection: "row", gap: 10 }}>
+                    <TouchableOpacity onPress={() => { FinishJob(element, element.id) }} style={{ paddingVertical: 15, display: 'flex', flexDirection: "row", gap: 10 }}>
 
                         <Button buttonColor='#0d98ba' labelStyle={{ fontSize: 17, fontWeight: "bold", textAlign: "center", }} color='white' style={{ padding: 5, borderRadius: 10 }} mode="contained">
                             Finish
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: 'white',
         borderRadius: 10,
-       
+
     }
 
 })
