@@ -31,7 +31,7 @@ const GetStarted = ({ navigation }) => {
             </View>
 
             <View style={styles.lowerContainer}>
-                <Text style={styles.primary_Heading}>Welcome to our Application Lorem ipsum dolor sit amet,</Text>
+                <Text style={styles.primary_Heading}>Welcome to Bright Work Pro</Text>
                 <Text style={styles.secondary_Heading}>Get Started</Text>
                 <TouchableOpacity onPress={routeChange}>
                     <FontAwesome name='arrow-alt-circle-right' size={60} color='white' />

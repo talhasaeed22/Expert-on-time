@@ -43,27 +43,27 @@ const Posts = () => {
         const Data = [];
         setCount(0);
         let counted = 0;
-
+        let id = 1;
         setLoading(true)
         firestore()
             .collection('posts')
             .get()
             .then((queryData) => {
                 queryData.forEach(async (doc) => {
-                    const { name, status, email, address, phone, postalCode, budget, price, brief, category, month, date, year } = doc.data();
+                    const { name, status, email, address, phone, postalCode, price, category, month, date, year } = doc.data();
                     const getDate = new Date();
                     if (filter === '1 Month') {
                         if (month === getDate.getMonth() + 1 && year === getDate.getFullYear()) {
                             Data.push({
-                                id: doc.id,
+                                id: doc.id.slice(0, 12) + '_' + id,
                                 name: name,
                                 email: email,
                                 address: address,
                                 phone: phone,
                                 postalCode: postalCode,
-                                budget: budget,
+                               
                                 price: price,
-                                brief: brief,
+                               
                                 category: category,
                                 status: status,
                                 date: date,
@@ -73,15 +73,14 @@ const Posts = () => {
                         }
                     } else if (filter === '1 Year') {
                         Data.push({
-                            id: doc.id,
-                            name: name,
+                            id: doc.id.slice(0, 12) + '_' + id,                            name: name,
                             email: email,
                             address: address,
                             phone: phone,
                             postalCode: postalCode,
-                            budget: budget,
+                            
                             price: price,
-                            brief: brief,
+                           
                             category: category,
                             status: status,
                             date: date,
@@ -90,15 +89,14 @@ const Posts = () => {
                         })
                     } else if (filter === 'All') {
                         Data.push({
-                            id: doc.id,
-                            name: name,
+                            id: doc.id.slice(0, 12) + '_' + id,                            name: name,
                             email: email,
                             address: address,
                             phone: phone,
                             postalCode: postalCode,
-                            budget: budget,
+                            
                             price: price,
-                            brief: brief,
+                            
                             category: category,
                             status: status,
                             date: date,
@@ -107,6 +105,7 @@ const Posts = () => {
                         })
                     }
                     counted++;
+                    id++;
 
                 })
                 setCount(counted);

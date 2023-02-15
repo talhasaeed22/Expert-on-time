@@ -14,7 +14,7 @@ const PostDetailBox = ({ element, index, deletePost }) => {
                     <Text style={{ fontSize: 15, fontWeight: "bold" }}>{element.id}</Text>
                 </View>
                 <View >
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: element.status === 'Ongoing' ? 'orange' : (element.status === 'New' ? "black" : 'green') }}>{element.status}</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: element.status === 'Ongoing' ? 'orange' : (element.status === 'New' ? "black" : 'green') }}>{element.status}</Text>
                     <Text style={{ fontSize: 15 }}>{''}</Text>
                 </View>
             </View>
@@ -48,21 +48,13 @@ const PostDetailBox = ({ element, index, deletePost }) => {
 
                 <Text style={{ fontSize: 15 }}>{element.postalCode}</Text>
             </View>
-            <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Budget</Text>
-
-                <Text style={{ fontSize: 15 }}>{element.budget}£</Text>
-            </View>
+            
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                 <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Price</Text>
 
                 <Text style={{ fontSize: 15 }}>{element.price}£</Text>
             </View>
-            <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Breif</Text>
-
-                <Text style={{ fontSize: 15 }}>{element.brief}</Text>
-            </View>
+            
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                     <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Category</Text>

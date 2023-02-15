@@ -1,13 +1,13 @@
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native'
 import React from 'react'
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign'
 import { StackActions } from '@react-navigation/native';
 
-const RecentAdminDetail = ({route, navigation}) => {
-    const {JobDone, date, year, month} = route.params;
-  return (
-    <ScrollView >
+const RecentAdminDetail = ({ route, navigation }) => {
+    const { JobDone, date, year, month, beforeImage, afterImage } = route.params;
+    return (
+        <ScrollView >
             <View style={{ padding: 20, paddingBottom: 5 }}>
                 <Text style={{ fontSize: 22, fontWeight: 'bold', color: "black" }}>Job Detail</Text>
             </View>
@@ -53,7 +53,16 @@ const RecentAdminDetail = ({route, navigation}) => {
                         <Text style={styles.bold}>Handyman Email</Text>
                         <Text>{JobDone.handymanEmail}</Text>
                     </View>
-                    
+
+                    <View style={{ display: 'flex', gap: 10, }}>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Before Work Image</Text>
+                        <Image source={{ uri: beforeImage }} style={{ width: Dimensions.get('window').width - 50, height: 250, borderRadius: 20, alignSelf: 'center' }} resizeMode='cover' />
+                    </View>
+                    <View style={{ display: 'flex', gap: 10, }}>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>After Work Image</Text>
+                        <Image source={{ uri: afterImage }} style={{ width: Dimensions.get('window').width - 50, height: 250, borderRadius: 20, alignSelf: 'center' }} resizeMode='cover' />
+                    </View>
+
 
                     <View style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', marginTop: 20 }}>
                         <View>
@@ -66,16 +75,7 @@ const RecentAdminDetail = ({route, navigation}) => {
                         </View>
                     </View>
 
-                    <View style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', }}>
-                        <View>
-                            <Text style={{ fontSize: 17 }}>Budget</Text>
 
-                        </View>
-                        <View style={{ paddingRight: 20 }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 17, color: "black" }}>{JobDone.post.budget} £</Text>
-
-                        </View>
-                    </View>
                     <View style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
                         <View>
                             <Text style={{ fontSize: 17 }}>Price</Text>
@@ -110,33 +110,33 @@ const RecentAdminDetail = ({route, navigation}) => {
                 </TouchableOpacity>
             </View>
         </ScrollView>
-  )
+    )
 }
 
 const styles = StyleSheet.create({
-  box: {
-      // #f8c42a
+    box: {
+        // #f8c42a
 
-      backgroundColor: 'white',
-      display: 'flex',
-      padding: 15,
-      paddingRight: 11,
-      gap: 15,
-      borderRadius: 15
+        backgroundColor: 'white',
+        display: 'flex',
+        padding: 15,
+        paddingRight: 11,
+        gap: 15,
+        borderRadius: 15
 
 
-  },
-  bold: {
-      fontWeight: "bold",
-      color: 'black',
-      fontSize: 17
-  },
-  primaryHeading: {
-      fontSize: 19,
-      color: 'black',
-      fontWeight: 'bold',
+    },
+    bold: {
+        fontWeight: "bold",
+        color: 'black',
+        fontSize: 17
+    },
+    primaryHeading: {
+        fontSize: 19,
+        color: 'black',
+        fontWeight: 'bold',
 
-  },
+    },
 })
 
 export default RecentAdminDetail

@@ -7,8 +7,9 @@ import firestore from '@react-native-firebase/firestore'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import OngoingBox from './OngoingBox';
 import auth from '@react-native-firebase/auth'
-const Ongoing = ({navigation}) => {
-    const isFocused = useIsFocused();
+import storage from '@react-native-firebase/storage'
+const Ongoing = ({ navigation }) => {
+  const isFocused = useIsFocused();
 
   const [list, setList] = useState([])
   const [loading, setLoading] = useState(false);
@@ -28,10 +29,10 @@ const Ongoing = ({navigation}) => {
       .then((queryData) => {
         queryData.forEach((doc) => {
           const { acceptedPost } = doc.data();
-          if(acceptedPost.handymanID === auth().currentUser.uid){
+          if (acceptedPost.handymanID === auth().currentUser.uid) {
             Data.push({
-              id:doc.id,
-              acceptedJobs:acceptedPost
+              id: doc.id,
+              acceptedJobs: acceptedPost
             })
           }
         })
@@ -45,31 +46,70 @@ const Ongoing = ({navigation}) => {
       })
   }
 
-  const FinishJob = (job, key)=>{
+  const FinishJob = async (job, key, beforeImage, afterImage) => {
+    setLoading(true);
     console.log(key)
+    let beforeImageUrl = 'false';
+    let afterImageUrl = 'false'
+
+    beforeImageUrl = await uploadImage(beforeImage);
+    afterImageUrl = await uploadImage(afterImage);
+
+
     const date = new Date();
-    
+
     firestore()
-        .collection('Recent')
-        .add({
-            JobDone:job.acceptedJobs,
-            date:date.getDate(),
-            year:date.getFullYear(),
-            month:date.getMonth() + 1
-        }).then(()=>{
-            firestore().collection('Accepted').doc(key)
-            .delete()
-            .then(() => {
-                setUpdate(!update)
-                firestore().collection('posts').doc(job.acceptedJobs.post.id)
-                .update({
-                  status:"Finished"
-                })
-                Alert.alert('Success', 'Job Finished')
-            })
-        }).catch((err)=>{
-            console.log(err)
-        })
+      .collection('Recent')
+      .add({
+        JobDone: job.acceptedJobs,
+        date: date.getDate(),
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        beforeWork:beforeImageUrl,
+        afterWork:afterImageUrl,
+      }).then(() => {
+        firestore().collection('Accepted').doc(key)
+          .delete()
+          .then(() => {
+            setUpdate(!update)
+            firestore().collection('posts').doc(job.acceptedJobs.post.id)
+              .update({
+                status: "Finished"
+              })
+              setLoading(false);
+
+            Alert.alert('Success', 'Job Finished')
+          })
+      }).catch((err) => {
+        setLoading(false);
+        console.log(err)
+      })
+  }
+
+  const uploadImage = async (image) => {
+    const uploadUri = image
+
+    let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1)
+
+    const extension = filename.split('.').pop();
+    const name = filename.split('.').slice(0, -1).join('.')
+
+    filename = name + Date.now() + '.' + extension
+
+    const StorageRef = storage().ref(`photos/${filename}`)
+
+    const task = StorageRef.putFile(uploadUri)
+    
+    try {
+      await task
+
+      const url = await StorageRef.getDownloadURL()
+      return url
+    } catch (error) {
+      console.log(error)
+      return null
+    }
+
   }
   return (
     <ScrollView>

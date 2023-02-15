@@ -60,8 +60,8 @@ const CreatePost = ({ navigation }) => {
 
 
 
-    } else if (parseInt(budget) < parseInt(price)) {
-      setMessage('Budget should be greater than Price')
+    } else if (parseInt(budget) > parseInt(price)) {
+      setMessage('Price should be greater than Budget')
       setModalVisible(true)
     }
     else {
@@ -149,14 +149,14 @@ const CreatePost = ({ navigation }) => {
 
           <View style={{ display: 'flex', width: '100%' }}>
             <Text>Client's Email</Text>
-            <TextInput value={email} onChangeText={setEmail} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Email' mode='outlined' />
+            <TextInput autoCapitalize='none' value={email} onChangeText={setEmail} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Email' mode='outlined' />
           </View>
 
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", gap: 4 }}>
 
             <View style={{ display: 'flex', width: '50%' }}>
               <Text>Client's Phone Number</Text>
-              <TextInput maxLength={10} keyboardType='numeric' value={phone} onChangeText={setPhone} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Phone Number' mode='outlined' />
+              <TextInput  keyboardType='numeric' value={phone} onChangeText={setPhone} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Phone Number' mode='outlined' />
             </View>
             <View style={{ display: 'flex', width: '50%' }}>
               <Text>Postal Code</Text>

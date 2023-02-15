@@ -54,7 +54,7 @@ const Stats = () => {
         })
         setPrice(pricee)
         setBudget(budgett)
-        setProfit(budgett - pricee)
+        setProfit(pricee - budgett)
 
       }).catch((err) => {
         console.log(err)

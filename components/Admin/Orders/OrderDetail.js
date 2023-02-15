@@ -65,16 +65,7 @@ const OrderDetail = ({navigation, route}) => {
                     </View>
                 </View>
 
-                <View style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', }}>
-                    <View>
-                        <Text style={{ fontSize: 17 }}>Budget</Text>
-
-                    </View>
-                    <View style={{ paddingRight: 20 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 17, color: "black" }}>{acceptedPost.post.budget} £</Text>
-
-                    </View>
-                </View>
+                
                 <View style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
                     <View>
                         <Text style={{ fontSize: 17 }}>Price</Text>

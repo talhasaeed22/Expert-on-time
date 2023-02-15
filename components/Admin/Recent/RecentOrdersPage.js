@@ -6,15 +6,17 @@ import RecentAdminDetail from './RecentAdminDetail'
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import firestore from '@react-native-firebase/firestore'
+import { useIsFocused } from '@react-navigation/native'
+useIsFocused
 const Home = ({ navigation }) => {
-
+    const isFocus = useIsFocused();
     const [list, setList] = useState([])
     const [loading, setLoading] = useState(false);
     const [count, setCount] = useState(0)
 
     useEffect(() => {
         getRecent();
-    }, [])
+    }, [isFocus])
 
     const getRecent = () => {
         const Data = [];
@@ -25,13 +27,15 @@ const Home = ({ navigation }) => {
             .get()
             .then((querryData) => {
                 querryData.forEach((doc) => {
-                    const { JobDone, date, month, year } = doc.data();
+                    const { JobDone, date, month, year,  beforeWork, afterWork } = doc.data();
                     Data.push({
                         id: doc.id,
                         JobDone: JobDone,
                         date: date,
                         year: year,
-                        month: month
+                        month: month,
+                        beforeWork:beforeWork,
+                        afterWork:afterWork
                     })
                     counted++
                 })
@@ -74,7 +78,7 @@ const Home = ({ navigation }) => {
                             <Text style={styles.primaryHeading}>Handyman Email</Text>
                             <Text style={{ fontSize: 16 }}>{element.JobDone.handymanEmail}</Text>
                         </View>
-                        <TouchableOpacity onPress={() => { navigation.navigate('RecentDetails', { JobDone: element.JobDone, year: element.year, month: element.month, date: element.date }) }} style={{ display: 'flex', alignItems: 'center', backgroundColor: '#39be5f', padding: 15, borderRadius: 10 }}>
+                        <TouchableOpacity onPress={() => { navigation.navigate('RecentDetails', { JobDone: element.JobDone, year: element.year, month: element.month, date: element.date, beforeImage:element.beforeWork, afterImage:element.afterWork }) }} style={{ display: 'flex', alignItems: 'center', backgroundColor: '#39be5f', padding: 15, borderRadius: 10 }}>
                             <Fontsinto name='prescription' size={31} color={'white'} />
                             <Text style={{ fontSize: 14, borderBottomWidth: 1, borderBottomColor: 'white', color: 'white' }}>View Detail</Text>
                         </TouchableOpacity>
