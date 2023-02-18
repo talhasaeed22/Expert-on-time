@@ -41,6 +41,10 @@ const OrderDetail = ({navigation, route}) => {
                     <Text style={styles.bold}>Client Phone Number</Text>
                     <Text>{acceptedPost.post.phone}</Text>
                 </View>
+                <View>
+                    <Text style={styles.bold}>Brief</Text>
+                    <Text>{acceptedPost.post.brief}</Text>
+                </View>
 
                 <View style={{ borderBottomWidth: 1, borderBottomColor: "lightgray" }}></View>
 

@@ -11,7 +11,7 @@ const PostDetailBox = ({ element, index, deletePost }) => {
                 <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                     <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Post ID</Text>
 
-                    <Text style={{ fontSize: 15, fontWeight: "bold" }}>{element.id}</Text>
+                    <Text style={{ fontSize: 17, fontWeight: "bold", color:'black' }}>{element.id}</Text>
                 </View>
                 <View >
                     <Text style={{ fontSize: 16, fontWeight: 'bold', color: element.status === 'Ongoing' ? 'orange' : (element.status === 'New' ? "black" : 'green') }}>{element.status}</Text>

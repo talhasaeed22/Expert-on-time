@@ -17,10 +17,15 @@ const PendingsBox = ({ index, element }) => {
                             <Text style={{ fontSize: 15 }}>{element.post.name}</Text>
                         </View>
 
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
+                        {/* <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                             <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Email</Text>
 
                             <Text style={{ fontSize: 15 }}>{element.post.email}</Text>
+                        </View> */}
+                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Status</Text>
+                            <Text style={{ fontSize: 17, color: '#eed202', fontWeight: 'bold' }}>{'Pending'}</Text>
+
                         </View>
 
                     </View>
@@ -32,11 +37,7 @@ const PendingsBox = ({ index, element }) => {
 
                         </View>
 
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Status</Text>
-                            <Text style={{ fontSize: 17, color: '#eed202', fontWeight: 'bold' }}>{'Pending'}</Text>
-
-                        </View>
+                       
 
 
                     </View>

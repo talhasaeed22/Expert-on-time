@@ -55,7 +55,7 @@ const Posts = () => {
                     if (filter === '1 Month') {
                         if (month === getDate.getMonth() + 1 && year === getDate.getFullYear()) {
                             Data.push({
-                                id: doc.id.slice(0, 12) + '_' + id,
+                                id: doc.id.slice(0, 12) + id,
                                 name: name,
                                 email: email,
                                 address: address,
@@ -73,7 +73,8 @@ const Posts = () => {
                         }
                     } else if (filter === '1 Year') {
                         Data.push({
-                            id: doc.id.slice(0, 12) + '_' + id,                            name: name,
+                            id: id,                            
+                            name: name,
                             email: email,
                             address: address,
                             phone: phone,
@@ -89,7 +90,8 @@ const Posts = () => {
                         })
                     } else if (filter === 'All') {
                         Data.push({
-                            id: doc.id.slice(0, 12) + '_' + id,                            name: name,
+                            id:id,                            
+                            name: name,
                             email: email,
                             address: address,
                             phone: phone,

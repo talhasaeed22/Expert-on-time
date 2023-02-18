@@ -45,11 +45,7 @@ const AdminPendingsBox = ({ element, index, acceptJob, rejectJob }) => {
 
                         <Text style={{ fontSize: 15 }}>{element.post.address}</Text>
                     </View>
-                    <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                        <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Breif</Text>
-
-                        <Text style={{ fontSize: 15 }}>{element.post.brief}</Text>
-                    </View>
+                    
                 </View>
 
                 <View style={{ display: "flex", flexDirection: 'column', gap: 10, }}>
@@ -76,6 +72,11 @@ const AdminPendingsBox = ({ element, index, acceptJob, rejectJob }) => {
                 </View>
 
             </View>
+            <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Breif</Text>
+
+                        <Text style={{ fontSize: 15 }}>{element.post.brief}</Text>
+                    </View>
 
             <View style={{ borderBottomWidth: 1, borderBottomColor: "lightgray", paddingVertical: 10 }}></View>
 
