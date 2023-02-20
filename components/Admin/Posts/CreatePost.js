@@ -70,7 +70,7 @@ const CreatePost = ({ navigation }) => {
       firestore()
         .collection('posts')
         .add({
-          name: fname + lname,
+          name: fname + ' ' + lname,
           email: email,
           address: address,
           phone: phone,
@@ -169,8 +169,8 @@ const CreatePost = ({ navigation }) => {
             <TextInput value={address} onChangeText={setAddress} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 50, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Address' mode='outlined' />
           </View>
           <View style={{ display: 'flex', width: '100%' }}>
-            <Text>Work Brief</Text>
-            <TextInput value={brief} onChangeText={setBrief} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 80, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Brief' mode='outlined' />
+            <Text>Job Description</Text>
+            <TextInput value={brief} onChangeText={setBrief} underlineColor='white' theme={{ colors: { placeholder: '#636bad', text: '#181c3f', primary: '#636bad', } }} style={{ marginTop: 7, marginBottom: 7, color: 'red', height: 80, backgroundColor: '#f5f5f5', borderRadius: 10 }} label='Job Description' mode='outlined' />
           </View>
 
 

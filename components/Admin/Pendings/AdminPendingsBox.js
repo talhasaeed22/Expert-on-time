@@ -73,7 +73,7 @@ const AdminPendingsBox = ({ element, index, acceptJob, rejectJob }) => {
 
             </View>
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                        <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Breif</Text>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Job Description</Text>
 
                         <Text style={{ fontSize: 15 }}>{element.post.brief}</Text>
                     </View>

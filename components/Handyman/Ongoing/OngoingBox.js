@@ -80,7 +80,7 @@ const OngoingBox = ({ index, element, FinishJob }) => {
                 </View>
 
                 <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between',   padding: 10, }}>
-                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Brief</Text>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Job Description</Text>
 
                     <Text style={{ fontSize: 15 }}>{element.acceptedJobs.post.brief}</Text>
                 </View>

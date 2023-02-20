@@ -43,7 +43,7 @@ const RecentAdminDetail = ({ route, navigation }) => {
                         <Text>{JobDone.post.phone}</Text>
                     </View>
                     <View>
-                        <Text style={styles.bold}>Brief</Text>
+                        <Text style={styles.bold}>Job Description</Text>
                         <Text>{JobDone.post.brief}</Text>
                     </View>
 

@@ -42,7 +42,7 @@ const OrderDetail = ({navigation, route}) => {
                     <Text>{acceptedPost.post.phone}</Text>
                 </View>
                 <View>
-                    <Text style={styles.bold}>Brief</Text>
+                    <Text style={styles.bold}>Job Description</Text>
                     <Text>{acceptedPost.post.brief}</Text>
                 </View>
 
