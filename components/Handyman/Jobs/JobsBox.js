@@ -43,9 +43,9 @@ const JobsBox = ({ index, element, changeFocus, navigation }) => {
                 <View style={styles.box} key={index}>
                     <View style={{ display: "flex", flexDirection: 'column', gap: 10, }}>
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Name</Text>
+                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Job ID</Text>
 
-                            <Text style={{ fontSize: 15 }}>{element.name}</Text>
+                            <Text style={{ fontSize: 17, fontWeight:'bold', }}>{element.jobNumber}</Text>
                         </View>
 
                         {/* <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
@@ -54,7 +54,7 @@ const JobsBox = ({ index, element, changeFocus, navigation }) => {
                             <Text style={{ fontSize: 15 }}>{element.email}</Text>
                         </View> */}
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Budget</Text>
+                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Payment</Text>
                             <Text style={{ fontSize: 15 }}>{element.budget}£</Text>
 
                         </View>

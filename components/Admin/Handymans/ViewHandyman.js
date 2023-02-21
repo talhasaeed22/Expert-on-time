@@ -33,7 +33,7 @@ const ViewHandyman = () => {
       .get()
       .then((queryData) => {
         queryData.forEach((doc) => {
-          const { name, email, password, phone, category } = doc.data();
+          const { name, email, password, phone, category, photo } = doc.data();
 
           Data.push({
             id: doc.id,
@@ -41,7 +41,8 @@ const ViewHandyman = () => {
             email: email,
             password: password,
             phone: phone,
-            category: category
+            category: category,
+            photo:photo
           })
           counted++;
         })

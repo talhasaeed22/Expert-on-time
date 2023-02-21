@@ -7,8 +7,24 @@ import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import Messagemodal from '../../Messagemodal';
 import { useIsFocused } from '@react-navigation/native';
+import MaterialComm from 'react-native-vector-icons/MaterialCommunityIcons'
+import ImagePicker from 'react-native-image-crop-picker';
+import storage from '@react-native-firebase/storage'
 
 const AddHandyman = ({ navigation }) => {
+  const [image, setImage] = useState('')
+  const handleImage = () => {
+    ImagePicker.openPicker({
+      cropping: true
+    }).then(image => {
+      console.log(image);
+      const imaeUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
+      setImage(imaeUri);
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+
   const isFocus = useIsFocused();
   const data = [
     { key: '1', value: 'Handyman', },
@@ -42,8 +58,8 @@ const AddHandyman = ({ navigation }) => {
   const CloseModal = () => {
     setModalVisible(false);
   }
-  const handleHandyman = () => {
-    if (fname === '' || lname === '' || email === '' || password === '' || cpassword === '' || phone === '' || category === '') {
+  const handleHandyman = async () => {
+    if (fname === '' ||  email === '' || password === '' || cpassword === '' || phone === '' || category === '') {
       setMessage('Please fill all the required fields!')
 
       setModalVisible(true);
@@ -56,6 +72,9 @@ const AddHandyman = ({ navigation }) => {
     }
     else {
       setLoading(true);
+      let ImageUrl = 'false';
+
+      ImageUrl = await uploadImage(image);
       firestore()
         .collection('handymans')
         .add({
@@ -63,21 +82,24 @@ const AddHandyman = ({ navigation }) => {
           email: email,
           password: password,
           phone: phone,
-          category: category
+          category: category,
+          photo:ImageUrl
         })
         .then(() => {
           auth().signOut().then(() => {
             auth().createUserWithEmailAndPassword(email, password)
               .then((userCred) => {
                 userCred.user.updateProfile({
-                  displayName: fname + ' ' + lname
-                })
-               
-                  auth().signInWithEmailAndPassword('admin@firebase.com', 'Admin123').then(() => {
-                    console.log('added');
-                    setLoading(false)
-                    navigation.navigate('ViewHandymans')
+                  displayName: fname + ' ' + lname,
+                  photoURL:ImageUrl
                   
+                })
+
+                auth().signInWithEmailAndPassword('admin@firebase.com', 'Admin123').then(() => {
+                  console.log('added');
+                  setLoading(false)
+                  navigation.navigate('ViewHandymans')
+
                 }).catch((err) => { console.log(err) })
               }).catch((err) => { console.log(err) })
           }).catch((err) => { console.log(err) })
@@ -87,6 +109,31 @@ const AddHandyman = ({ navigation }) => {
           setLoading(false)
           console.log(err)
         })
+    }
+
+  }
+  const uploadImage = async (image) => {
+    const uploadUri = image
+
+    let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1)
+
+    const extension = filename.split('.').pop();
+    const name = filename.split('.').slice(0, -1).join('.')
+
+    filename = name + Date.now() + '.' + extension
+
+    const StorageRef = storage().ref(`profile/${filename}`)
+
+    const task = StorageRef.putFile(uploadUri)
+
+    try {
+      await task
+
+      const url = await StorageRef.getDownloadURL()
+      return url
+    } catch (error) {
+      console.log(error)
+      return null
     }
 
   }
@@ -141,6 +188,12 @@ const AddHandyman = ({ navigation }) => {
               data={data}
               save="value"
             />
+          </View>
+          <View style={{ paddingVertical: 10, padding: 10, }}>
+            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black', }}>Profile Photo</Text>
+            <View style={{ padding: 10, }}>
+              {image !== '' ? <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'orangered' }}>Image uploaded</Text> : <TouchableOpacity onPress={handleImage}><MaterialComm name='image-plus' size={50} color='black' /></TouchableOpacity>}
+            </View>
           </View>
           {loading ? <ActivityIndicator /> : <TouchableOpacity onPress={handleHandyman} style={{ display: 'flex', alignItems: 'flex-end', paddingTop: 10, paddingBottom: 10 }}>
             <Button color='white' buttonColor='#4e75ec' style={{ padding: 5 }} icon={() => (<Icon name='pluscircleo' size={23} color='white' />)} mode="contained">

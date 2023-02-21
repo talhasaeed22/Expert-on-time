@@ -67,6 +67,7 @@ const NewJob = ({ navigation, route }) => {
 
   const getPosts =  () => {
     const Data = [];
+    let count = 1;
     setLoading(true)
     firestore()
       .collection('posts')
@@ -86,6 +87,7 @@ const NewJob = ({ navigation, route }) => {
           if (status === 'New' && !found) {
             Data.push({
               id: doc.id,
+              jobNumber:count,
               name: name,
               email: email,
               address: address,
@@ -98,8 +100,8 @@ const NewJob = ({ navigation, route }) => {
               status:status,
               handyman:handyman
             })
+            count ++;
           }
-
 
         })
 

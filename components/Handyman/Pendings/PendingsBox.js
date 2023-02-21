@@ -8,13 +8,13 @@ import firestore from '@react-native-firebase/firestore'
 const PendingsBox = ({ index, element }) => {
     return (
         <ScrollView>
-            <View style={{ borderBottomWidth: 1, borderBottomColor: 'lightgray', paddingBottom:20 }}>
+            <View style={{ borderBottomWidth: 1, borderBottomColor: 'lightgray', paddingBottom: 20 }}>
                 <View style={styles.box} key={index}>
                     <View style={{ display: "flex", flexDirection: 'column', gap: 25, }}>
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Name</Text>
+                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Payment</Text>
 
-                            <Text style={{ fontSize: 15 }}>{element.post.name}</Text>
+                            <Text style={{ fontSize: 15 }}>{element.post.budget}£</Text>
                         </View>
 
                         {/* <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
@@ -22,9 +22,9 @@ const PendingsBox = ({ index, element }) => {
 
                             <Text style={{ fontSize: 15 }}>{element.post.email}</Text>
                         </View> */}
-                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Status</Text>
-                            <Text style={{ fontSize: 17, color: '#eed202', fontWeight: 'bold' }}>{'Pending'}</Text>
+                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
+                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Status</Text>
+                            <Text style={{ fontSize: 15, color: '#eed202', fontWeight: 'bold' }}>{'Pending'}</Text>
 
                         </View>
 
@@ -32,15 +32,20 @@ const PendingsBox = ({ index, element }) => {
 
                     <View style={{ display: "flex", flexDirection: 'column', gap: 25, }}>
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Category</Text>
-                            <Text style={{ fontSize: 17, color: 'red', fontWeight: 'bold' }}>{element.post.category}</Text>
+                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Category</Text>
+                            <Text style={{ fontSize: 15, color: 'red', fontWeight: 'bold' }}>{element.post.category}</Text>
 
                         </View>
 
-                       
+
 
 
                     </View>
+
+                </View>
+                <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingHorizontal:10, paddingVertical:5}}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Job Description</Text>
+                    <Text style={{ fontSize: 15, color: 'red', fontWeight: 'bold' }}>{element.post.brief}</Text>
 
                 </View>
                 {/* <View style={{ alignItems: 'flex-end' }}>
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: 'white',
         borderRadius: 10,
-       
+
     }
 
 })

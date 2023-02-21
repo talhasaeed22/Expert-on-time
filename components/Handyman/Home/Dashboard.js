@@ -68,8 +68,8 @@ const Dashboard = ({navigation}) => {
       .get()
       .then((queryData) => {
         queryData.forEach((doc) => {
-          const { JobDone } = doc.data();
-          if(JobDone.handymanID === auth().currentUser.uid){
+          const { job } = doc.data();
+          if(job.JobDone.handymanID === auth().currentUser.uid){
             counted++
           }
         })

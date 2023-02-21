@@ -9,6 +9,7 @@ import ActiveOrders from './Admin/Orders/ActiveOrders';
 import RecentOrdersPage from './Admin/Recent/RecentOrdersPage';
 import PendingRequest from './Admin/Pendings/PendingRequests'
 import Stats from './Admin/Stats/Stats';
+import JobDone from './Admin/Recent/JobDone';
 const AdminHome = () => {
  
   const Drawer = createDrawerNavigator();
@@ -77,6 +78,14 @@ const AdminHome = () => {
           }} />
           <Drawer.Screen name="stats" component={Stats} options={{
             title: 'Stats',
+            headerTintColor: 'white',
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#6b6b6b' ,
+            },
+          }} />
+          <Drawer.Screen name="status" component={JobDone} options={{
+            title: 'Jobs Status',
             headerTintColor: 'white',
             headerTitleAlign: 'center',
             headerStyle: {

@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import firestore from '@react-native-firebase/firestore'
 import { useIsFocused } from '@react-navigation/native'
-useIsFocused
+
 const Home = ({ navigation }) => {
     const isFocus = useIsFocused();
     const [list, setList] = useState([])
@@ -27,15 +27,15 @@ const Home = ({ navigation }) => {
             .get()
             .then((querryData) => {
                 querryData.forEach((doc) => {
-                    const { JobDone, date, month, year,  beforeWork, afterWork } = doc.data();
+                    const { job } = doc.data();
                     Data.push({
                         id: doc.id,
-                        JobDone: JobDone,
-                        date: date,
-                        year: year,
-                        month: month,
-                        beforeWork:beforeWork,
-                        afterWork:afterWork
+                        JobDone: job.JobDone,
+                        date: job.date,
+                        year: job.year,
+                        month: job.month,
+                        beforeWork:job.beforeWork,
+                        afterWork:job.afterWork
                     })
                     counted++
                 })

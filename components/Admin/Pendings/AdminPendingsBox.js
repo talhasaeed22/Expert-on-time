@@ -50,7 +50,7 @@ const AdminPendingsBox = ({ element, index, acceptJob, rejectJob }) => {
 
                 <View style={{ display: "flex", flexDirection: 'column', gap: 10, }}>
                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                        <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Budget</Text>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Payment</Text>
 
                         <Text style={{ fontSize: 15 }}>{element.post.budget}</Text>
                     </View>

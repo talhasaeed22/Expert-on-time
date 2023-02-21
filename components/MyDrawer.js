@@ -73,6 +73,11 @@ const MyDrawer = (props) => {
             label={() => (<Text style={{ color: focusedRoute === 'ActiveOrders' ? ('white') : 'black', fontSize: 15 }}>Active Jobs</Text>)}
 
           />
+          <DrawerItem onPress={() => { props.navigation.navigate('status'); }} style={focusedRoute === 'status' ? { backgroundColor: '#181c3f' } : {}}
+            icon={({ color, size }) => (<Entypo name="check" size={21} color={focusedRoute === 'status' ? ('white') : 'black'} />)}
+            label={() => (<Text style={{ color: focusedRoute === 'status' ? ('white') : 'black', fontSize: 15 }}>Job Status</Text>)}
+
+          />
           <DrawerItem onPress={() => { props.navigation.navigate('RecentJobs'); }} style={focusedRoute === 'RecentJobs' ? { backgroundColor: '#181c3f' } : {}}
             icon={({ color, size }) => (<Icon name="clock-check-outline" size={21} color={focusedRoute === 'RecentJobs' ? ('white') : 'black'} />)}
             label={() => (<Text style={{ color: focusedRoute === 'RecentJobs' ? ('white') : 'black', fontSize: 15 }}>Recent Orders</Text>)}

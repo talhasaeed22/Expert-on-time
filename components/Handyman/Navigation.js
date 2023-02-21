@@ -29,7 +29,8 @@ const Navigation = ({navigation, changeFocus }) => {
                 </View>
                 <View style={{ display: "flex", flexDirection: "row", gap: 10, paddingVertical: 15, alignItems:'center' }}>
                     <View>
-                        <Entypo name='user' size={42} color='#5e48db' />
+                        {/* <Entypo name='user' size={42} color='#5e48db' /> */}
+                        {auth().currentUser && <Avatar.Image source={{uri:auth().currentUser.photoURL}} size={50} />}
                     </View>
                     <View style={{ display: 'flex' }}>
                         <Text style={{fontSize:23, fontWeight:'bold', color:'black'}}>Hi, {auth().currentUser && auth().currentUser.displayName}</Text>

@@ -3,6 +3,7 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/EvilIcons'
 import Material from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { Avatar } from 'react-native-paper'
 const HandymanBox = ({ element, index, deleteHandman }) => {
     return (
         <View style={{ padding: 20 }} key={index}>
@@ -28,7 +29,8 @@ const HandymanBox = ({ element, index, deleteHandman }) => {
                     </View>
                     <View>
                         <View style={{ paddingTop: 8 }}>
-                            <Material name="face-man-outline" color='black' size={70} />
+                            {/* <Material name="face-man-outline" color='black' size={70} /> */}
+                            <Avatar.Image source={{uri:element.photo}} size={100}  />
                         </View>
                     </View>
                 </View>

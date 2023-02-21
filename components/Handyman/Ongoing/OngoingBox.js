@@ -13,6 +13,7 @@ const OngoingBox = ({ index, element, FinishJob }) => {
     const [imageAfter, setImageAfter] = useState('')
     const handleBeforeImage = ()=>{
         ImagePicker.openPicker({
+            
            cropping:true
           }).then(image => {
             console.log(image);
@@ -24,8 +25,9 @@ const OngoingBox = ({ index, element, FinishJob }) => {
     }
     const handleAfterImage = ()=>{
         ImagePicker.openPicker({
+            
             cropping:true
-
+            
           }).then(image => {
             console.log(image);
             const imaeUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
@@ -33,6 +35,14 @@ const OngoingBox = ({ index, element, FinishJob }) => {
           }).catch((err)=>{
             console.log(err)
           })
+    }
+
+    const handlePress = ()=>{
+        if(imageAfter === '' || imageBefore === ''){
+            Alert.alert('Warning','Please Upload Requried Images')
+        }else{
+            FinishJob(element, element.id, imageBefore, imageAfter)
+        }
     }
     return (
         <ScrollView>
@@ -45,15 +55,11 @@ const OngoingBox = ({ index, element, FinishJob }) => {
                             <Text style={{ fontSize: 15 }}>{element.acceptedJobs.post.name}</Text>
                         </View>
 
+                      
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Client Email</Text>
+                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Payment</Text>
 
-                            <Text style={{ fontSize: 15 }}>{element.acceptedJobs.post.email}</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Price</Text>
-
-                            <Text style={{ fontSize: 15 }}>{element.acceptedJobs.post.price}£</Text>
+                            <Text style={{ fontSize: 15 }}>{element.acceptedJobs.post.budget}£</Text>
                         </View>
 
 
@@ -61,14 +67,14 @@ const OngoingBox = ({ index, element, FinishJob }) => {
 
                     <View style={{ display: "flex", flexDirection: 'column', gap: 25, }}>
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Category</Text>
-                            <Text style={{ fontSize: 17, color: 'red', fontWeight: 'bold' }}>{element.acceptedJobs.post.category}</Text>
+                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Category</Text>
+                            <Text style={{ fontSize: 15, color: 'red', fontWeight: 'bold' }}>{element.acceptedJobs.post.category}</Text>
 
                         </View>
 
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Status</Text>
-                            <Text style={{ fontSize: 17, color: '#eed202', fontWeight: 'bold' }}>{'Ongoing'}</Text>
+                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Status</Text>
+                            <Text style={{ fontSize: 15, color: '#eed202', fontWeight: 'bold' }}>{'Ongoing'}</Text>
                         </View>
                     </View>
 
@@ -98,7 +104,7 @@ const OngoingBox = ({ index, element, FinishJob }) => {
                     </View>
                 </View>
                 <View style={{ alignItems: 'flex-end' }}>
-                    <TouchableOpacity onPress={() => { FinishJob(element, element.id, imageBefore, imageAfter) }} style={{ paddingVertical: 15, display: 'flex', flexDirection: "row", gap: 10 }}>
+                    <TouchableOpacity onPress={handlePress} style={{ paddingVertical: 15, display: 'flex', flexDirection: "row", gap: 10 }}>
 
                         <Button buttonColor='#0d98ba' labelStyle={{ fontSize: 17, fontWeight: "bold", textAlign: "center", }} color='white' style={{ padding: 5, borderRadius: 10 }} mode="contained">
                             Finish

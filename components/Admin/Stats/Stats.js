@@ -27,26 +27,26 @@ const Stats = () => {
       .get()
       .then((qs) => {
         qs.forEach((doc) => {
-          const { JobDone, date, year, month } = doc.data();
+          const { job, } = doc.data();
           const getDate = new Date();
           if (filter === '') {
-            pricee = pricee + parseInt(JobDone.post.price)
-            budgett = budgett + parseInt(JobDone.post.budget)
+            pricee = pricee + parseInt(job.JobDone.post.price)
+            budgett = budgett + parseInt(job.JobDone.post.budget)
           } else if (filter === '1 Month') {
-            if (month === getDate.getMonth() + 1 && year === getDate.getFullYear()) {
-              pricee = pricee + parseInt(JobDone.post.price)
-              budgett = budgett + parseInt(JobDone.post.budget)
+            if (job.month === getDate.getMonth() + 1 && year === getDate.getFullYear()) {
+              pricee = pricee + parseInt(job.JobDone.post.price)
+              budgett = budgett + parseInt(job.JobDone.post.budget)
             }
           } else if (filter === '1 Year') {
-            if (year === getDate.getFullYear()) {
-              pricee = pricee + parseInt(JobDone.post.price)
-              budgett = budgett + parseInt(JobDone.post.budget)
+            if (job.year === getDate.getFullYear()) {
+              pricee = pricee + parseInt(job.JobDone.post.price)
+              budgett = budgett + parseInt(job.JobDone.post.budget)
             }
 
           } else if (filter === 'All') {
 
-            pricee = pricee + parseInt(JobDone.post.price)
-            budgett = budgett + parseInt(JobDone.post.budget)
+            pricee = pricee + parseInt(job.JobDone.post.price)
+            budgett = budgett + parseInt(job.JobDone.post.budget)
 
 
           }
@@ -128,7 +128,7 @@ const Stats = () => {
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: "center" }}>
             <Entypo name='dot-single' size={23} color='#FF0000' />
-            <Text style={{ fontSize: 20, color: '#FF0000', fontWeight: 'bold' }}>Budget</Text>
+            <Text style={{ fontSize: 20, color: '#FF0000', fontWeight: 'bold' }}>Payment</Text>
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: "center" }}>
             <Entypo name='dot-single' size={23} color='#228b22' />

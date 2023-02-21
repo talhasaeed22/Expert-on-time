@@ -59,27 +59,28 @@ const Ongoing = ({ navigation }) => {
     const date = new Date();
 
     firestore()
-      .collection('Recent')
+      .collection('Finished')
       .add({
         JobDone: job.acceptedJobs,
+        acceptedId: key,
         date: date.getDate(),
         year: date.getFullYear(),
         month: date.getMonth() + 1,
-        beforeWork:beforeImageUrl,
-        afterWork:afterImageUrl,
+        beforeWork: beforeImageUrl,
+        afterWork: afterImageUrl,
       }).then(() => {
         firestore().collection('Accepted').doc(key)
           .delete()
           .then(() => {
             setUpdate(!update)
-            firestore().collection('posts').doc(job.acceptedJobs.post.id)
-              .update({
-                status: "Finished"
-              })
-              setLoading(false);
+            setLoading(false);
 
             Alert.alert('Success', 'Job Finished')
+          }).catch((err) => {
+            console.log(err);
           })
+
+
       }).catch((err) => {
         setLoading(false);
         console.log(err)
@@ -99,7 +100,7 @@ const Ongoing = ({ navigation }) => {
     const StorageRef = storage().ref(`photos/${filename}`)
 
     const task = StorageRef.putFile(uploadUri)
-    
+
     try {
       await task
 
