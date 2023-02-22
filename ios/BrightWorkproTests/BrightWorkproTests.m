@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface expertTests : XCTestCase
+@interface BrightWorkproTests : XCTestCase
 
 @end
 
-@implementation expertTests
+@implementation BrightWorkproTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

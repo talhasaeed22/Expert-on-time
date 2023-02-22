@@ -1,4 +1,4 @@
-package com.expert;
+package com.brightpro.expert;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

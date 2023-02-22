@@ -1,4 +1,4 @@
-package com.expert;
+package com.brightpro.expert;
 import android.content.Intent; // <-- include if not already there
 import com.tkporter.sendsms.SendSMSPackage;
 import com.facebook.react.ReactActivity;
@@ -14,7 +14,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "expert";
+    return "Bright Work pro";
   }
 
   /**
